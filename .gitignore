@@ -1,0 +1,12 @@
+# Default ignored files
+.idea/shelf/
+.idea/workspace.xml
+.idea/libraries
+# Datasource local storage ignored files
+/../../../../:\Java\Projects\fl4\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+.idea/httpRequests/
+
+# Compiled files
+out/
