@@ -6,14 +6,13 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Player extends Entity {
 
     private int health;
-    private int maxHealth;
+    private final int maxHealth;
     private boolean dead;
 
     // Parry button input field
@@ -21,28 +20,17 @@ public class Player extends Entity {
 
     // Parry state regulation
     private boolean parryActive;
-    private boolean parryCooldown;
-    private long parryTimer;
-    private long parryCooldownTimer;
+    private boolean parryCoolDown;
+    private final long parryTimer;
+    private final long parryCoolDownTimer;
     private long parryCounter;
 
     // Flinching state regulation
     private boolean flinching;
     private long flinchTime;
 
-    double xVelocity, yVelocity;
-
     // Animation hash table
     private HashMap<EntityState, BufferedImage[]> sprites;
-
-    // Number of frames per animation
-    private final Map<EntityState, Integer> frameAmount = Map.of(
-            EntityState.IDLE, 1,
-            EntityState.WALKING, 2,
-            EntityState.JUMPING, 1,
-            EntityState.FALLING, 1,
-            EntityState.FLINCHING, 3,
-            EntityState.PARRYING, 2);
 
 
     public Player(TileMap tm) {
@@ -53,8 +41,9 @@ public class Player extends Entity {
         collisionWidth = 30;
         collisionHeight = 30;
 
-        moveSpeed = 0.3;
-        maxSpeed = 2.0;
+        // Player velocity constants, to be tweaked with
+        moveSpeed = 0.4;
+        maxSpeed = 2.5;
         stopSpeed = 0.4;
         fallSpeed = 0.15;
         maxFallSpeed = 4.0;
@@ -64,12 +53,21 @@ public class Player extends Entity {
 
         // Parry effect setup
         parryTimer = 20;
-        parryCooldownTimer = 40;
+        parryCoolDownTimer = 40;
         parryActive = false;
-        parryCooldown = false;
+        parryCoolDown = false;
         parryCounter = 0;
 
         health = maxHealth = 4;
+
+        // Map player states to the number of frames in their animations
+        final Map<EntityState, Integer> frameAmount = Map.of(
+                EntityState.IDLE, 1,
+                EntityState.WALKING, 2,
+                EntityState.JUMPING, 1,
+                EntityState.FALLING, 1,
+                EntityState.FLINCHING, 3,
+                EntityState.PARRYING, 2);
 
         // Load the player sprites
         try {
@@ -99,7 +97,12 @@ public class Player extends Entity {
 
     public int getHealth() { return health; }
     public int getMaxHealth() { return maxHealth; }
-    public void setParrying(boolean b) { this.parrying = b; }
+    public boolean isParrying() { return parryActive; }
+
+    /**
+     * Turn on the parrying input vector. It will be unset automatically in the update function.
+     */
+    public void setParrying() { this.parrying = true; }
 
     public void update() {
         // Update position
@@ -112,10 +115,10 @@ public class Player extends Entity {
         // The parry action takes precedence over all the others
         if (parrying) {
             // If the parry button is pressed, enter parry state UNLESS it's already active or on cooldown
-            if (!parryActive && !parryCooldown) {
+            if (!parryActive && !parryCoolDown) {
                 // Enter parry state and set the frame counter
                 parryActive = true;
-                parryCooldown = false;
+                parryCoolDown = false;
                 parryCounter = 0;
 
                 // Override player state
@@ -123,9 +126,11 @@ public class Player extends Entity {
 
                 // Set parry animation
                 animation.setFrames(sprites.get(EntityState.PARRYING));
-                animation.setDelay(50);
+                animation.setDelay(25);
             }
         }
+        // Clear the parry input vector
+        parrying = false;
 
         // If the player is in active parry state, ignore animation and state changes
         if (!parryActive) {
@@ -164,18 +169,18 @@ public class Player extends Entity {
             } else {
                 // When the parry counter reaches a threshold, leave active parry state and commence cooldown
                 parryActive = false;
-                parryCooldown = true;
+                parryCoolDown = true;
                 parryCounter = 0;
             }
         }
 
         // Increment the parry cooldown
-        if (parryCooldown) {
-            if (parryCounter <= parryCooldownTimer) {
+        if (parryCoolDown) {
+            if (parryCounter <= parryCoolDownTimer) {
                 parryCounter++;
             } else {
                 parryActive = false;
-                parryCooldown = false;
+                parryCoolDown = false;
             }
         }
 

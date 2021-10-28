@@ -76,7 +76,7 @@ public class Level1State extends GameState{
                 player.setJumping(true);
                 break;
             case KeyEvent.VK_S:
-                player.setParrying(true);
+                player.setParrying();
                 break;
         }
     }
@@ -98,9 +98,6 @@ public class Level1State extends GameState{
                 break;
             case KeyEvent.VK_A:
                 player.setJumping(false);
-                break;
-            case KeyEvent.VK_S:
-                player.setParrying(false);
                 break;
         }
     }
