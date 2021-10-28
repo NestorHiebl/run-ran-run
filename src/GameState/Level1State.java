@@ -20,14 +20,20 @@ public class Level1State extends GameState{
 
     @Override
     public void init() {
+        // Load background and set its movement vector
         background = new Background("Resources/Backgrounds/placeholder-1.gif", -1);
         background.setVector(0.05, 0);
+
+        // Load level tile map
         tileMap = new TileMap(30);
         tileMap.loadTiles("Resources/Tilesets/basetileset.gif");
+
+        // Load level structure
         tileMap.loadMap("Resources/Maps/level1-1.map");
         tileMap.setPosition(0, 0);
         tileMap.setTween(1.0);
 
+        // Load and place player entity
         player = new Player(tileMap);
         player.setPosition(100, 100);
     }
@@ -36,12 +42,12 @@ public class Level1State extends GameState{
     public void update() {
         background.update();
         player.update();
-        tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX(), (GamePanel.HEIGHT / 2) - player.getY());
+        tileMap.setPosition((double) (GamePanel.WIDTH / 2) - player.getX(), (double) (GamePanel.HEIGHT / 2) - player.getY());
     }
 
     @Override
     public void draw(Graphics2D g) {
-        // Draw bg
+        // Draw background
         background.draw(g);
 
         // Draw tilemap

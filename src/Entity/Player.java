@@ -15,31 +15,25 @@ public class Player extends Entity {
     private int health;
     private int maxHealth;
     private boolean dead;
+
+    // Parry button input field
+    private boolean parrying;
+
+    // Parry state regulation
+    private boolean parryActive;
+    private boolean parryCooldown;
+    private long parryTimer;
+    private long parryCooldownTimer;
+    private long parryCounter;
+
+    // Flinching state regulation
     private boolean flinching;
     private long flinchTime;
-    private boolean parrying;
-    private long parryTimer;
 
     double xVelocity, yVelocity;
 
-    /* Input vectors */
-    boolean keyLeft;
-    boolean keyRight;
-    boolean keyUp;
-    boolean keyDown;
-    boolean Parry;
-
-    // Animations
-    // TODO: Refactor sprites into a hashmap
+    // Animation hash table
     private HashMap<EntityState, BufferedImage[]> sprites;
-
-    // Animation indices
-    private static final int IDLE = 0;
-    private static final int WALKING = 1;
-    private static final int JUMPING = 2;
-    private static final int FALLING = 3;
-    private static final int FLINCHING = 4;
-    private static final int PARRYING = 5;
 
     // Number of frames per animation
     private final Map<EntityState, Integer> frameAmount = Map.of(
@@ -68,13 +62,23 @@ public class Player extends Entity {
         stopJumpSpeed = 0.3;
         facingRight = true;
 
+        // Parry effect setup
+        parryTimer = 20;
+        parryCooldownTimer = 40;
+        parryActive = false;
+        parryCooldown = false;
+        parryCounter = 0;
+
         health = maxHealth = 4;
 
-        // Load sprites
+        // Load the player sprites
         try {
+            // Open the spritesheet
             BufferedImage spriteSheet = ImageIO.read(new File("Resources/Sprites/charsprite_placeholder.gif"));
+            // Initialize an animation HashMap
             sprites = new HashMap<>();
 
+            // Convert each row in the spritesheet into an array of buffered images that is used to initialize an animation
             for (EntityState state: EntityState.values()) {
                 // Make a new subarray of sprites for each animation
                 BufferedImage[] subSheet = new BufferedImage[frameAmount.get(state)];
@@ -87,10 +91,10 @@ public class Player extends Entity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        animation = new Animation();
+
+        // Set the player state to idle and stop the animation from looping
         currentAction = EntityState.IDLE;
-        animation.setFrames(sprites.get(EntityState.IDLE));
-        animation.setDelay(-1);
+        animation = new Animation(sprites.get(EntityState.IDLE), -1);
     }
 
     public int getHealth() { return health; }
@@ -105,40 +109,77 @@ public class Player extends Entity {
 
         // Set animation
 
-        if (dy > 0) /* Going down */ {
-            if (currentAction != EntityState.FALLING) {
-                currentAction = EntityState.FALLING;
-                animation.setFrames(sprites.get(EntityState.FALLING));
-                animation.setDelay(-1); /* The falling animation only has one sprite */
-            }
-        } else if (dx < 0) /* Going up */ {
-            if (currentAction != EntityState.JUMPING) {
-                currentAction = EntityState.JUMPING;
-                animation.setFrames(sprites.get(EntityState.JUMPING));
-                animation.setDelay(-1); /* The jumping animation only has one sprite */
-            }
-        } else if (left || right) {
-            if (currentAction != EntityState.WALKING) {
-                currentAction = EntityState.WALKING;
-                animation.setFrames(sprites.get(EntityState.WALKING));
-                animation.setDelay(50);
-            }
-        } else {
-            if (currentAction != EntityState.IDLE) {
-                currentAction = EntityState.IDLE;
-                animation.setFrames(sprites.get(EntityState.IDLE));
-                animation.setDelay(-1); /* The idle animation only has one sprite */
-            }
-        }
-
-
+        // The parry action takes precedence over all the others
         if (parrying) {
-            if (currentAction != EntityState.PARRYING) {
+            // If the parry button is pressed, enter parry state UNLESS it's already active or on cooldown
+            if (!parryActive && !parryCooldown) {
+                // Enter parry state and set the frame counter
+                parryActive = true;
+                parryCooldown = false;
+                parryCounter = 0;
+
+                // Override player state
                 currentAction = EntityState.PARRYING;
+
+                // Set parry animation
                 animation.setFrames(sprites.get(EntityState.PARRYING));
                 animation.setDelay(50);
             }
         }
+
+        // If the player is in active parry state, ignore animation and state changes
+        if (!parryActive) {
+
+            if (dy > 0) /* Going down */ {
+                if (currentAction != EntityState.FALLING) {
+                    currentAction = EntityState.FALLING;
+                    animation.setFrames(sprites.get(EntityState.FALLING));
+                    animation.setDelay(-1); /* The falling animation only has one sprite */
+                }
+            } else if (dx < 0) /* Going up */ {
+                if (currentAction != EntityState.JUMPING) {
+                    currentAction = EntityState.JUMPING;
+                    animation.setFrames(sprites.get(EntityState.JUMPING));
+                    animation.setDelay(-1); /* The jumping animation only has one sprite */
+                }
+            } else if (left || right) {
+                if (currentAction != EntityState.WALKING) {
+                    currentAction = EntityState.WALKING;
+                    animation.setFrames(sprites.get(EntityState.WALKING));
+                    animation.setDelay(50);
+                }
+            } else {
+                // Switch to idle state if all other options have been exhausted
+                if (currentAction != EntityState.IDLE) {
+                    currentAction = EntityState.IDLE;
+                    animation.setFrames(sprites.get(EntityState.IDLE));
+                    animation.setDelay(-1); /* The idle animation only has one sprite */
+                }
+            }
+        } else {
+            // If the player is in active parry state
+            if (parryCounter <= parryTimer) {
+                // Increment the parry counter
+                parryCounter++;
+            } else {
+                // When the parry counter reaches a threshold, leave active parry state and commence cooldown
+                parryActive = false;
+                parryCooldown = true;
+                parryCounter = 0;
+            }
+        }
+
+        // Increment the parry cooldown
+        if (parryCooldown) {
+            if (parryCounter <= parryCooldownTimer) {
+                parryCounter++;
+            } else {
+                parryActive = false;
+                parryCooldown = false;
+            }
+        }
+
+        // If the player is in parry state or cooldown, increment the parry counter
 
         animation.update();
 
