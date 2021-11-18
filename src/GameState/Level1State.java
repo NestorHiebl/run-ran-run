@@ -34,8 +34,12 @@ public class Level1State extends GameState{
         tileMap.setTween(1.0);
 
         // Load and place player entity
-        player = new Player(tileMap);
-        player.setPosition(100, 100);
+        player = new Player(tileMap, gsm);
+        try {
+            player.setPosition(100, 100);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -55,6 +59,17 @@ public class Level1State extends GameState{
 
         // Draw player
         player.draw(g);
+    }
+
+    @Override
+    public void reload() {
+        tileMap.setPosition(0, 0);
+
+        try {
+            player.setPosition(100, 100);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -6,7 +6,8 @@ public enum EntityState {
     JUMPING(2),
     FALLING(3),
     FLINCHING(4),
-    PARRYING(5);
+    PARRYING(5),
+    DEAD(0); /* TODO: Extend spritesheet and update index */
 
     private final int index;
 

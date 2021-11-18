@@ -25,6 +25,11 @@ public class OptionsState extends GameState{
     }
 
     @Override
+    public void reload() {
+
+    }
+
+    @Override
     public void keyPressed(int k) {
 
     }

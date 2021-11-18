@@ -1,25 +1,28 @@
 package GameState;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameStateManager {
-    private ArrayList<GameState> gameStates;
-    private int currentState;
-
-    public static final int MENUSTATE = 0;
-    public static final int LEVEL1STATE = 1;
+    private HashMap<StateType, GameState> gameStates;
+    private StateType currentState;
 
     public GameStateManager() {
-        gameStates = new ArrayList<GameState>();
+        gameStates = new HashMap <StateType, GameState>();
 
-        currentState = MENUSTATE;
+        currentState = StateType.MAINMENU;
         // Currently, all levels are loaded into memory as soon as the game state manager is constructed.
         // This is not particularly efficient and might have to be changed at some point
-        gameStates.add(new MenuState(this));
-        gameStates.add(new Level1State(this));
+        gameStates.put(StateType.MAINMENU, new MenuState(this));
+        gameStates.put(StateType.LEVEL1, new Level1State(this));
+
     }
 
-    public void setState(int state) {
+    public void setState(StateType state) {
         currentState = state;
+    }
+
+    public void reloadCurrentState() {
+        this.gameStates.get(this.currentState).reload();
     }
 
     public void update() {

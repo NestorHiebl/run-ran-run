@@ -1,5 +1,6 @@
 package Entity;
 
+import GameState.GameStateManager;
 import Main.GamePanel;
 import TileMap.*;
 
@@ -8,6 +9,7 @@ import java.awt.*;
 public abstract class Entity {
 
     protected TileMap tileMap;
+    protected GameStateManager gsm;
     protected int tileSize;
     protected double xmap;
     protected double ymap;
@@ -62,9 +64,10 @@ public abstract class Entity {
     protected double stopJumpSpeed;
 
     // Constructor
-    public Entity(TileMap tm) {
+    public Entity(TileMap tm, GameStateManager gsm) {
         this.tileMap = tm;
         tileSize = tm.getTileSize();
+        this.gsm = gsm;
     }
 
     public boolean intersects(Entity o) {
@@ -160,7 +163,11 @@ public abstract class Entity {
     public int getCollisionWidth() { return collisionWidth; }
     public int getCollisionHeight() { return collisionHeight; }
 
-    public void setPosition(double x, double y) {
+    public void setPosition(double x, double y) throws LethalDamageException{
+        if (y > tileMap.getHeight()) {
+            throw new LethalDamageException("Fell off the map");
+        }
+
         this.x = x;
         this.y = y;
     }
@@ -198,4 +205,5 @@ public abstract class Entity {
                 y + ymap - height > GamePanel.HEIGHT;
     }
 
+    abstract void kill();
 }

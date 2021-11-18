@@ -19,7 +19,7 @@ public class TileMap {
 
     // Map
     private int[][] map;
-    private int tileSize;
+    private final int tileSize;
     private int numRows, numCols;
     private int width, height;
 
@@ -45,7 +45,7 @@ public class TileMap {
         try {
             tileset = ImageIO.read(new File(s));
             numTilesAcross = tileset.getWidth() / tileSize;
-            // We assume that the image has to rows of tiles
+            // We assume that the image has two rows of tiles
             tiles = new Tile[2][numTilesAcross];
             // Create a subimage container to save the individual tile images in
             BufferedImage subimage;
@@ -58,7 +58,7 @@ public class TileMap {
                         col * tileSize, 0,
                         /* Subimage dimensions */
                         tileSize, tileSize);
-                tiles[0][col] = new Tile(subimage, Tile.NORMAL);
+                tiles[0][col] = new Tile(subimage, Tile.PASSABLE);
 
                 // Load and mark tiles in the second row as blocked
                 subimage =tileset.getSubimage(
@@ -125,7 +125,18 @@ public class TileMap {
         return height;
     }
 
+    /**
+     * Get the tile type at a specific pair of coordinates. Mostly useful for collision checking.
+     * Out-of-bounds indices will always return a passable value.
+     * @param row The tile row.
+     * @param col The tile column.
+     * @return The type of tile at (row, col).
+     */
     public int getType(int row, int col) {
+        if ((row < 0) || (col < 0) || (row >= numRows) || (col >= numCols)) {
+            /* Space outside of the map is always passable */
+            return Tile.PASSABLE;
+        }
         int rc = map[row][col];
         int rw = rc / numTilesAcross;
         int clmn = rc % numTilesAcross;
@@ -154,6 +165,7 @@ public class TileMap {
     }
 
     public void draw(Graphics2D g) {
+        // Loop through every visible row
         for (
                 int row = rowOffset;
                 row < rowOffset + numRowsToRender;

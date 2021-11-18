@@ -11,7 +11,7 @@ public class MenuState extends GameState{
 
     private Background bg;
 
-    private int currentChoice = 0;
+    private int currentChoice;
     private String[] options = {
             "Start",
             "Options",
@@ -30,6 +30,7 @@ public class MenuState extends GameState{
 
     @Override
     public void init() {
+        this.currentChoice = 0;
         try {
             bg = new Background("Resources/Backgrounds/menu_bg1.gif", -1);
             bg.setVector(-0.1, 0);
@@ -44,6 +45,11 @@ public class MenuState extends GameState{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void reload() {
+        this.currentChoice = 0;
     }
 
     @Override
@@ -77,7 +83,7 @@ public class MenuState extends GameState{
         switch (currentChoice) {
             case 0:
                 // Start
-                gsm.setState(GameStateManager.LEVEL1STATE);
+                gsm.setState(StateType.LEVEL1);
                 break;
             case 1:
                 // Options

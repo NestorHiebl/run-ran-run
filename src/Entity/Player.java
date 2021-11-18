@@ -1,5 +1,6 @@
 package Entity;
 
+import GameState.GameStateManager;
 import TileMap.TileMap;
 
 import javax.imageio.ImageIO;
@@ -33,8 +34,8 @@ public class Player extends Entity {
     private HashMap<EntityState, BufferedImage[]> sprites;
 
 
-    public Player(TileMap tm) {
-        super(tm);
+    public Player(TileMap tm, GameStateManager gsm) {
+        super(tm, gsm);
         width = 30;
         height = 30;
 
@@ -67,7 +68,8 @@ public class Player extends Entity {
                 EntityState.JUMPING, 1,
                 EntityState.FALLING, 1,
                 EntityState.FLINCHING, 3,
-                EntityState.PARRYING, 2);
+                EntityState.PARRYING, 2,
+                EntityState.DEAD, 1); /* TODO: Update sprites and set actual frame amount of the dying animation */
 
         // Load the player sprites
         try {
@@ -108,7 +110,12 @@ public class Player extends Entity {
         // Update position
         getNextPosition();
         checkTileMapCollision();
-        setPosition(xTemp, yTemp);
+        try {
+            setPosition(xTemp, yTemp);
+        } catch (LethalDamageException e) {
+            this.kill();
+        }
+
 
         // Set animation
 
@@ -268,5 +275,13 @@ public class Player extends Entity {
             }
 
         }
+    }
+
+    /**
+     * Dying currently only reloads the level
+     */
+    void kill() {
+        this.currentAction = EntityState.DEAD;
+        this.gsm.reloadCurrentState();
     }
 }
