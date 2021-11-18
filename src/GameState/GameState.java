@@ -1,7 +1,19 @@
 package GameState;
 
 public abstract class GameState {
-    protected GameStateManager gsm;
+    final protected GameStateManager gsm;
+
+    final protected StateType stateType;
+
+    /**
+     * Permanently set the game state type and the game state manager for this state.
+     * @param stateType The type of game state.
+     * @param gsm The game state manager.
+     */
+    public GameState(StateType stateType, GameStateManager gsm) {
+        this.stateType = stateType;
+        this.gsm = gsm;
+    }
 
     /**
      * Executed once, when the state is constructed.

@@ -14,7 +14,8 @@ public class Level1State extends GameState{
     private Player player;
 
     public Level1State(GameStateManager gsm) {
-        this.gsm = gsm;
+        /* Send the game state type and manager to the parent class so they can be marked as final */
+        super(StateType.LEVEL1, gsm);
         init();
     }
 

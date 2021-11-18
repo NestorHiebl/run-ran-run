@@ -5,7 +5,7 @@ import java.awt.*;
 public class OptionsState extends GameState{
 
     public OptionsState(GameStateManager gsm) {
-        this.gsm = gsm;
+        super(StateType.OPTIONS, gsm);
         init();
     }
 

@@ -24,7 +24,8 @@ public class MenuState extends GameState{
     private FontRenderContext frc;
 
     public MenuState(GameStateManager gsm) {
-        this.gsm = gsm;
+        /* Send the game state type and manager to the parent class so they can be marked as final */
+        super(StateType.MAINMENU, gsm);
         init();
     }
 

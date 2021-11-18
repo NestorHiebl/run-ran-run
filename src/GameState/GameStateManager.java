@@ -6,7 +6,26 @@ public class GameStateManager {
     private HashMap<StateType, GameState> gameStates;
     private StateType currentState;
 
-    public GameStateManager() {
+    GameStateManager self;
+
+    public static class GameStateManagerBuilder {
+
+        GameStateManager gsm;
+
+        public GameStateManagerBuilder() {
+            this.gsm = null;
+        }
+
+        public GameStateManager getGsm() {
+            if (this.gsm == null) {
+                this.gsm = new GameStateManager(this);
+            }
+
+            return this.gsm;
+        }
+    }
+
+    private GameStateManager(GameStateManagerBuilder gsmB) {
         gameStates = new HashMap <StateType, GameState>();
 
         currentState = StateType.MAINMENU;

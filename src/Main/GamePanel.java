@@ -53,7 +53,8 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
         g = (Graphics2D) image.getGraphics();
         running = true;
 
-        gsm = new GameStateManager();
+        GameStateManager.GameStateManagerBuilder builder = new GameStateManager.GameStateManagerBuilder();
+        gsm = builder.getGsm();
     }
 
     public void run() {
