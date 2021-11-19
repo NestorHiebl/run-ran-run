@@ -37,7 +37,7 @@ public class Level1State extends GameState{
         // Load and place player entity
         player = new Player(tileMap, gsm);
         try {
-            player.setPosition(100, 100);
+            player.setPosition(3100, 195);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,9 +111,6 @@ public class Level1State extends GameState{
                 break;
             case KeyEvent.VK_DOWN:
                 player.setDown(false);
-                break;
-            case KeyEvent.VK_A:
-                player.setJumping(false);
                 break;
         }
     }

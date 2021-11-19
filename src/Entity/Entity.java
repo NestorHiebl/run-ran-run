@@ -53,6 +53,7 @@ public abstract class Entity {
     protected boolean down;
     protected boolean jumping;
     protected boolean falling;
+    protected boolean fastFalling;
 
     // Movement attributes
     protected double moveSpeed;
@@ -60,6 +61,7 @@ public abstract class Entity {
     protected double stopSpeed;
     protected double fallSpeed;
     protected double maxFallSpeed;
+    protected double fastFallSpeed;
     protected double jumpStart;
     protected double stopJumpSpeed;
 
@@ -123,6 +125,7 @@ public abstract class Entity {
             if (bottomLeft || bottomRight) { /* Stop moving once landed */
                 dy = 0;
                 falling = false;
+                fastFalling = false;
                 // Bracket order matters, kids!
                 yTemp = ((currRow + 1) * tileSize) - (collisionHeight / 2.0);
             }else { /* Otherwise keep falling */

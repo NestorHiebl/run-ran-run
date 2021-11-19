@@ -30,6 +30,7 @@ public class Player extends Entity {
     private boolean flinching;
     private long flinchTime;
 
+
     // Animation hash table
     private HashMap<EntityState, BufferedImage[]> sprites;
 
@@ -48,7 +49,7 @@ public class Player extends Entity {
         stopSpeed = 0.4;
         fallSpeed = 0.15;
         maxFallSpeed = 4.0;
-        jumpStart = -4.8;
+        jumpStart = -5.2;
         stopJumpSpeed = 0.3;
         facingRight = true;
 
@@ -58,6 +59,10 @@ public class Player extends Entity {
         parryActive = false;
         parryCoolDown = false;
         parryCounter = 0;
+
+        // Fastfall setup
+        fastFalling = false;
+        fastFallSpeed = 8.0;
 
         health = maxHealth = 4;
 
@@ -255,8 +260,16 @@ public class Player extends Entity {
             }
         }
 
+        // Fastfalling
+        if (fastFalling) {
+            jumping = false;
+            falling = false;
+            dy = fastFallSpeed;
+        }
+
         // Jumping
         if (jumping && !falling) {
+            jumping = false;
             dy = jumpStart;
             falling = true;
         }
@@ -265,9 +278,11 @@ public class Player extends Entity {
         if (falling) {
             dy += fallSpeed;
 
-            if (dy > 0) {
-                /* Exit jumping state once upwards acceleration is used up */
+            if (jumping) {
+                /* Jump input vector is active, initiate fast-fall */
                 jumping = false;
+                falling = false;
+                fastFalling = true;
             }
 
             if (dy > maxFallSpeed) {
