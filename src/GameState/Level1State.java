@@ -37,7 +37,7 @@ public class Level1State extends GameState{
         // Load and place player entity
         player = new Player(tileMap, gsm);
         try {
-            player.setPosition(3100, 195);
+            player.setPosition(100, 195);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class Level1State extends GameState{
         tileMap.setPosition(0, 0);
 
         try {
-            player.setPosition(100, 100);
+            player.setPosition(100, 195);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,9 +76,6 @@ public class Level1State extends GameState{
     @Override
     public void keyPressed(int k) {
         switch (k) {
-            case KeyEvent.VK_LEFT:
-                player.setLeft(true);
-                break;
             case KeyEvent.VK_RIGHT:
                 player.setRight(true);
                 break;
@@ -89,7 +86,7 @@ public class Level1State extends GameState{
                 player.setDown(true);
                 break;
             case KeyEvent.VK_A:
-                player.setJumping(true);
+                player.setJumping();
                 break;
             case KeyEvent.VK_S:
                 player.setParrying();
@@ -100,9 +97,6 @@ public class Level1State extends GameState{
     @Override
     public void keyReleased(int k) {
         switch (k) {
-            case KeyEvent.VK_LEFT:
-                player.setLeft(false);
-                break;
             case KeyEvent.VK_RIGHT:
                 player.setRight(false);
                 break;

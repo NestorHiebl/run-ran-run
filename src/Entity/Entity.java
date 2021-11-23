@@ -84,7 +84,7 @@ public abstract class Entity {
     }
 
     public void calculateCorners(double x, double y) {
-        // Get surrounding tile indices
+        // Get surrounding tile indices based on an entities x and y coordinates
         int leftTileXIndex = (int) (x - collisionWidth / 2) / tileSize;
         int rightTileXIndex = (int) (x + (collisionWidth / 2) - 1) / tileSize;
         int topTileYIndex = (int) (y - collisionHeight / 2) / tileSize;
@@ -126,6 +126,7 @@ public abstract class Entity {
                 dy = 0;
                 falling = false;
                 fastFalling = false;
+                jumping = false;
                 // Bracket order matters, kids!
                 yTemp = ((currRow + 1) * tileSize) - (collisionHeight / 2.0);
             }else { /* Otherwise keep falling */
@@ -195,7 +196,7 @@ public abstract class Entity {
     public void setRight(boolean b) { this.right = b; }
     public void setUp(boolean b) { this.up = b; }
     public void setDown(boolean b) { this.down = b; }
-    public void setJumping(boolean b) { this.jumping = b; }
+    public void setJumping() { this.jumping = true; }
 
     /**
      * Check in an Entity is within the screen bounds. If not, there is no need to render it.

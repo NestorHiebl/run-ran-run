@@ -4,16 +4,20 @@ import java.util.HashMap;
 
 public class GameStateManager {
     private HashMap<StateType, GameState> gameStates;
+    private StateType previousState;
     private StateType currentState;
-
-    GameStateManager self;
 
     public static class GameStateManagerBuilder {
 
         GameStateManager gsm;
+        private static boolean instantiated = false;
 
         public GameStateManagerBuilder() {
+            if (instantiated) {
+                throw new ExceptionInInitializerError("Only one instance of GameStateManager(Builder) may exist.");
+            }
             this.gsm = null;
+            instantiated = true;
         }
 
         public GameStateManager getGsm() {
@@ -37,6 +41,7 @@ public class GameStateManager {
     }
 
     public void setState(StateType state) {
+        previousState = currentState;
         currentState = state;
     }
 
