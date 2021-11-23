@@ -153,7 +153,7 @@ public class Player extends Entity {
                     animation.setFrames(sprites.get(EntityState.FALLING));
                     animation.setDelay(-1); /* The falling animation only has one sprite */
                 }
-            } else if (dx < 0) /* Going up */ {
+            } else if (dy < 0) /* Going up */ {
                 if (currentAction != EntityState.JUMPING) {
                     currentAction = EntityState.JUMPING;
                     animation.setFrames(sprites.get(EntityState.JUMPING));
@@ -231,6 +231,7 @@ public class Player extends Entity {
             );
         }
 
+        resetInputVector();
     }
 
     private void getNextPosition() {
@@ -288,7 +289,6 @@ public class Player extends Entity {
             if (dy > maxFallSpeed) {
                 dy = maxFallSpeed;
             }
-
         }
     }
 
@@ -297,7 +297,19 @@ public class Player extends Entity {
      */
     void kill() {
         this.currentAction = EntityState.DEAD;
-        
+
+        /* Reset parry state */
+        this.parryActive = false;
+        this.parryCounter = 0;
+        this.parryCoolDown = false;
+
+        /* TODO: After the death animation has been added, trigger the state reload when the animation has played once */
+
         this.gsm.reloadCurrentState();
+    }
+
+    private void resetInputVector() {
+        this.jumping = false;
+        this.parrying = false;
     }
 }

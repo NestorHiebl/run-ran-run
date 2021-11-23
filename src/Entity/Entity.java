@@ -152,7 +152,7 @@ public abstract class Entity {
             }
         }
 
-        if (!falling) /* Walked off a cliff */ {
+        if (!falling && !fastFalling) /* Walked off a cliff */ {
             calculateCorners(x, yDest + 1);
             if (!bottomLeft && !bottomRight) {
                 falling = true;
