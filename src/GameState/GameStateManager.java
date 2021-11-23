@@ -1,36 +1,51 @@
 package GameState;
+import Main.GamePanel;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameStateManager {
+    private Graphics2D g;
+
     private HashMap<StateType, GameState> gameStates;
     private StateType previousState;
     private StateType currentState;
 
+    private boolean transitioning;
+    private int transitionCounter;
+    private final static int transitionLength = 40;
+
     public static class GameStateManagerBuilder {
 
         GameStateManager gsm;
+        Graphics2D g;
         private static boolean instantiated = false;
 
-        public GameStateManagerBuilder() {
+        public GameStateManagerBuilder(Graphics2D g) {
             if (instantiated) {
                 throw new ExceptionInInitializerError("Only one instance of GameStateManager(Builder) may exist.");
             }
             this.gsm = null;
+            this.g = g;
             instantiated = true;
         }
 
         public GameStateManager getGsm() {
             if (this.gsm == null) {
-                this.gsm = new GameStateManager(this);
+                this.gsm = new GameStateManager(this, g);
             }
 
             return this.gsm;
         }
     }
 
-    private GameStateManager(GameStateManagerBuilder gsmB) {
+    private GameStateManager(GameStateManagerBuilder gsmB, Graphics2D g) {
+        this.g = g;
         gameStates = new HashMap <StateType, GameState>();
+
+        transitioning = false;
+        transitionCounter = 0;
 
         currentState = StateType.MAINMENU;
         // Currently, all levels are loaded into memory as soon as the game state manager is constructed.
@@ -43,27 +58,72 @@ public class GameStateManager {
     public void setState(StateType state) {
         previousState = currentState;
         currentState = state;
+        transitionState();
     }
 
     public void reloadCurrentState() {
         this.gameStates.get(this.currentState).reload();
+        transitionState();
     }
 
+    /**
+     * Update the current game state if not currently in a transition. Also handles exiting the transition state.
+     */
     public void update() {
-        gameStates.get(currentState).update();
+        if (!transitioning) {
+            gameStates.get(currentState).update();
+        } else {
+            if (transitionCounter > transitionLength) {
+                transitioning = false;
+                transitionCounter = 0;
+            }
+        }
     }
 
+    /**
+     * Draw the current game state. Also handles transition graphics, as well as incrementing the transition state.
+     * @param g The game's Graphics2D object.
+     */
     public void draw(java.awt.Graphics2D g) {
-        gameStates.get(currentState).draw(g);
+        if (transitioning) {
+            if (transitionCounter < transitionLength / 2) {
+                /* We're in the first half of the transition */
+                g.setColor(Color.BLACK);
+
+                /* Draw a new vertical bar every for frame until the screen is filled */
+                int rectX = (GamePanel.WIDTH / (transitionLength / 2)) * transitionCounter;
+                g.fillRect(rectX, 0, GamePanel.WIDTH / (transitionLength / 2), GamePanel.HEIGHT);
+
+            } else if (transitionCounter < transitionLength) {
+                /* Second stage of the transition */
+                /* Draw the first frame of the new state under the transition animation */
+                gameStates.get(currentState).draw(g);
+
+                /* Cover the screen with a black rectangle that shrinks left-to-right until the image is fully visible */
+                int rectX = GamePanel.WIDTH / (transitionLength / 2) * (transitionCounter - (transitionLength / 2));
+                g.fillRect(rectX, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+            }
+            transitionCounter++;
+        } else {
+            gameStates.get(currentState).draw(g);
+        }
+
     }
 
     // Key events are propagated down from the GamePanel class
     public void keyPressed(int k) {
-        gameStates.get(currentState).keyPressed(k);
+        if (!transitioning) {
+            gameStates.get(currentState).keyPressed(k);
+        }
     }
 
     // Key events are propagated down from the GamePanel class
     public void keyReleased(int k) {
         gameStates.get(currentState).keyReleased(k);
+    }
+
+    private void transitionState() {
+        this.transitioning = true;
+        this.transitionCounter = 0;
     }
 }

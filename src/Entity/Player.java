@@ -297,6 +297,7 @@ public class Player extends Entity {
      */
     void kill() {
         this.currentAction = EntityState.DEAD;
+        
         this.gsm.reloadCurrentState();
     }
 }
