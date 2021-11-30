@@ -45,6 +45,7 @@ public abstract class Entity {
     protected EntityState currentAction;
     protected int previousAction;
     protected boolean facingRight;
+    protected boolean transparent;
 
     // Movement
     protected boolean left;
@@ -70,6 +71,7 @@ public abstract class Entity {
         this.tileMap = tm;
         tileSize = tm.getTileSize();
         this.gsm = gsm;
+        this.transparent = false;
     }
 
     public boolean intersects(Entity o) {
@@ -160,12 +162,13 @@ public abstract class Entity {
         }
     }
 
-    public int getX() { return (int) x; }
-    public int getY() { return (int) y; }
+    public double getX() { return x; }
+    public double getY() { return y; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
     public int getCollisionWidth() { return collisionWidth; }
     public int getCollisionHeight() { return collisionHeight; }
+    public boolean getTransparent() { return transparent; }
 
     public void setPosition(double x, double y) throws LethalDamageException{
         if (y > tileMap.getHeight()) {

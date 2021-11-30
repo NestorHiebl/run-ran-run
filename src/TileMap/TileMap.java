@@ -147,16 +147,26 @@ public class TileMap {
         this.tween = tween;
     }
 
+    /**
+     * Sets the map position. Is called in the update section of the GameState containing the tilemap.
+     * @param x The new x of the tilemap.
+     * @param y The new y of the tilemap.
+     */
     public void setPosition(double x, double y) {
+        /* Handles the map tween */
         this.x += (x - this.x) * tween;
         this.y += (y - this.y) * tween;
 
         fixBounds();
 
+        /* Calculate column and row offest */
         colOffset = (int) - this.x / tileSize;
         rowOffset = (int) - this.y / tileSize;
     }
 
+    /**
+     * Make sure the camera does not not exceed the predefined minimum and maximum x and y values.
+     */
     private void fixBounds() {
         if (x < xmin) x = xmin;
         if (x > xmax) x = xmax;
@@ -183,15 +193,15 @@ public class TileMap {
                 // If the first tile in the tileset is encountered, skip it
                 if (map[row][col] == 0) continue;
 
-                int rc = map[row][col];
+                long rc = map[row][col];
                 // Get tile y index in tileset
-                int r = rc / numTilesAcross;
+                long r = rc / numTilesAcross;
                 // Get tile x index in tileset
-                int c = rc % numTilesAcross;
+                long c = rc % numTilesAcross;
 
                 g.drawImage(
                         // Resolve tile indices in tileset and load corresponding image
-                        tiles[r][c].getImage(),
+                        tiles[(int)r][(int)c].getImage(),
                         (int) x + col * tileSize,
                         (int) y + row * tileSize,
                         null

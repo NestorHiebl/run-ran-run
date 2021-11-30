@@ -47,7 +47,9 @@ public class Level1State extends GameState{
     public void update() {
         background.update();
         player.update();
-        tileMap.setPosition((double) (GamePanel.WIDTH / 2) - player.getX(), (double) (GamePanel.HEIGHT / 2) - player.getY());
+        double newMapX = (GamePanel.WIDTH / 2) - player.getX();
+        double newMapY = (GamePanel.WIDTH / 2) - player.getY();
+        tileMap.setPosition(newMapX, newMapY);
     }
 
     @Override
@@ -59,7 +61,14 @@ public class Level1State extends GameState{
         tileMap.draw(g);
 
         // Draw player
-        player.draw(g);
+        if (player.getTransparent()) {
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+            player.draw(g);
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+        } else {
+            player.draw(g);
+        }
+
     }
 
     @Override
@@ -73,6 +82,7 @@ public class Level1State extends GameState{
         }
     }
 
+    /* TODO: forward key events to Player class */
     @Override
     public void keyPressed(int k) {
         switch (k) {

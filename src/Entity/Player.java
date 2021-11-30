@@ -28,7 +28,7 @@ public class Player extends Entity {
 
     // Flinching state regulation
     private boolean flinching;
-    private long flinchTime;
+    private long flinchTimer;
 
 
     // Animation hash table
@@ -231,7 +231,6 @@ public class Player extends Entity {
             );
         }
 
-        resetInputVector();
     }
 
     private void getNextPosition() {
@@ -311,5 +310,13 @@ public class Player extends Entity {
     private void resetInputVector() {
         this.jumping = false;
         this.parrying = false;
+    }
+
+    public void keyPressed(int k) {
+
+    }
+
+    public void keyReleased(int k) {
+
     }
 }
