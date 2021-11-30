@@ -47,7 +47,8 @@ public class Level1State extends GameState{
     public void update() {
         background.update();
         player.update();
-        double newMapX = (GamePanel.WIDTH / 2) - player.getX();
+        /* Center the player on the back third of the screen to provide more reaction time */
+        double newMapX = (GamePanel.WIDTH / 3) - player.getX();
         double newMapY = (GamePanel.WIDTH / 2) - player.getY();
         tileMap.setPosition(newMapX, newMapY);
     }
