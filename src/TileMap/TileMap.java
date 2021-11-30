@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Vector;
 
 public class TileMap {
 
@@ -18,6 +19,8 @@ public class TileMap {
     private double tween;
 
     // Map
+    private Vector<int[]> mapStructure;
+    /* Will be replaced by the mapStructure */
     private int[][] map;
     private final int tileSize;
     private int numRows, numCols;
@@ -25,8 +28,10 @@ public class TileMap {
 
     /***** Tileset *****/
     private BufferedImage tileset;
-    // Width of the tileset
+    /* Width of the tileset */
     private int numTilesAcross;
+    /* Game height in tiles. Is 8 with a pixel height of 240 and tile size of 30 */
+    private final int numTilesVertical;
     private Tile[][] tiles;
 
     // Drawing
@@ -39,6 +44,7 @@ public class TileMap {
         numRowsToRender = GamePanel.HEIGHT / tileSize + 2;
         numColsToRender = GamePanel.WIDTH / tileSize + 2;
         tween = 0.07;
+        numTilesVertical = GamePanel.HEIGHT / tileSize;
     }
 
     public void loadTiles(String s) {

@@ -22,6 +22,7 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
     public static final int WIDTH = 600;
     public static final int HEIGHT = 240;
     public static final int SCALE = 2;
+    public static final int TILESIZE = 30;
 
     // Game thread
     private Thread thread;
