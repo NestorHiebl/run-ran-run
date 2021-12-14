@@ -14,8 +14,8 @@ import java.util.Vector;
  * they'd look as a map chunk, swap the rows and columns.
  */
 public enum TileConfigurations {
-    DEFAULT(),
-    LEDGE();
+    DEFAULT("Resources/Maps/tileConfigDefault.map", true),
+    LEDGE("Resources/Maps/tileConfigLedge.map", false);
 
     private int configLength;
     private final int configHeight;
@@ -35,36 +35,16 @@ public enum TileConfigurations {
     }
 
     /**
-     * Enum constructor that branches and calls a different config file loader for each enum element.
+     * Enum constructor that reads the specified map config file and converts it into a vector.
      */
-    TileConfigurations() {
+    TileConfigurations(String mapFileLocator, boolean extendable) {
         configHeight = GamePanel.HEIGHT / GamePanel.TILESIZE;
 
         configuration = new Vector<>();
-        switch (this) {
-            case DEFAULT:
-                loadDefaultConfig(this.configuration);
-                break;
-            case LEDGE:
-                loadLedgeConfig(this.configuration);
-                break;
-            default:
-                /* This should never happen */
-                loadDefaultConfig(this.configuration);
-                throw new IllegalStateException("Non-existent enum state passed to constructor");
-        }
-    }
 
-    private void loadDefaultConfig(Vector<int[]> config) {
-        loadMapFile("Resources/Maps/tileConfigDefault.map", config);
+        loadMapFile(mapFileLocator, configuration);
         this.configLength = this.configuration.size();
-        this.extendable = true;
-    }
-
-    private void loadLedgeConfig(Vector<int[]> config) {
-        loadMapFile("Resources/Maps/tileConfigLedge.map", config);
-        this.configLength = this.configuration.size();
-        this.extendable = false;
+        this.extendable = extendable;
     }
 
     private void loadMapFile(String s, Vector<int[]> config) {
@@ -83,6 +63,7 @@ public enum TileConfigurations {
 
                 /* An array containing a single map column, the elements have to be converted to integers before being
                 * added to the config vector */
+
                 String[] tokens = line.split(delims);
                 if (tokens.length != configHeight) throw new IllegalArgumentException("Invalid number of rows in map file");
 

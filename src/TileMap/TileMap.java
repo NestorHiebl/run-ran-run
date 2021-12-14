@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Vector;
+import java.util.concurrent.Semaphore;
 
 public class TileMap {
 
@@ -39,6 +40,9 @@ public class TileMap {
     private int rowOffset, colOffset;
     private int numRowsToRender, numColsToRender;
 
+    /* Map builder and concurrency resources */
+    private MapBuilder builder;
+    private Semaphore mapStructureAvailable;
 
     public TileMap(int tileSize) {
         this.tileSize = tileSize;
@@ -46,6 +50,15 @@ public class TileMap {
         numColsToRender = GamePanel.WIDTH / tileSize + 2;
         tween = 0.07;
         numTilesVertical = GamePanel.HEIGHT / tileSize;
+
+        this.mapStructure = new Vector<>();
+
+        this.mapStructureAvailable = new Semaphore(1);
+
+        this.builder = new MapBuilder(this, mapStructureAvailable);
+        /* Run the builder a set number of times until there is enough initial map to go on */
+        builder.setWorkLoad(30);
+        builder.run();
     }
 
     public void loadTiles(String s) {
@@ -134,7 +147,8 @@ public class TileMap {
 
     /**
      * Get the tile type at a specific pair of coordinates. Mostly useful for collision checking.
-     * Out-of-bounds indices will always return a passable value.
+     * Out-of-bounds indices will always return a passable value. This function reads from the protected MapStructure
+     * Vector, and is called as part of the player update function. TODO: Add protection
      * @param row The tile row.
      * @param col The tile column.
      * @return The type of tile at (row, col).
@@ -149,6 +163,8 @@ public class TileMap {
         int clmn = rc % numTilesAcross;
         return tiles[rw][clmn].getType();
     }
+
+    protected Semaphore getMapStructureAvailable() { return this.mapStructureAvailable; }
 
     public void setTween(double tween) {
         this.tween = tween;
@@ -185,11 +201,16 @@ public class TileMap {
      * This update method checks the map bounds and forks off a new thread to extend the map vector if necessary.
      */
     public void update() {
-        if (colOffset > (mapStructure.size() - 10)) {
+        /* If the column offset is such that there are less than 10 columns available off the right side of the screen */
+        if (colOffset > (mapStructure.size() - ((GamePanel.WIDTH / GamePanel.TILESIZE) + 10))) {
 
         }
     }
 
+    /**
+     * Draw the tilemap. Reads from the protected MapStructure Vector. TODO: Add protection
+     * @param g The Graphics2D object to draw into.
+     */
     public void draw(Graphics2D g) {
         // Loop through every visible row
         for (
@@ -227,7 +248,7 @@ public class TileMap {
     }
 
     /**
-     *
+     * TODO:
      * @param config
      */
     protected synchronized void appendTileConfig(TileConfigurations config) {
@@ -236,4 +257,19 @@ public class TileMap {
         }
     }
 
+    /**
+     * TODO: The return value of this function will be used inside the GSM to enter a loading state until the level
+     * structure has been extended. What is the best way to code this?
+     * @return
+     */
+    public boolean isLoading() {
+        if (mapStructureAvailable.availablePermits() == 0) {
+            /* The map is currently being updated */
+            if (colOffset > (mapStructure.size() - ((GamePanel.WIDTH / GamePanel.TILESIZE) + 2))) {
+                /* There are only two blocks available off the right side of the screen */
+                return true;
+            }
+        }
+        return false;
+    }
 }
