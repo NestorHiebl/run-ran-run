@@ -34,59 +34,40 @@ public enum TileConfigurations {
         return this.configLength;
     }
 
+    /**
+     * Enum constructor that branches and calls a different config file loader for each enum element.
+     */
     TileConfigurations() {
         configHeight = GamePanel.HEIGHT / GamePanel.TILESIZE;
 
         configuration = new Vector<>();
         switch (this) {
             case DEFAULT:
-                loadDefaultConfig();
+                loadDefaultConfig(this.configuration);
                 break;
             case LEDGE:
-                loadLedgeConfig();
+                loadLedgeConfig(this.configuration);
                 break;
             default:
                 /* This should never happen */
-                loadDefaultConfig();
+                loadDefaultConfig(this.configuration);
                 throw new IllegalStateException("Non-existent enum state passed to constructor");
         }
     }
 
-    private void loadDefaultConfig() {
-        loadMapFile("Resources/Maps/tileConfigLedge.map");
-        this.configLength = configuration.size();
+    private void loadDefaultConfig(Vector<int[]> config) {
+        loadMapFile("Resources/Maps/tileConfigDefault.map", config);
+        this.configLength = this.configuration.size();
         this.extendable = true;
     }
 
-    private void loadLedgeConfig() {
-        this.configuration.addElement(new int[] {0,  0,  0,  0,  0,  0,  0, 21});
-        this.configuration.addElement(new int[] {0,  0,  0,  0,  0,  0,  0, 21});
-        this.configuration.addElement(new int[] {0,  0,  0,  0,  0,  0, 21, 21});
-        this.configuration.addElement(new int[] {0,  0,  0,  0,  0,  0, 21, 21});
-        this.configuration.addElement(new int[] {0,  0,  0,  0,  0,  0, 21, 21});
-        this.configuration.addElement(new int[] {0,  0,  0,  0,  0, 21, 21, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
-        this.configuration.addElement(new int[] {0, 0, 0, 0, 0, 0, 0, 21});
+    private void loadLedgeConfig(Vector<int[]> config) {
+        loadMapFile("Resources/Maps/tileConfigLedge.map", config);
+        this.configLength = this.configuration.size();
         this.extendable = false;
     }
 
-    private void loadMapFile(String s) {
+    private void loadMapFile(String s, Vector<int[]> config) {
         try (BufferedReader br = new BufferedReader(new FileReader(s))) {
 
             // Read map file
@@ -112,7 +93,7 @@ public enum TileConfigurations {
                 }
 
                 /* Add the integer array, representing the column, into the config vector */
-                this.configuration.addElement(column);
+                config.addElement(column);
             }
         } catch (Exception e) {
             e.printStackTrace();

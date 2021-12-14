@@ -20,6 +20,7 @@ public class TileMap {
 
     // Map
     private Vector<int[]> mapStructure;
+
     /* Will be replaced by the mapStructure */
     private int[][] map;
     private final int tileSize;
@@ -180,6 +181,15 @@ public class TileMap {
         if (y > ymax) y = ymax;
     }
 
+    /**
+     * This update method checks the map bounds and forks off a new thread to extend the map vector if necessary.
+     */
+    public void update() {
+        if (colOffset > (mapStructure.size() - 10)) {
+
+        }
+    }
+
     public void draw(Graphics2D g) {
         // Loop through every visible row
         for (
@@ -213,6 +223,16 @@ public class TileMap {
                         null
                 );
             }
+        }
+    }
+
+    /**
+     *
+     * @param config
+     */
+    protected synchronized void appendTileConfig(TileConfigurations config) {
+        for (int[] col: config.getConfiguration()) {
+            this.mapStructure.addElement(col);
         }
     }
 
