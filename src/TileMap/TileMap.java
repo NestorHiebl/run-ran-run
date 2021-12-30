@@ -34,6 +34,7 @@ public class TileMap {
     private int numTilesAcross;
     /* Game height in tiles. Is 8 with a pixel height of 240 and tile size of 30 */
     private final int numTilesVertical;
+    /* 2D array containing available tile properties */
     private Tile[][] tiles;
 
     // Drawing
@@ -58,8 +59,19 @@ public class TileMap {
         this.builder = new MapBuilder(this, mapStructureAvailable);
         /* Run the builder a set number of times until there is enough initial map to go on */
         this.appendTileConfig(TileConfigurations.DEFAULT);
-        builder.setWorkLoad(30);
+        builder.setWorkLoad(10);
         builder.run();
+
+        numCols = mapStructure.size();
+        numRows = numTilesVertical;
+
+        width = numCols * tileSize;
+        height = numRows * tileSize;
+
+        xmin = GamePanel.WIDTH - width;
+        xmax = 0;
+        ymin = GamePanel.HEIGHT - height;
+        ymax = 0;
     }
 
     public void loadTiles(String s) {
@@ -88,38 +100,6 @@ public class TileMap {
                         /* Subimage dimensions */
                         tileSize, tileSize);
                 tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loadMap(String s) {
-        try (BufferedReader br = new BufferedReader(new FileReader(s))) {
-
-            // Read map file - the following file structure is arbitrary and will change
-            numCols = Integer.parseInt(br.readLine()); // Line 1 holds the number of columns
-            numRows = Integer.parseInt(br.readLine()); // Line 2 holds the number of rows
-            System.out.printf("%d cols and %d rows found in %s\n", numCols, numRows, s);
-
-            map = new int[numRows][numCols];
-            width = numCols * tileSize;
-            height = numRows * tileSize;
-
-            xmin = GamePanel.WIDTH - width;
-            xmax = 0;
-            ymin = GamePanel.HEIGHT - height;
-            ymax = 0;
-
-            String delims = "\\s+";
-            for (int row = 0; row < numRows; row++) {
-                String line = br.readLine();
-                String[] tokens = line.split(delims);
-                for (int col = 0; col < numCols; col++) {
-                    map[row][col] = Integer.parseInt(tokens[col]);
-                    System.out.printf("%2d ", map[row][col]);
-                }
-                System.out.println("");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,7 +139,8 @@ public class TileMap {
             /* Space outside of the map is always passable */
             return Tile.PASSABLE;
         }
-        int rc = map[row][col];
+
+        int rc = mapStructure.get(col)[row];
         int rw = rc / numTilesAcross;
         int clmn = rc % numTilesAcross;
         return tiles[rw][clmn].getType();
@@ -230,13 +211,13 @@ public class TileMap {
                 if (col >= numCols) break;
 
                 // If the first tile in the tileset is encountered, skip it
-                if (map[row][col] == 0) continue;
+                int tileToRender = mapStructure.get(col)[row];
+                if (tileToRender == 0) continue;
 
-                long rc = map[row][col];
                 // Get tile y index in tileset
-                long r = rc / numTilesAcross;
+                long r = tileToRender / numTilesAcross;
                 // Get tile x index in tileset
-                long c = rc % numTilesAcross;
+                long c = tileToRender % numTilesAcross;
 
                 g.drawImage(
                         // Resolve tile indices in tileset and load corresponding image
@@ -257,6 +238,9 @@ public class TileMap {
         for (int[] col: config.getConfiguration()) {
             this.mapStructure.addElement(col);
         }
+        numCols = mapStructure.size();
+        width = numCols * tileSize;
+        xmin = GamePanel.WIDTH - width;
     }
 
     /**

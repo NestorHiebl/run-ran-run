@@ -26,11 +26,10 @@ public class Level1State extends GameState{
         background.setVector(0.05, 0);
 
         // Load level tile map
-        tileMap = new TileMap(30);
+        tileMap = new TileMap(30); /* The TileMap constructor already creates a tile structure */
         tileMap.loadTiles("Resources/Tilesets/basetileset.gif");
 
         // Load level structure
-        tileMap.loadMap("Resources/Maps/level1-1.map");
         tileMap.setPosition(0, 0);
         tileMap.setTween(1.0);
 
@@ -47,6 +46,7 @@ public class Level1State extends GameState{
     public void update() {
         background.update();
         player.update();
+        tileMap.update();
         /* Center the player on the back third of the screen to provide more reaction time */
         double newMapX = (GamePanel.WIDTH / 3) - player.getX();
         double newMapY = (GamePanel.WIDTH / 2) - player.getY();
