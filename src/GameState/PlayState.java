@@ -1,5 +1,6 @@
 package GameState;
 
+import Audio.AudioPlayer;
 import Entity.Player;
 import Main.GamePanel;
 import TileMap.*;
@@ -12,6 +13,7 @@ public class PlayState extends GameState{
     private TileMap tileMap;
     private Background background;
     private Player player;
+    private AudioPlayer audioPlayer;
 
     public PlayState(GameStateManager gsm) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
@@ -40,6 +42,10 @@ public class PlayState extends GameState{
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        /* Load BGM */
+        audioPlayer = new AudioPlayer("Resources/Sound/Music/Shutter2.wav");
+        audioPlayer.play();
     }
 
     @Override
@@ -87,15 +93,6 @@ public class PlayState extends GameState{
     @Override
     public void keyPressed(int k) {
         switch (k) {
-            case KeyEvent.VK_RIGHT:
-                player.setRight(true);
-                break;
-            case KeyEvent.VK_UP:
-                player.setUp(true);
-                break;
-            case KeyEvent.VK_DOWN:
-                player.setDown(true);
-                break;
             case KeyEvent.VK_A:
                 player.setJumping();
                 break;
@@ -107,16 +104,6 @@ public class PlayState extends GameState{
 
     @Override
     public void keyReleased(int k) {
-        switch (k) {
-            case KeyEvent.VK_RIGHT:
-                player.setRight(false);
-                break;
-            case KeyEvent.VK_UP:
-                player.setUp(false);
-                break;
-            case KeyEvent.VK_DOWN:
-                player.setDown(false);
-                break;
-        }
+        /* Releasing a key doesn't make a difference for us */
     }
 }

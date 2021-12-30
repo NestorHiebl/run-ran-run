@@ -3,11 +3,12 @@ import Main.GamePanel;
 
 import java.awt.*;
 import java.util.HashMap;
+import javax.sound.sampled.*;
 
 public class GameStateManager {
-    private Graphics2D g;
+    private final Graphics2D g;
 
-    private HashMap<StateType, GameState> gameStates;
+    private final HashMap<StateType, GameState> gameStates;
     private StateType previousState;
     private StateType currentState;
 
@@ -93,14 +94,18 @@ public class GameStateManager {
 
     }
 
-    // Key events are propagated down from the GamePanel class
+    /**
+     * Key events are propagated down from the GamePanel class down to the concrete game state
+     */
     public void keyPressed(int k) {
         if (!transitioning) {
             gameStates.get(currentState).keyPressed(k);
         }
     }
 
-    // Key events are propagated down from the GamePanel class
+    /**
+     * Key events are propagated down from the GamePanel class down to the concrete game state
+     */
     public void keyReleased(int k) {
         gameStates.get(currentState).keyReleased(k);
     }
