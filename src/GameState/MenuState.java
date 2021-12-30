@@ -84,7 +84,7 @@ public class MenuState extends GameState{
         switch (currentChoice) {
             case 0:
                 // Start
-                gsm.setState(StateType.LEVEL1);
+                gsm.setState(StateType.PLAY);
                 break;
             case 1:
                 // Options

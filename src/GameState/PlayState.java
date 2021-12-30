@@ -7,15 +7,15 @@ import TileMap.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class Level1State extends GameState{
+public class PlayState extends GameState{
 
     private TileMap tileMap;
     private Background background;
     private Player player;
 
-    public Level1State(GameStateManager gsm) {
+    public PlayState(GameStateManager gsm) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
-        super(StateType.LEVEL1, gsm);
+        super(StateType.PLAY, gsm);
         init();
     }
 

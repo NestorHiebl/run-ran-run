@@ -58,7 +58,7 @@ public class TileMap {
 
         this.builder = new MapBuilder(this, mapStructureAvailable);
         /* Run the builder a set number of times until there is enough initial map to go on */
-        this.appendTileConfig(TileConfigurations.DEFAULT);
+        this.appendTileConfig(TileConfiguration.DEFAULT);
         builder.setWorkLoad(10);
         builder.run();
 
@@ -210,17 +210,19 @@ public class TileMap {
 
                 if (col >= numCols) break;
 
-                // If the first tile in the tileset is encountered, skip it
+                /* Resolve tile in map datastructure */
                 int tileToRender = mapStructure.get(col)[row];
+
+                /* If the first tile in the tileset is encountered, skip it */
                 if (tileToRender == 0) continue;
 
-                // Get tile y index in tileset
+                /* Get tile y index in tileset */
                 long r = tileToRender / numTilesAcross;
-                // Get tile x index in tileset
+                /* Get tile x index in tileset */
                 long c = tileToRender % numTilesAcross;
 
                 g.drawImage(
-                        // Resolve tile indices in tileset and load corresponding image
+                        /* Resolve tile indices in tileset and load corresponding image */
                         tiles[(int)r][(int)c].getImage(),
                         (int) x + col * tileSize,
                         (int) y + row * tileSize,
@@ -231,10 +233,10 @@ public class TileMap {
     }
 
     /**
-     * TODO:
-     * @param config
+     * Appends a tile configuration to the end of the map and updates all class variables that depend on map width.
+     * @param config The configuration to be appended,
      */
-    protected synchronized void appendTileConfig(TileConfigurations config) {
+    protected synchronized void appendTileConfig(TileConfiguration config) {
         for (int[] col: config.getConfiguration()) {
             this.mapStructure.addElement(col);
         }
@@ -245,7 +247,7 @@ public class TileMap {
 
     /**
      * TODO: The return value of this function will be used inside the GSM to enter a loading state until the level
-     * structure has been extended. What is the best way to code this?
+     * structure has been extended. May not be needed
      * @return
      */
     public boolean isLoading() {

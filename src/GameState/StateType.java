@@ -2,7 +2,7 @@ package GameState;
 
 public enum StateType {
     MAINMENU(),
-    LEVEL1(),
+    PLAY(),
     GAMEOVER(),
     OPTIONS();
 }

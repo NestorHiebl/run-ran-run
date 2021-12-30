@@ -41,9 +41,9 @@ public class MapBuilder implements Runnable{
         for (int i = 0; i < this.workLoad; i++) {
             /* Rudimentary add - one of two configs */
             if (RNG.nextBoolean()) {
-                tileMap.appendTileConfig(TileConfigurations.DEFAULT);
+                tileMap.appendTileConfig(TileConfiguration.DEFAULT);
             } else {
-                tileMap.appendTileConfig(TileConfigurations.LEDGE);
+                tileMap.appendTileConfig(TileConfiguration.LEDGE);
             }
         }
 

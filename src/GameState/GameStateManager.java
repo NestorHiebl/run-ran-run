@@ -2,7 +2,6 @@ package GameState;
 import Main.GamePanel;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameStateManager {
@@ -51,7 +50,7 @@ public class GameStateManager {
         // Currently, all levels are loaded into memory as soon as the game state manager is constructed.
         // This is not particularly efficient and might have to be changed at some point
         gameStates.put(StateType.MAINMENU, new MenuState(this));
-        gameStates.put(StateType.LEVEL1, new Level1State(this));
+        gameStates.put(StateType.PLAY, new PlayState(this));
 
     }
 

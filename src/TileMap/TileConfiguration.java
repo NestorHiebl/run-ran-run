@@ -13,7 +13,7 @@ import java.util.Vector;
  * thought of as transposed matrices containing the integer tile IDs of the configuration. To get a feeling for how
  * they'd look as a map chunk, swap the rows and columns.
  */
-public enum TileConfigurations {
+public enum TileConfiguration {
     DEFAULT("Resources/Maps/tileConfigDefault.map", true),
     LEDGE("Resources/Maps/tileConfigLedge.map", false);
 
@@ -37,7 +37,7 @@ public enum TileConfigurations {
     /**
      * Enum constructor that reads the specified map config file and converts it into a vector.
      */
-    TileConfigurations(String mapFileLocator, boolean extendable) {
+    TileConfiguration(String mapFileLocator, boolean extendable) {
         configHeight = GamePanel.HEIGHT / GamePanel.TILESIZE;
 
         configuration = new Vector<>();
