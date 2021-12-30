@@ -57,6 +57,7 @@ public class TileMap {
 
         this.builder = new MapBuilder(this, mapStructureAvailable);
         /* Run the builder a set number of times until there is enough initial map to go on */
+        this.appendTileConfig(TileConfigurations.DEFAULT);
         builder.setWorkLoad(30);
         builder.run();
     }
@@ -203,7 +204,8 @@ public class TileMap {
     public void update() {
         /* If the column offset is such that there are less than 10 columns available off the right side of the screen */
         if (colOffset > (mapStructure.size() - ((GamePanel.WIDTH / GamePanel.TILESIZE) + 10))) {
-
+            builder.setWorkLoad(10);
+            builder.run();
         }
     }
 
