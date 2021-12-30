@@ -11,10 +11,6 @@ public class Animation {
 
     private boolean playedOnce;
 
-    public Animation() {
-        playedOnce = false;
-    }
-
     public Animation(BufferedImage[] frames) {
         if (frames == null) {
             throw new IllegalArgumentException("Cannot create an animation with null frame array");

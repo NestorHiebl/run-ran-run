@@ -106,6 +106,10 @@ public class Player extends Entity {
     public int getMaxHealth() { return maxHealth; }
     public boolean isParrying() { return parryActive; }
 
+    public double getRelativeScreenXPosition() {
+        return x + xmap - (width / 2);
+    }
+
     /**
      * Turn on the parrying input vector. It will be unset automatically in the update function.
      */
@@ -235,18 +239,10 @@ public class Player extends Entity {
 
     private void getNextPosition() {
         // Movement
-        if(left) {
-            dx -= moveSpeed;
-            if (dx <= -maxSpeed) {
-                dx = -maxSpeed;
-            }
-        } else if (right) {
-            dx += moveSpeed;
-            if (dx >= maxSpeed) {
-                dx = maxSpeed;
-            }
-        } else {
-            /* Stopping mechanics */
+        dx += moveSpeed;
+        if (dx >= maxSpeed) {
+            dx = maxSpeed;
+        }/* else {
             if (dx > 0) {
                 dx -= stopSpeed;
                 if (dx < 0) {
@@ -258,7 +254,7 @@ public class Player extends Entity {
                     dx = 0;
                 }
             }
-        }
+        }*/
 
         // Fastfalling
         if (fastFalling) {

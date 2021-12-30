@@ -14,9 +14,11 @@ public abstract class Entity {
     protected double xmap;
     protected double ymap;
 
-    // Position and vector
+    /* Global position on tilemap */
     protected double x;
     protected double y;
+
+    /* Global movement vector */
     protected double dx;
     protected double dy;
 
