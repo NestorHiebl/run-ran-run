@@ -22,15 +22,15 @@ public abstract class Entity {
     protected double dx;
     protected double dy;
 
-    // Dimensions
+    /* Dimensions */
     protected int width;
     protected int height;
 
-    // Collision box
+    /* Collision box */
     protected int collisionWidth;
     protected int collisionHeight;
 
-    // Collision detection
+    /* Collision detection */
     protected int currRow;
     protected int currCol;
     protected double xDest;
@@ -42,14 +42,13 @@ public abstract class Entity {
     protected boolean bottomLeft;
     protected boolean bottomRight;
 
-    // Animation
+    /* Animation */
     protected Animation animation;
     protected EntityState currentAction;
-    protected int previousAction;
     protected boolean facingRight;
     protected boolean transparent;
 
-    // Movement
+    /* Movement */
     protected boolean left;
     protected boolean right;
     protected boolean up;
@@ -58,7 +57,7 @@ public abstract class Entity {
     protected boolean falling;
     protected boolean fastFalling;
 
-    // Movement attributes
+    /* Movement attributes */
     protected double moveSpeed;
     protected double maxSpeed;
     protected double stopSpeed;
@@ -68,7 +67,6 @@ public abstract class Entity {
     protected double jumpStart;
     protected double stopJumpSpeed;
 
-    // Constructor
     public Entity(TileMap tm, GameStateManager gsm) {
         this.tileMap = tm;
         tileSize = tm.getTileSize();
@@ -88,19 +86,19 @@ public abstract class Entity {
     }
 
     public void calculateCorners(double x, double y) {
-        // Get surrounding tile indices based on an entities x and y coordinates
+        /* Get surrounding tile indices based on an entities x and y coordinates */
         int leftTileXIndex = (int) (x - collisionWidth / 2) / tileSize;
         int rightTileXIndex = (int) (x + (collisionWidth / 2) - 1) / tileSize;
         int topTileYIndex = (int) (y - collisionHeight / 2) / tileSize;
         int bottomTileYIndex = (int) (y + (collisionHeight / 2) - 1) / tileSize;
 
-        // Get corner tile types
+        /* Get corner tile types */
         int topLeftTileType = tileMap.getType(topTileYIndex, leftTileXIndex);
         int topRightTileType = tileMap.getType(topTileYIndex, rightTileXIndex);
         int bottomLeftTileType = tileMap.getType(bottomTileYIndex, leftTileXIndex);
         int bottomRightTileType = tileMap.getType(bottomTileYIndex, rightTileXIndex);
 
-        // Set corner booleans
+        /* Set corner booleans */
         this.topLeft = topLeftTileType == Tile.BLOCKED;
         this.topRight = topRightTileType == Tile.BLOCKED;
         this.bottomLeft = bottomLeftTileType == Tile.BLOCKED;

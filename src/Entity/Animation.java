@@ -6,8 +6,15 @@ public class Animation {
     private BufferedImage[] frames;
     private int currentFrame;
 
-    private long startTime;
+    /**
+     * Determines the length an animation subimage is displayed, in game frames.
+     */
     private long delay;
+
+    /**
+     * The amount of frames a single subimage has been displayed for so far.
+     */
+    private long frameCounter;
 
     private boolean playedOnce;
 
@@ -16,9 +23,9 @@ public class Animation {
             throw new IllegalArgumentException("Cannot create an animation with null frame array");
         }
         this.frames = frames;
-        currentFrame = 0;
-        startTime = System.nanoTime();
-        playedOnce = false;
+        this.currentFrame = 0;
+        this.playedOnce = false;
+        this.frameCounter = 0;
     }
 
     public void setFrames(BufferedImage[] frames) {
@@ -26,16 +33,15 @@ public class Animation {
             throw new IllegalArgumentException("Cannot set animation frames with null frame array");
         }
         this.frames = frames;
-        currentFrame = 0;
-        startTime = System.nanoTime();
-        playedOnce = false;
+        this.currentFrame = 0;
+        this.playedOnce = false;
+        this.frameCounter = 0;
     }
 
     /**
      * Creates a new animation from an array of buffered images, immediately setting its delay. The
      * delay is currently in milliseconds. If it is less than one, the animation will not progress, e.g.
      * it will remain on its first frame indefinitely.
-     * todo: Change milliseconds into frames
      * @param frames
      * @param delay
      */
@@ -44,17 +50,15 @@ public class Animation {
             throw new IllegalArgumentException("Cannot create an animation with null frame array");
         }
         this.frames = frames;
-        currentFrame = 0;
-        startTime = System.nanoTime();
-        playedOnce = false;
-        // Set delay
+        this.currentFrame = 0;
+        this.playedOnce = false;
         this.delay = delay;
+        this.frameCounter = 0;
     }
 
     /**
      * Set the animation delay, which is currently in milliseconds. If the delay is less than one, the
      * animation will not progress, e.g. it will remain on its first frame indefinitely.
-     * todo: Change milliseconds into frames
      * @param d The delay in milliseconds.
      */
     public void setDelay(long d) { this.delay = d; }
@@ -63,13 +67,11 @@ public class Animation {
     public void update() {
         if (delay < 1) return;
 
-        // This processes animations separately from the global game clock, which is is not at all ideal
-        // Todo: Bind animation frame processing to the global frame counter in GamePanel
-        long elapsed = (System.nanoTime() - startTime) / 1000000;
+        frameCounter++;
 
-        if (elapsed > delay) {
+        if (frameCounter > delay) {
             currentFrame++;
-            startTime = System.nanoTime();
+            frameCounter = 0;
         }
 
         if (currentFrame == frames.length) {

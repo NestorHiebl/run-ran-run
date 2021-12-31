@@ -142,7 +142,7 @@ public class Player extends Entity {
 
                 // Set parry animation
                 animation.setFrames(sprites.get(EntityState.PARRYING));
-                animation.setDelay(25);
+                animation.setDelay(2);
             }
         }
         // Clear the parry input vector
@@ -163,18 +163,11 @@ public class Player extends Entity {
                     animation.setFrames(sprites.get(EntityState.JUMPING));
                     animation.setDelay(-1); /* The jumping animation only has one sprite */
                 }
-            } else if (left || right) {
+            } else {
                 if (currentAction != EntityState.WALKING) {
                     currentAction = EntityState.WALKING;
                     animation.setFrames(sprites.get(EntityState.WALKING));
-                    animation.setDelay(50);
-                }
-            } else {
-                // Switch to idle state if all other options have been exhausted
-                if (currentAction != EntityState.IDLE) {
-                    currentAction = EntityState.IDLE;
-                    animation.setFrames(sprites.get(EntityState.IDLE));
-                    animation.setDelay(-1); /* The idle animation only has one sprite */
+                    animation.setDelay(3);
                 }
             }
         } else {
