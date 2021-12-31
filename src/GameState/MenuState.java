@@ -62,12 +62,12 @@ public class MenuState extends GameState{
     public void draw(Graphics2D g) {
         bg.draw(g);
 
-        // Draw title
+        /* Draw title */
         g.setColor(titleColor);
         g.setFont(titleFont);
-        int titleWidth = calculateStringDisplayWidth(GamePanel.GAMETITLE);
+        int titleWidth = calculateStringDisplayWidth(GamePanel.GAMETITLE, this.titleFont, this.frc);
         g.drawString(GamePanel.GAMETITLE, (GamePanel.WIDTH / 2) - (titleWidth / 2), 70);
-        // Draw menu options
+        /* Draw menu options */
         g.setFont(font);
         for(int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
@@ -75,26 +75,26 @@ public class MenuState extends GameState{
             } else {
                 g.setColor(menuItemColor);
             }
-            int menuItemWidth = calculateStringDisplayWidth(options[i]);
-            g.drawString(options[i], (GamePanel.WIDTH / 2) - (menuItemWidth / 4) /* No idea why this needs to be divided by four */, 140 + i *15);
+            int menuItemWidth = calculateStringDisplayWidth(options[i], this.font, this.frc);
+            g.drawString(options[i], (GamePanel.WIDTH / 2) - (menuItemWidth / 2), 140 + i *15);
         }
     }
 
     private void select() {
         switch (currentChoice) {
             case 0:
-                // Start
+                /* Start */
                 gsm.setState(StateType.PLAY);
                 break;
             case 1:
-                // Options
+                /* Options */
                 break;
             case 2:
-                // Quit
+                /* Quit */
                 System.exit(0);
                 break;
             default:
-                // Error
+                /* Error */
                 System.exit(1);
                 break;
         }
@@ -102,33 +102,26 @@ public class MenuState extends GameState{
 
     @Override
     public void keyPressed(int k) {
-        if (k == KeyEvent.VK_ENTER) {
-            select();
-        }
-        if (k == KeyEvent.VK_UP) {
-            currentChoice--;
-            // Wrap around to end of list
-            currentChoice = Math.floorMod(currentChoice, options.length);
-        }
-        if (k == KeyEvent.VK_DOWN) {
-            currentChoice++;
-            // Wrap around to start of list
-            currentChoice = Math.floorMod(currentChoice, options.length);
+        switch (k) {
+            case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_A:
+                select();
+                break;
+            case KeyEvent.VK_UP:
+                currentChoice--;
+                /* Wrap around to end of list */
+                currentChoice = Math.floorMod(currentChoice, options.length);
+                break;
+            case KeyEvent.VK_DOWN:
+                currentChoice++;
+                /* Wrap around to start of list */
+                currentChoice = Math.floorMod(currentChoice, options.length);
+                break;
         }
     }
 
     @Override
     public void keyReleased(int k) {
 
-    }
-
-    /**
-     * Calculates a string's display width given the current font options and the menu font render context.
-     * Should be called immediately before the string is rendered to function correctly.
-     * @param s The string whose width is to be queried
-     * @return The render with of the given string
-     */
-    private int calculateStringDisplayWidth(String s) {
-        return (int) titleFont.getStringBounds(s, this.frc).getWidth();
     }
 }

@@ -13,7 +13,7 @@ public class PlayState extends GameState{
     private TileMap tileMap;
     private Background background;
     private Player player;
-    private AudioPlayer audioPlayer;
+    private AudioPlayer BGM;
 
     public PlayState(GameStateManager gsm) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
@@ -23,19 +23,19 @@ public class PlayState extends GameState{
 
     @Override
     public void init() {
-        // Load background and set its movement vector
+        /* Load background and set its movement vector */
         background = new Background("Resources/Backgrounds/placeholder-1.gif", -1);
         background.setVector(0.05, 0);
 
-        // Load level tile map
-        tileMap = new TileMap(30); /* The TileMap constructor already creates a tile structure */
+        /* Load level tile map */
+        tileMap = new TileMap(30);
         tileMap.loadTiles("Resources/Tilesets/basetileset.gif");
 
-        // Load level structure
+        /* Load level structure */
         tileMap.setPosition(0, 0);
         tileMap.setTween(1.0);
 
-        // Load and place player entity
+        /* Load and place player entity */
         player = new Player(tileMap, gsm);
         try {
             player.setPosition(100, 195);
@@ -44,8 +44,8 @@ public class PlayState extends GameState{
         }
 
         /* Load BGM */
-        audioPlayer = new AudioPlayer("Resources/Sound/Music/Shutter2.wav");
-        audioPlayer.play();
+        BGM = new AudioPlayer("Resources/Sound/Music/Shutter2.wav");
+        BGM.play();
     }
 
     @Override
@@ -54,6 +54,7 @@ public class PlayState extends GameState{
         player.update();
         tileMap.update();
         /* Center the player on the back third of the screen to provide more reaction time */
+        /* TODO: Make map advance independently of player */
         double newMapX = (GamePanel.WIDTH / 3) - player.getX();
         double newMapY = (GamePanel.WIDTH / 2) - player.getY();
         tileMap.setPosition(newMapX, newMapY);
@@ -81,6 +82,7 @@ public class PlayState extends GameState{
     @Override
     public void reload() {
         tileMap.setPosition(0, 0);
+        /* TODO: Reset level structure */
 
         try {
             player.setPosition(100, 195);
@@ -89,7 +91,6 @@ public class PlayState extends GameState{
         }
     }
 
-    /* TODO: forward key events to Player class */
     @Override
     public void keyPressed(int k) {
         switch (k) {

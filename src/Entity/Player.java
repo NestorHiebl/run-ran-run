@@ -307,12 +307,4 @@ public class Player extends Entity {
         this.jumping = false;
         this.parrying = false;
     }
-
-    public void keyPressed(int k) {
-
-    }
-
-    public void keyReleased(int k) {
-
-    }
 }

@@ -1,5 +1,8 @@
 package GameState;
 
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+
 public abstract class GameState {
     final protected GameStateManager gsm;
 
@@ -35,6 +38,17 @@ public abstract class GameState {
      * Reload the game state in case of e.g. Error or Player death.
      */
     public abstract void reload();
+
     public abstract void keyPressed(int k);
     public abstract void keyReleased(int k);
+
+    /**
+     * Calculates a string's display width given the current font options and the menu font render context.
+     * Should be called immediately before the string is rendered to function correctly.
+     * @param s The string whose width is to be queried
+     * @return The render with of the given string
+     */
+    int calculateStringDisplayWidth(String s, Font f, FontRenderContext frc) {
+        return (int) f.getStringBounds(s, frc).getWidth();
+    }
 }
