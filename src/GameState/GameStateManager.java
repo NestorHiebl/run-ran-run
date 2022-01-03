@@ -48,22 +48,25 @@ public class GameStateManager {
         transitionCounter = 0;
 
         currentState = StateType.MAINMENU;
-        // Currently, all levels are loaded into memory as soon as the game state manager is constructed.
-        // This is not particularly efficient and might have to be changed at some point
+        /* Currently, all levels are loaded into memory as soon as the game state manager is constructed. */
         gameStates.put(StateType.MAINMENU, new MenuState(this));
         gameStates.put(StateType.PLAY, new PlayState(this));
 
     }
 
     public void setState(StateType state) {
-        previousState = currentState;
-        currentState = state;
+        this.gameStates.get(this.currentState).stopBGM();
+        this.previousState = currentState;
+        this.currentState = state;
         transitionState();
+        this.gameStates.get(this.currentState).playBGM();
     }
 
     public void reloadCurrentState() {
+        this.gameStates.get(this.currentState).stopBGM();
         this.gameStates.get(this.currentState).reload();
         transitionState();
+        this.gameStates.get(this.currentState).playBGM();
     }
 
     /**

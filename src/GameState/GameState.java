@@ -1,5 +1,7 @@
 package GameState;
 
+import Audio.AudioPlayer;
+
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 
@@ -7,6 +9,8 @@ public abstract class GameState {
     final protected GameStateManager gsm;
 
     final protected StateType stateType;
+
+    protected AudioPlayer BGM;
 
     /**
      * Permanently set the game state type and the game state manager for this state.
@@ -38,6 +42,10 @@ public abstract class GameState {
      * Reload the game state in case of e.g. Error or Player death.
      */
     public abstract void reload();
+
+    public abstract void playBGM();
+
+    public abstract void stopBGM();
 
     public abstract void keyPressed(int k);
     public abstract void keyReleased(int k);

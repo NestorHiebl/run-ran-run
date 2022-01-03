@@ -99,4 +99,10 @@ public class GameOverState extends GameState {
     public void keyReleased(int k) {
 
     }
+
+    public void playBGM() {
+    }
+
+    public void stopBGM() {
+    }
 }

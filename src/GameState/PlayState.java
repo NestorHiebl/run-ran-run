@@ -45,7 +45,6 @@ public class PlayState extends GameState{
 
         /* Load BGM */
         BGM = new AudioPlayer("Resources/Sound/Music/Shutter2.wav");
-        BGM.play();
     }
 
     @Override
@@ -82,6 +81,7 @@ public class PlayState extends GameState{
     @Override
     public void reload() {
         tileMap.setPosition(0, 0);
+
         /* TODO: Reset level structure */
 
         try {
@@ -106,5 +106,13 @@ public class PlayState extends GameState{
     @Override
     public void keyReleased(int k) {
         /* Releasing a key doesn't make a difference for us */
+    }
+
+    public void playBGM() {
+        this.BGM.play();
+    }
+
+    public void stopBGM() {
+        this.BGM.stop();
     }
 }
