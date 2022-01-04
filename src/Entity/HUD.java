@@ -58,6 +58,4 @@ public class HUD {
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
         }
     }
-
-
 }

@@ -11,6 +11,8 @@ public class Projectile extends Hazard {
 
         width = 30;
         height = 30;
+        collisionHeight = 30;
+        collisionWidth = 30;
 
         maxSpeed = 1.5;
 
@@ -45,6 +47,4 @@ public class Projectile extends Hazard {
                 this.height
         );
     }
-
-
 }

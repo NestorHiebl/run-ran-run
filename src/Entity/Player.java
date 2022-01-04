@@ -39,7 +39,8 @@ public class Player extends Entity {
 
     // Flinching state regulation
     private boolean flinching;
-    private long flinchTimer;
+    private int flinchTimer;
+    private int flinchDuration;
 
 
     // Animation hash table
@@ -79,6 +80,11 @@ public class Player extends Entity {
 
         healCounter = 0;
         healThreshold = 5;
+
+        /* Flinch parameters */
+        flinchTimer = 0;
+        flinchDuration = 30;
+        flinching = false;
 
         dead = false;
 
@@ -123,6 +129,7 @@ public class Player extends Entity {
     public int getHealCounter() { return healCounter; }
     public int getHealThreshold() { return healThreshold; }
     public boolean isParrying() { return parryActive; }
+    public boolean isFlinching() { return flinching; }
 
     public double getRelativeScreenXPosition() {
         return x + xmap - (width / 2);
@@ -141,6 +148,15 @@ public class Player extends Entity {
             setPosition(xTemp, yTemp);
         } catch (LethalDamageException e) {
             this.kill();
+        }
+
+        /* Handle i-frames after taking damage */
+        if (flinching) {
+            flinchTimer++;
+            if (flinchTimer >= flinchDuration) {
+                flinching = false;
+                flinchTimer = 0;
+            }
         }
 
 
@@ -299,6 +315,8 @@ public class Player extends Entity {
         /* TODO: After the death animation has been added, trigger the state reload when the animation has played once */
 
         this.gsm.setState(StateType.GAMEOVER);
+
+        this.health = this.maxHealth;
     }
 
     private void resetInputVector() {
@@ -311,6 +329,7 @@ public class Player extends Entity {
         if (health <= 0) {
             throw new LethalDamageException("Player took lethal damage");
         }
+        flinching = true;
     }
 
     public void heal() {

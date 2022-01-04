@@ -1,16 +1,14 @@
 package GameState;
 
 import Audio.AudioPlayer;
-import Entity.HUD;
-import Entity.Hazard;
-import Entity.LethalDamageException;
-import Entity.Player;
+import Entity.*;
 import Main.GamePanel;
 import TileMap.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class PlayState extends GameState{
 
@@ -20,7 +18,7 @@ public class PlayState extends GameState{
     private AudioPlayer BGM;
     private HUD hud;
 
-    private ArrayList<Hazard> hazards;
+    private ConcurrentLinkedQueue<Hazard> hazards;
 
     public PlayState(GameStateManager gsm) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
@@ -49,6 +47,10 @@ public class PlayState extends GameState{
             e.printStackTrace();
         }
 
+        /* Create hazard list */
+        hazards = new ConcurrentLinkedQueue<Hazard>();
+        hazards.add(new Projectile(tileMap, gsm, 400, 195));
+
         /* Create HUD */
         hud = new HUD(this.gsm, this.player, 10, 10);
 
@@ -66,6 +68,9 @@ public class PlayState extends GameState{
         double newMapX = tileMap.getX() - GamePanel.SCROLLSPEED;
         double newMapY = (GamePanel.WIDTH / 2) - player.getY();
         tileMap.setPosition(newMapX, newMapY);
+
+        /* Update hazards */
+        updateHazards();
     }
 
     @Override
@@ -77,13 +82,15 @@ public class PlayState extends GameState{
         tileMap.draw(g);
 
         // Draw player
-        if (player.getTransparent()) {
+        if (player.isFlinching()) {
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
             player.draw(g);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
         } else {
             player.draw(g);
         }
+
+        drawHazards(g);
 
         hud.draw(g);
     }
@@ -134,7 +141,7 @@ public class PlayState extends GameState{
             } else {
                 h.update();
                 /* Check for contact with player */
-                if (h.intersects(player)) {
+                if (h.intersects(player) && !player.isFlinching()) {
                     /* Check if the damage was parried */
                     if (player.isParrying()) {
                         player.heal();
@@ -150,6 +157,12 @@ public class PlayState extends GameState{
                 }
             }
 
+        }
+    }
+
+    private void drawHazards(Graphics2D g) {
+        for (Hazard h: hazards) {
+            h.draw(g);
         }
     }
 }
