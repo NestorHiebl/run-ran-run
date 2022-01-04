@@ -2,6 +2,7 @@ package Entity;
 
 import GameState.GameStateManager;
 import GameState.StateType;
+import Main.GamePanel;
 import TileMap.TileMap;
 
 import javax.imageio.ImageIO;
@@ -46,7 +47,7 @@ public class Player extends Entity {
 
         // Player velocity constants, to be tweaked with
         moveSpeed = 0.4;
-        maxSpeed = 2.5;
+        maxSpeed = GamePanel.SCROLLSPEED;
         stopSpeed = 0.4;
         fallSpeed = 0.15;
         maxFallSpeed = 4.0;
@@ -233,6 +234,12 @@ public class Player extends Entity {
 
     private void getNextPosition() {
         // Movement
+        if (this.getRelativeScreenXPosition() < GamePanel.WIDTH / 3) {
+            this.maxSpeed = GamePanel.SCROLLSPEED * 1.3;
+        } else {
+            this.maxSpeed = GamePanel.SCROLLSPEED;
+        }
+
         dx += moveSpeed;
         if (dx >= maxSpeed) {
             dx = maxSpeed;

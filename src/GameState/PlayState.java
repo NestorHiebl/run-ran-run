@@ -53,7 +53,7 @@ public class PlayState extends GameState{
         tileMap.update();
         /* Center the player on the back third of the screen to provide more reaction time */
         /* TODO: Make map advance independently of player */
-        double newMapX = (GamePanel.WIDTH / 3) - player.getX();
+        double newMapX = tileMap.getX() - GamePanel.SCROLLSPEED;
         double newMapY = (GamePanel.WIDTH / 2) - player.getY();
         tileMap.setPosition(newMapX, newMapY);
     }

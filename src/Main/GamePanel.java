@@ -24,6 +24,8 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
     public static final int SCALE = 2;
     public static final int TILESIZE = 30;
 
+    public static final double SCROLLSPEED = 2.5;
+
     // Game thread
     private Thread thread;
     private boolean running;
