@@ -11,7 +11,7 @@ public class GameOverState extends GameState {
     private int choiceIndex;
     private String[] options;
 
-    private Color menuItemColor, selectedColor;
+    private Color BGColor, menuItemColor, selectedColor;
     private Font font;
     private FontRenderContext frc;
 
@@ -28,6 +28,7 @@ public class GameOverState extends GameState {
         options[0] = "again";
         options[1] = "quit";
 
+        BGColor = Color.BLACK;
         menuItemColor = Color.RED;
         selectedColor = Color.WHITE;
         font = new Font("Arial", Font.PLAIN, 12);
@@ -41,7 +42,8 @@ public class GameOverState extends GameState {
 
     @Override
     public void draw(java.awt.Graphics2D g) {
-        g.drawRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+        g.setColor(BGColor);
+        g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
         g.setFont(font);
         for(int i = 0; i < options.length; i++) {
@@ -51,17 +53,19 @@ public class GameOverState extends GameState {
                 g.setColor(menuItemColor);
             }
             int menuItemWidth = calculateStringDisplayWidth(options[i], this.font, this.frc);
-            g.drawString(options[i], ((GamePanel.WIDTH / 3) * (i + 1)) - (menuItemWidth / 2), 140 + i *15);
+            g.drawString(options[i], ((GamePanel.WIDTH / 3) * (i + 1)) - (menuItemWidth / 2), 140);
         }
 
     }
 
     private void select() {
+        gsm.getState(StateType.PLAY).reload();
         switch (choiceIndex) {
             case 0:
                 gsm.setState(StateType.PLAY);
                 break;
             case 1:
+                gsm.getState(StateType.MAINMENU).reload();
                 this.gsm.setState(StateType.MAINMENU);
                 break;
             default:
@@ -93,6 +97,7 @@ public class GameOverState extends GameState {
                 choiceIndex = Math.floorMod(choiceIndex, options.length);
                 break;
         }
+        System.out.println(choiceIndex);
     }
 
     @Override
@@ -100,9 +105,11 @@ public class GameOverState extends GameState {
 
     }
 
+    @Override
     public void playBGM() {
     }
 
+    @Override
     public void stopBGM() {
     }
 }

@@ -51,6 +51,7 @@ public class GameStateManager {
         /* Currently, all levels are loaded into memory as soon as the game state manager is constructed. */
         gameStates.put(StateType.MAINMENU, new MenuState(this));
         gameStates.put(StateType.PLAY, new PlayState(this));
+        gameStates.put(StateType.GAMEOVER, new GameOverState(this));
 
     }
 
@@ -60,6 +61,10 @@ public class GameStateManager {
         this.currentState = state;
         transitionState();
         this.gameStates.get(this.currentState).playBGM();
+    }
+
+    public GameState getState(StateType state) {
+        return this.gameStates.get(state);
     }
 
     public void reloadCurrentState() {
@@ -147,4 +152,5 @@ public class GameStateManager {
             g.fillRect(rectX, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
         }
     }
+
 }

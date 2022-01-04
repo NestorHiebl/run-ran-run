@@ -16,7 +16,8 @@ import java.util.Vector;
 public enum TileConfiguration {
     DEFAULT("Resources/Maps/tileConfigDefault.map", true),
     LEDGE("Resources/Maps/tileConfigLedge.map", false),
-    BUMPS1("Resources/Maps/tileConfigBumps1.map", false);
+    BUMPS1("Resources/Maps/tileConfigBumps1.map", false),
+    PITS1("Resources/Maps/tileConfigPits1.map", false);
 
     private int configLength;
     private final int configHeight;

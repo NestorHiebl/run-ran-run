@@ -1,6 +1,7 @@
 package Entity;
 
 import GameState.GameStateManager;
+import GameState.StateType;
 import TileMap.TileMap;
 
 import javax.imageio.ImageIO;
@@ -293,7 +294,7 @@ public class Player extends Entity {
 
         /* TODO: After the death animation has been added, trigger the state reload when the animation has played once */
 
-        this.gsm.reloadCurrentState();
+        this.gsm.setState(StateType.GAMEOVER);
     }
 
     private void resetInputVector() {
