@@ -18,6 +18,4 @@ public class HazardGenerator implements Runnable {
 
     }
 
-
-
 }

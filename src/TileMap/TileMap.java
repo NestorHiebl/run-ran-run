@@ -93,7 +93,7 @@ public class TileMap {
                 tiles[0][col] = new Tile(subimage, Tile.PASSABLE);
 
                 // Load and mark tiles in the second row as blocked
-                subimage =tileset.getSubimage(
+                subimage = tileset.getSubimage(
                         /* Subimage position */
                         col * tileSize, tileSize,
                         /* Subimage dimensions */
@@ -215,6 +215,11 @@ public class TileMap {
                 long r = tileToRender / numTilesAcross;
                 /* Get tile x index in tileset */
                 long c = tileToRender % numTilesAcross;
+
+                if (tileToRender == 30) {
+                    r = 1;
+                    c = 9;
+                }
 
                 g.drawImage(
                         /* Resolve tile indices in tileset and load corresponding image */

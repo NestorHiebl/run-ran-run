@@ -34,7 +34,7 @@ public class PlayState extends GameState{
 
         /* Load level tile map */
         tileMap = new TileMap(30);
-        tileMap.loadTiles("Resources/Tilesets/basetileset.gif");
+        tileMap.loadTiles("Resources/Tilesets/placeholderset.gif");
 
         /* Load level structure */
         tileMap.setPosition(0, 0);
