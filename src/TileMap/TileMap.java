@@ -11,13 +11,17 @@ import java.util.concurrent.Semaphore;
 
 public class TileMap {
 
-    // Position
+    /* Position */
+    /**
+     * The map's location is updated such that it is pushed backwards into space as the player moves to
+     * the right. In other words, as the player moves, the x value becomes smaller and smaller.
+     */
     private double x, y;
 
-    // Bounds
+    /* Bounds */
     private int xmin, ymin, xmax, ymax;
 
-    // Map
+    /* Map */
     private Vector<int[]> mapStructure;
 
     /* Will be replaced by the mapStructure */
@@ -107,11 +111,11 @@ public class TileMap {
         return this.tileSize;
     }
 
-    public int getx() {
+    public int getX() {
         return (int) x;
     }
 
-    public int gety() {
+    public int getY() {
         return (int) y;
     }
 

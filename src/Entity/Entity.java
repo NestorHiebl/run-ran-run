@@ -185,8 +185,8 @@ public abstract class Entity {
     }
 
     public void setMapPosition() {
-        xmap = tileMap.getx();
-        ymap = tileMap.gety();
+        xmap = tileMap.getX();
+        ymap = tileMap.getY();
     }
 
 
