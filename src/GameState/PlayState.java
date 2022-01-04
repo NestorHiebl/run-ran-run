@@ -7,7 +7,6 @@ import TileMap.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class PlayState extends GameState{
@@ -18,6 +17,7 @@ public class PlayState extends GameState{
     private AudioPlayer BGM;
     private HUD hud;
 
+    /* Todo: Add worker thread that dynamically adds enemies */
     private ConcurrentLinkedQueue<Hazard> hazards;
 
     public PlayState(GameStateManager gsm) {
@@ -162,7 +162,9 @@ public class PlayState extends GameState{
 
     private void drawHazards(Graphics2D g) {
         for (Hazard h: hazards) {
-            h.draw(g);
+            if (!h.notOnScreen()) {
+                h.draw(g);
+            }
         }
     }
 }
