@@ -33,7 +33,6 @@ public class PlayState extends GameState{
 
         /* Load level structure */
         tileMap.setPosition(0, 0);
-        tileMap.setTween(1.0);
 
         /* Load and place player entity */
         player = new Player(tileMap, gsm);

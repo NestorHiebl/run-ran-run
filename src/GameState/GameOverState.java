@@ -28,7 +28,7 @@ public class GameOverState extends GameState {
         options[0] = "again";
         options[1] = "quit";
 
-        BGColor = Color.BLACK;
+        BGColor = Color.DARK_GRAY;
         menuItemColor = Color.RED;
         selectedColor = Color.WHITE;
         font = new Font("Arial", Font.PLAIN, 12);
@@ -55,6 +55,7 @@ public class GameOverState extends GameState {
             int menuItemWidth = calculateStringDisplayWidth(options[i], this.font, this.frc);
             g.drawString(options[i], ((GamePanel.WIDTH / 3) * (i + 1)) - (menuItemWidth / 2), 140);
         }
+        g.setColor(BGColor);
 
     }
 

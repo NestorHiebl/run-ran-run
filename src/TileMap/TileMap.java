@@ -17,8 +17,6 @@ public class TileMap {
     // Bounds
     private int xmin, ymin, xmax, ymax;
 
-    private double tween;
-
     // Map
     private Vector<int[]> mapStructure;
 
@@ -49,7 +47,6 @@ public class TileMap {
         this.tileSize = tileSize;
         numRowsToRender = GamePanel.HEIGHT / tileSize + 2;
         numColsToRender = GamePanel.WIDTH / tileSize + 2;
-        tween = 0.07;
         numTilesVertical = GamePanel.HEIGHT / tileSize;
 
         this.mapStructure = new Vector<>();
@@ -148,10 +145,6 @@ public class TileMap {
 
     protected Semaphore getMapStructureAvailable() { return this.mapStructureAvailable; }
 
-    public void setTween(double tween) {
-        this.tween = tween;
-    }
-
     /**
      * Sets the map position. Is called in the update section of the GameState containing the tilemap.
      * @param x The new x of the tilemap.
@@ -159,8 +152,8 @@ public class TileMap {
      */
     public void setPosition(double x, double y) {
         /* Handles the map tween */
-        this.x += (x - this.x) * tween;
-        this.y += (y - this.y) * tween;
+        this.x += (x - this.x);
+        this.y += (y - this.y);
 
         fixBounds();
 
@@ -183,6 +176,7 @@ public class TileMap {
      * This update method checks the map bounds and forks off a new thread to extend the map vector if necessary.
      */
     public void update() {
+        System.out.println("Map x = " + this.x + ", Map y = " + this.y);
         /* If the column offset is such that there are less than 10 columns available off the right side of the screen */
         if (colOffset > (mapStructure.size() - ((GamePanel.WIDTH / GamePanel.TILESIZE) + 10))) {
             builder.setWorkLoad(10);

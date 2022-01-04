@@ -137,7 +137,6 @@ public class GameStateManager {
         if (transitionCounter < transitionLength / 2) {
             /* We're in the first half of the transition */
             g.setColor(Color.BLACK);
-
             /* Draw a new vertical bar every for frame until the screen is filled */
             int rectX = (GamePanel.WIDTH / (transitionLength / 2)) * transitionCounter;
             g.fillRect(rectX, 0, GamePanel.WIDTH / (transitionLength / 2), GamePanel.HEIGHT);
@@ -146,7 +145,7 @@ public class GameStateManager {
             /* Second stage of the transition */
             /* Draw the first frame of the new state under the transition animation */
             gameStates.get(currentState).draw(g);
-
+            g.setColor(Color.BLACK);
             /* Cover the screen with a black rectangle that shrinks left-to-right until the image is fully visible */
             int rectX = GamePanel.WIDTH / (transitionLength / 2) * (transitionCounter - (transitionLength / 2));
             g.fillRect(rectX, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
