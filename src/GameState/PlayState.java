@@ -51,8 +51,8 @@ public class PlayState extends GameState{
         background.update();
         player.update();
         tileMap.update();
-        /* Center the player on the back third of the screen to provide more reaction time */
-        /* TODO: Make map advance independently of player */
+
+        /* Scroll the map by the amount determined by the GamePanel */
         double newMapX = tileMap.getX() - GamePanel.SCROLLSPEED;
         double newMapY = (GamePanel.WIDTH / 2) - player.getY();
         tileMap.setPosition(newMapX, newMapY);
@@ -79,7 +79,7 @@ public class PlayState extends GameState{
 
     @Override
     public void reload() {
-        tileMap.setPosition(0, 0);
+        tileMap.reset();
 
         /* TODO: Reset level structure */
 

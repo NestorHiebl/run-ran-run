@@ -24,8 +24,6 @@ public class TileMap {
     /* Map */
     private Vector<int[]> mapStructure;
 
-    /* Will be replaced by the mapStructure */
-    private int[][] map;
     private final int tileSize;
     private int numRows, numCols;
     private int width, height;
@@ -180,7 +178,6 @@ public class TileMap {
      * This update method checks the map bounds and forks off a new thread to extend the map vector if necessary.
      */
     public void update() {
-        System.out.println("Map x = " + this.x + ", Map y = " + this.y);
         /* If the column offset is such that there are less than 10 columns available off the right side of the screen */
         if (colOffset > (mapStructure.size() - ((GamePanel.WIDTH / GamePanel.TILESIZE) + 10))) {
             builder.setWorkLoad(10);
@@ -228,6 +225,15 @@ public class TileMap {
                 );
             }
         }
+    }
+
+    public void reset() {
+        this.x = 0;
+        this.y = 0;
+        this.colOffset = 0;
+        this.rowOffset = 0;
+
+        fixBounds();
     }
 
     /**

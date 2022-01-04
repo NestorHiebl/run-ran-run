@@ -233,7 +233,9 @@ public class Player extends Entity {
     }
 
     private void getNextPosition() {
-        // Movement
+        /* Movement */
+
+        /* Center the player on the back third of the screen to provide more reaction time */
         if (this.getRelativeScreenXPosition() < GamePanel.WIDTH / 3) {
             this.maxSpeed = GamePanel.SCROLLSPEED * 1.3;
         } else {
@@ -243,19 +245,7 @@ public class Player extends Entity {
         dx += moveSpeed;
         if (dx >= maxSpeed) {
             dx = maxSpeed;
-        }/* else {
-            if (dx > 0) {
-                dx -= stopSpeed;
-                if (dx < 0) {
-                    dx = 0;
-                }
-            } else if (dx < 0) {
-                dx += stopSpeed;
-                if (dx > 0) {
-                    dx = 0;
-                }
-            }
-        }*/
+        }
 
         // Fastfalling
         if (fastFalling) {

@@ -171,7 +171,7 @@ public abstract class Entity {
     public boolean getTransparent() { return transparent; }
 
     public void setPosition(double x, double y) throws LethalDamageException{
-        if (y > tileMap.getHeight()) {
+        if (y > tileMap.getHeight() || this.scrolledPast()) {
             throw new LethalDamageException("Fell off the map");
         }
 
@@ -210,6 +210,10 @@ public abstract class Entity {
                 x + xmap - width > GamePanel.WIDTH ||
                 y + ymap + height < 0 ||
                 y + ymap - height > GamePanel.HEIGHT;
+    }
+
+    public boolean scrolledPast() {
+        return x + tileMap.getX() + width < 0;
     }
 
     abstract void kill();
