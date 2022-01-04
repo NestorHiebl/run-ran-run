@@ -16,7 +16,6 @@ public class Player extends Entity {
 
     private int health;
     private final int maxHealth;
-    private boolean dead;
 
     // Parry button input field
     private boolean parrying;
@@ -67,6 +66,8 @@ public class Player extends Entity {
         fastFallSpeed = 8.0;
 
         health = maxHealth = 4;
+
+        dead = false;
 
         // Map player states to the number of frames in their animations
         final Map<EntityState, Integer> frameAmount = Map.of(

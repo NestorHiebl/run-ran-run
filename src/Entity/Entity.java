@@ -42,6 +42,9 @@ public abstract class Entity {
     protected boolean bottomLeft;
     protected boolean bottomRight;
 
+    /* Used to mark for removal from level */
+    protected boolean dead;
+
     /* Animation */
     protected Animation animation;
     protected EntityState currentAction;
