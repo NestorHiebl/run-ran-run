@@ -120,6 +120,8 @@ public class Player extends Entity {
 
     public int getHealth() { return health; }
     public int getMaxHealth() { return maxHealth; }
+    public int getHealCounter() { return healCounter; }
+    public int getHealThreshold() { return healThreshold; }
     public boolean isParrying() { return parryActive; }
 
     public double getRelativeScreenXPosition() {

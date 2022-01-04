@@ -1,6 +1,7 @@
 package GameState;
 
 import Audio.AudioPlayer;
+import Entity.HUD;
 import Entity.Hazard;
 import Entity.LethalDamageException;
 import Entity.Player;
@@ -17,6 +18,7 @@ public class PlayState extends GameState{
     private Background background;
     private Player player;
     private AudioPlayer BGM;
+    private HUD hud;
 
     private ArrayList<Hazard> hazards;
 
@@ -46,6 +48,9 @@ public class PlayState extends GameState{
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        /* Create HUD */
+        hud = new HUD(this.gsm, this.player, 10, 10);
 
         /* Load BGM */
         BGM = new AudioPlayer("Resources/Sound/Music/Shutter2.wav");
@@ -80,6 +85,7 @@ public class PlayState extends GameState{
             player.draw(g);
         }
 
+        hud.draw(g);
     }
 
     @Override

@@ -98,7 +98,6 @@ public class GameOverState extends GameState {
                 choiceIndex = Math.floorMod(choiceIndex, options.length);
                 break;
         }
-        System.out.println(choiceIndex);
     }
 
     @Override
