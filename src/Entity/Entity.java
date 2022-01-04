@@ -172,6 +172,7 @@ public abstract class Entity {
     public int getCollisionWidth() { return collisionWidth; }
     public int getCollisionHeight() { return collisionHeight; }
     public boolean getTransparent() { return transparent; }
+    public boolean isDead() { return this.dead; }
 
     public void setPosition(double x, double y) throws LethalDamageException{
         if (y > tileMap.getHeight() || this.scrolledPast()) {
@@ -219,5 +220,9 @@ public abstract class Entity {
         return x + tileMap.getX() + width < 0;
     }
 
-    abstract void kill();
+    public abstract void update();
+
+    public abstract void draw(Graphics2D g);
+
+    abstract public void kill();
 }

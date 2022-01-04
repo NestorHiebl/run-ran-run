@@ -17,6 +17,16 @@ public class Player extends Entity {
     private int health;
     private final int maxHealth;
 
+    /**
+     * Amount of times since last heal that player has parried
+     */
+    private int healCounter;
+
+    /**
+     * Numer of parries required to heal
+     */
+    private final int healThreshold;
+
     // Parry button input field
     private boolean parrying;
 
@@ -66,6 +76,9 @@ public class Player extends Entity {
         fastFallSpeed = 8.0;
 
         health = maxHealth = 4;
+
+        healCounter = 0;
+        healThreshold = 5;
 
         dead = false;
 
@@ -210,26 +223,16 @@ public class Player extends Entity {
         }
     }
 
+    @Override
     public void draw(Graphics2D g) {
         setMapPosition();
 
-        if (facingRight) {
             g.drawImage(
                     animation.getFrame(),
                     (int) (x + xmap - (width / 2)),
                     (int) (y + ymap - (height / 2)),
                     null
             );
-        } else {
-            g.drawImage(
-                    animation.getFrame(),
-                    (int) (x + xmap - (width / 2) + width),
-                    (int) (y + ymap - (height / 2)),
-                    -width,
-                    height,
-                    null
-            );
-        }
 
     }
 
@@ -282,7 +285,8 @@ public class Player extends Entity {
     /**
      * Dying currently only reloads the level
      */
-    void kill() {
+    @Override
+    public void kill() {
         this.currentAction = EntityState.DEAD;
 
         /* Reset parry state */
@@ -298,5 +302,28 @@ public class Player extends Entity {
     private void resetInputVector() {
         this.jumping = false;
         this.parrying = false;
+    }
+
+    public void damage() throws LethalDamageException {
+        health--;
+        if (health <= 0) {
+            throw new LethalDamageException("Player took lethal damage");
+        }
+    }
+
+    public void heal() {
+        healCounter++;
+
+        /* Heal threshold has been reached */
+        if (healCounter >= healThreshold) {
+            /* Player health is not full */
+            if (health < maxHealth) {
+                /* Heal the player */
+                health++;
+            }
+        }
+
+        /* Wrap heal counter back around */
+        healCounter = Math.floorMod(healCounter, healThreshold);
     }
 }

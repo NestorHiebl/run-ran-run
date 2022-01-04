@@ -1,12 +1,15 @@
 package GameState;
 
 import Audio.AudioPlayer;
+import Entity.Hazard;
+import Entity.LethalDamageException;
 import Entity.Player;
 import Main.GamePanel;
 import TileMap.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class PlayState extends GameState{
 
@@ -14,6 +17,8 @@ public class PlayState extends GameState{
     private Background background;
     private Player player;
     private AudioPlayer BGM;
+
+    private ArrayList<Hazard> hazards;
 
     public PlayState(GameStateManager gsm) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
@@ -113,5 +118,32 @@ public class PlayState extends GameState{
 
     public void stopBGM() {
         this.BGM.stop();
+    }
+
+    private void updateHazards() {
+        for (Hazard h: hazards) {
+            if (h.isDead()) {
+                /* Remove dead hazards from level */
+                hazards.remove(h);
+            } else {
+                h.update();
+                /* Check for contact with player */
+                if (h.intersects(player)) {
+                    /* Check if the damage was parried */
+                    if (player.isParrying()) {
+                        player.heal();
+                        h.kill();
+                    } else {
+                        /* If the damage has not been parried, damage the player */
+                        try {
+                            player.damage();
+                        } catch (LethalDamageException e) {
+                            player.kill();
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }
