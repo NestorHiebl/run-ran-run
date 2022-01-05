@@ -1,11 +1,17 @@
 package Networking;
 
+import org.json.JSONObject;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+
 public class WeatherPuller {
+
+    private JSONObject WeatherDataJSON;
 
     private URL APIURL;
 
@@ -14,6 +20,10 @@ public class WeatherPuller {
     }
 
     public WeatherPuller() {
+        getDataFromTestFile("Resources/TestData/PlaceholderAPIResponse.txt");
+    }
+
+    private void getApiData() {
         try {
             this.APIURL = buildAPICall();
             HttpURLConnection APIConnection = (HttpURLConnection) APIURL.openConnection();
@@ -47,5 +57,38 @@ public class WeatherPuller {
         }
     }
 
+    public void getDataFromTestFile(String filePath) {
+        String rawData = null;
 
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
+            StringBuilder stringBuilder = new StringBuilder();
+
+            String line = br.readLine();
+
+            while (line != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(System.lineSeparator());
+                line = br.readLine();
+            }
+
+            rawData = stringBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assert rawData != null;
+        WeatherDataJSON = new JSONObject(rawData);
+    }
+
+    public JSONObject getWeatherDataJSON() {
+        return this.WeatherDataJSON;
+    }
+
+    public String getWeatherString() {
+        return this.WeatherDataJSON.getJSONArray("weather").getJSONObject(0).getString("main");
+    }
+
+    public double getTemp() {
+        return this.WeatherDataJSON.getJSONObject("main").getDouble("temp");
+    }
 }
