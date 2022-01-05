@@ -1,6 +1,7 @@
 package GameState;
 
 import Main.GamePanel;
+import Networking.WeatherData;
 import TileMap.Background;
 
 import java.awt.*;
@@ -23,9 +24,9 @@ public class MenuState extends GameState{
     private Font font;
     private FontRenderContext frc;
 
-    public MenuState(GameStateManager gsm) {
+    public MenuState(GameStateManager gsm, WeatherData weatherData) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
-        super(StateType.MAINMENU, gsm);
+        super(StateType.MAINMENU, gsm, weatherData);
         init();
     }
 

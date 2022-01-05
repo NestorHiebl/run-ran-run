@@ -1,20 +1,26 @@
 package TileMap;
 
+import Networking.WeatherData;
+
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 public class MapBuilder implements Runnable{
-    private TileMap tileMap;
+    private final TileMap tileMap;
     private Semaphore semaphore;
-    private Random RNG;
+    private final Random RNG;
+
+    /* Weather data container for RNG seeding and chunk selection */
+    private final WeatherData weatherData;
 
     private int workLoad;
 
-    public MapBuilder(TileMap tileMap, Semaphore semaphore) {
+    public MapBuilder(TileMap tileMap, Semaphore semaphore, WeatherData weatherData) {
         this.tileMap = tileMap;
         this.semaphore = semaphore;
         this.RNG = new Random();
         this.workLoad = 1;
+        this.weatherData = weatherData;
     }
 
     public synchronized void setWorkLoad(int i) {

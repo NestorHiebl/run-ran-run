@@ -1,5 +1,6 @@
 package GameState;
 import Main.GamePanel;
+import Networking.WeatherData;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -21,31 +22,40 @@ public class GameStateManager {
     private int transitionCounter;
     private final static int transitionLength = 40;
 
+    /* Weather data container */
+    private final WeatherData weatherData;
+
     public static class GameStateManagerBuilder {
 
-        GameStateManager gsm;
-        Graphics2D g;
+        private GameStateManager gsm;
+        private Graphics2D g;
+
+        private WeatherData weatherData;
+
         private static boolean instantiated = false;
 
-        public GameStateManagerBuilder(Graphics2D g) {
+        public GameStateManagerBuilder(Graphics2D g, WeatherData weatherData) {
             if (instantiated) {
                 throw new ExceptionInInitializerError("Only one instance of GameStateManager(Builder) may exist.");
             }
             this.gsm = null;
             this.g = g;
+
+            this.weatherData = weatherData;
+
             instantiated = true;
         }
 
         public GameStateManager getGsm() {
             if (this.gsm == null) {
-                this.gsm = new GameStateManager(this, g);
+                this.gsm = new GameStateManager(this, this.g, this.weatherData);
             }
 
             return this.gsm;
         }
     }
 
-    private GameStateManager(GameStateManagerBuilder gsmB, Graphics2D g) {
+    private GameStateManager(GameStateManagerBuilder gsmB, Graphics2D g, WeatherData weatherData) {
         this.g = g;
         gameStates = new HashMap <StateType, GameState>();
 
@@ -55,11 +65,13 @@ public class GameStateManager {
         freezeFrame = false;
         freezeFrameCounter = 0;
 
+        this.weatherData = weatherData;
+
         currentState = StateType.MAINMENU;
         /* Currently, all levels are loaded into memory as soon as the game state manager is constructed. */
-        gameStates.put(StateType.MAINMENU, new MenuState(this));
-        gameStates.put(StateType.PLAY, new PlayState(this));
-        gameStates.put(StateType.GAMEOVER, new GameOverState(this));
+        gameStates.put(StateType.MAINMENU, new MenuState(this, this.weatherData));
+        gameStates.put(StateType.PLAY, new PlayState(this, this.weatherData));
+        gameStates.put(StateType.GAMEOVER, new GameOverState(this, this.weatherData));
 
     }
 

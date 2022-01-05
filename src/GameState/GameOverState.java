@@ -1,6 +1,7 @@
 package GameState;
 
 import Main.GamePanel;
+import Networking.WeatherData;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -16,8 +17,8 @@ public class GameOverState extends GameState {
     private FontRenderContext frc;
 
 
-    public GameOverState(GameStateManager gsm) {
-        super(StateType.GAMEOVER, gsm);
+    public GameOverState(GameStateManager gsm, WeatherData weatherData) {
+        super(StateType.GAMEOVER, gsm, weatherData);
         init();
     }
 

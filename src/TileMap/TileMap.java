@@ -1,6 +1,7 @@
 package TileMap;
 
 import Main.GamePanel;
+import Networking.WeatherData;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -42,10 +43,11 @@ public class TileMap {
     private int numRowsToRender, numColsToRender;
 
     /* Map builder and concurrency resources */
-    private MapBuilder builder;
+    private final MapBuilder builder;
     private Semaphore mapStructureAvailable;
+    private final WeatherData weatherData;
 
-    public TileMap(int tileSize) {
+    public TileMap(int tileSize, WeatherData weatherData) {
         this.tileSize = tileSize;
         numRowsToRender = GamePanel.HEIGHT / tileSize + 2;
         numColsToRender = GamePanel.WIDTH / tileSize + 2;
@@ -55,7 +57,10 @@ public class TileMap {
 
         this.mapStructureAvailable = new Semaphore(1);
 
-        this.builder = new MapBuilder(this, mapStructureAvailable);
+        /* Create builder with weather data container for seeding */
+        this.weatherData = weatherData;
+        this.builder = new MapBuilder(this, mapStructureAvailable, weatherData);
+
         /* Run the builder a set number of times until there is enough initial map to go on */
         this.appendTileConfig(TileConfiguration.DEFAULT);
         builder.setWorkLoad(10);

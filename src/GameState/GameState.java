@@ -1,6 +1,7 @@
 package GameState;
 
 import Audio.AudioPlayer;
+import Networking.WeatherData;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -12,14 +13,17 @@ public abstract class GameState {
 
     protected AudioPlayer BGM;
 
+    protected WeatherData weatherData;
+
     /**
      * Permanently set the game state type and the game state manager for this state.
      * @param stateType The type of game state.
      * @param gsm The game state manager.
      */
-    public GameState(StateType stateType, GameStateManager gsm) {
+    public GameState(StateType stateType, GameStateManager gsm, WeatherData weatherData) {
         this.stateType = stateType;
         this.gsm = gsm;
+        this.weatherData = weatherData;
     }
 
     /**

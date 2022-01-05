@@ -12,7 +12,7 @@ public class Main {
         System.out.println(wp.getWeatherString());
 
         JFrame window = new JFrame("Window test");
-        window.setContentPane(new GamePanel());
+        window.setContentPane(new GamePanel(wp));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.pack();

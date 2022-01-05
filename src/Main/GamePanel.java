@@ -1,6 +1,7 @@
 package Main;
 
 import GameState.GameStateManager;
+import Networking.WeatherData;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,9 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
 
     // Global game info
     public static final String GAMETITLE = "Scraper";
+
+    /* Weather data container */
+    private final WeatherData weatherData;
 
     // Dimensions
     public static final int WIDTH = 600;
@@ -39,8 +43,10 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
     private GameStateManager gsm;
 
     // The constructor sets some of the window properties
-    public GamePanel() {
+    public GamePanel(WeatherData weatherData) {
         super();
+
+        this.weatherData = weatherData;
 
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         setFocusable(true);
@@ -52,7 +58,7 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
         g = (Graphics2D) image.getGraphics();
         running = true;
 
-        GameStateManager.GameStateManagerBuilder builder = new GameStateManager.GameStateManagerBuilder(g);
+        GameStateManager.GameStateManagerBuilder builder = new GameStateManager.GameStateManagerBuilder(this.g, this.weatherData);
         gsm = builder.getGsm();
     }
 

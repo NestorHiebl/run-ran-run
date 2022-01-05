@@ -3,6 +3,7 @@ package GameState;
 import Audio.AudioPlayer;
 import Entity.*;
 import Main.GamePanel;
+import Networking.WeatherData;
 import TileMap.*;
 
 import java.awt.*;
@@ -20,9 +21,9 @@ public class PlayState extends GameState{
     /* Todo: Add worker thread that dynamically adds enemies */
     private ConcurrentLinkedQueue<Hazard> hazards;
 
-    public PlayState(GameStateManager gsm) {
+    public PlayState(GameStateManager gsm, WeatherData weatherData) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
-        super(StateType.PLAY, gsm);
+        super(StateType.PLAY, gsm, weatherData);
         init();
     }
 
@@ -33,7 +34,7 @@ public class PlayState extends GameState{
         background.setVector(0.05, 0);
 
         /* Load level tile map */
-        tileMap = new TileMap(30);
+        tileMap = new TileMap(30, this.weatherData);
         tileMap.loadTiles("Resources/Tilesets/placeholderset.gif");
 
         /* Load level structure */

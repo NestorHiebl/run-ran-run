@@ -1,11 +1,13 @@
 package GameState;
 
+import Networking.WeatherData;
+
 import java.awt.*;
 
 public class OptionsState extends GameState{
 
-    public OptionsState(GameStateManager gsm) {
-        super(StateType.OPTIONS, gsm);
+    public OptionsState(GameStateManager gsm, WeatherData weatherData) {
+        super(StateType.OPTIONS, gsm, weatherData);
         init();
     }
 
