@@ -212,14 +212,17 @@ public class TileMap {
                 if (tileToRender == 0) continue;
 
                 /* Get tile y index in tileset */
-                long r = tileToRender / numTilesAcross;
+                long r;
+
+                /* Done this way to prevent looking for a non-existent third row in the tile sheet */
+                if (tileToRender >= 30) {
+                    r = 1;
+                } else {
+                    r = tileToRender / numTilesAcross;
+                }
+
                 /* Get tile x index in tileset */
                 long c = tileToRender % numTilesAcross;
-
-                if (tileToRender == 30) {
-                    r = 1;
-                    c = 9;
-                }
 
                 g.drawImage(
                         /* Resolve tile indices in tileset and load corresponding image */
