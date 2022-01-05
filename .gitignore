@@ -10,3 +10,6 @@
 
 # Compiled files
 out/
+
+# API keys
+src/Networking/APIKey.*
