@@ -1,6 +1,5 @@
 package Main;
 
-import Entity.Player;
 import GameState.GameStateManager;
 
 import java.awt.*;
@@ -64,7 +63,7 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
         long elapsed;
         long wait;
 
-        // Game loop
+        /* Game loop - where the magic happens */
         while (running) {
             start = System.nanoTime();
 
@@ -76,7 +75,7 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
 
             wait = targetTime - nanosecondsToMilliseconds(elapsed);
 
-            // The first wait period is always a large negative value for some reason
+            /* The first wait period is always a large negative value for some reason */
             if (wait > 0) {
                 try {
                     Thread.sleep(wait);

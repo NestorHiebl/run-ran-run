@@ -50,6 +50,18 @@ public class MapBuilder implements Runnable{
                 case 2:
                     tileMap.appendTileConfig(TileConfiguration.PITS1);
                     break;
+                case 3:
+                    tileMap.appendTileConfig(TileConfiguration.PITS2);
+                    break;
+                case 4:
+                    tileMap.appendTileConfig(TileConfiguration.PLATFORMS1);
+                    break;
+                case 5:
+                    tileMap.appendTileConfig(TileConfiguration.PLATFORMS2);
+                    break;
+                case 6:
+                    tileMap.appendTileConfig(TileConfiguration.HOLE1);
+                    break;
                 default:
                     tileMap.appendTileConfig(TileConfiguration.DEFAULT);
                     break;

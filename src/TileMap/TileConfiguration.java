@@ -17,12 +17,16 @@ public enum TileConfiguration {
     DEFAULT("Resources/Maps/tileConfigDefault.map", true),
     LEDGE("Resources/Maps/tileConfigLedge.map", false),
     BUMPS1("Resources/Maps/tileConfigBumps1.map", false),
-    PITS1("Resources/Maps/tileConfigPits1.map", false);
+    PITS1("Resources/Maps/tileConfigPits1.map", false),
+    PITS2("Resources/Maps/tileConfigPits2.map", false),
+    PLATFORMS1("Resources/Maps/tileConfigPlatforms1.map", false),
+    PLATFORMS2("Resources/Maps/tileConfigPlatforms2.map", false),
+    HOLE1("Resources/Maps/tileConfigHole1.map", false);
 
-    private int configLength;
+    private final int configLength;
     private final int configHeight;
     private final Vector<int[]> configuration;
-    private boolean extendable;
+    private final boolean extendable;
 
     public Vector<int[]> getConfiguration() {
         return this.configuration;
