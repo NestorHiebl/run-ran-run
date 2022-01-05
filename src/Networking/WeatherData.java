@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 
-public class WeatherPuller {
+public class WeatherData {
 
     private JSONObject WeatherDataJSON;
 
@@ -19,7 +19,7 @@ public class WeatherPuller {
         return new URL(String.format("http://api.openweathermap.org/data/2.5/weather?q=Vienna&units=metric&appid=%s", APIKey.get()));
     }
 
-    public WeatherPuller() {
+    public WeatherData() {
         getDataFromTestFile("Resources/TestData/PlaceholderAPIResponse.txt");
     }
 
@@ -57,7 +57,7 @@ public class WeatherPuller {
         }
     }
 
-    public void getDataFromTestFile(String filePath) {
+    private void getDataFromTestFile(String filePath) {
         String rawData = null;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
@@ -76,7 +76,10 @@ public class WeatherPuller {
             e.printStackTrace();
         }
 
-        assert rawData != null;
+        if (rawData == null) {
+            throw new RuntimeException("Could not read data from test file - aborting startup");
+        }
+
         WeatherDataJSON = new JSONObject(rawData);
     }
 

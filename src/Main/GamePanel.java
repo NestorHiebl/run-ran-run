@@ -39,8 +39,6 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
     // Game state Manager
     private GameStateManager gsm;
 
-    private Player player;
-
     // The constructor sets some of the window properties
     public GamePanel() {
         super();
@@ -48,7 +46,6 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         setFocusable(true);
         requestFocus();
-
     }
 
     public void init() {
@@ -71,9 +68,9 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
         while (running) {
             start = System.nanoTime();
 
-            update();
-            draw();
-            drawToScreen();
+                update();
+                draw();
+                drawToScreen();
 
             elapsed = System.nanoTime() - start;
 

@@ -146,6 +146,7 @@ public class PlayState extends GameState{
                     if (player.isParrying()) {
                         player.heal();
                         h.kill();
+                        this.gsm.requestFreezeFrame();
                     } else {
                         /* If the damage has not been parried, damage the player */
                         try {

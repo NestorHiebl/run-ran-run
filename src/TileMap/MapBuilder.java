@@ -39,18 +39,15 @@ public class MapBuilder implements Runnable{
         }
 
         for (int i = 0; i < this.workLoad; i++) {
-            /* Rudimentary add - one of available configs, randomly */
-            switch (RNG.nextInt(TileConfiguration.values().length)) {
+            /* Rudimentary add - one of available configs (except default), randomly */
+            switch (RNG.nextInt(TileConfiguration.values().length - 1)) {
                 case 0:
-                    tileMap.appendTileConfig(TileConfiguration.DEFAULT);
-                    break;
-                case 1:
                     tileMap.appendTileConfig(TileConfiguration.LEDGE);
                     break;
-                case 2:
+                case 1:
                     tileMap.appendTileConfig(TileConfiguration.BUMPS1);
                     break;
-                case 3:
+                case 2:
                     tileMap.appendTileConfig(TileConfiguration.PITS1);
                     break;
                 default:

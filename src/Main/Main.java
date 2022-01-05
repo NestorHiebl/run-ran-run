@@ -1,15 +1,14 @@
 package Main;
 
-import Networking.WeatherPuller;
+import Networking.WeatherData;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        WeatherPuller wp = new WeatherPuller();
+        WeatherData wp = new WeatherData();
         System.out.println(wp.getWeatherString());
 
         JFrame window = new JFrame("Window test");

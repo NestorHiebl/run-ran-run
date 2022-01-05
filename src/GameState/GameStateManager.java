@@ -3,7 +3,6 @@ import Main.GamePanel;
 
 import java.awt.*;
 import java.util.HashMap;
-import javax.sound.sampled.*;
 
 public class GameStateManager {
     private final Graphics2D g;
@@ -12,6 +11,12 @@ public class GameStateManager {
     private StateType previousState;
     private StateType currentState;
 
+    /* Freeze frame handling */
+    private boolean freezeFrame;
+    private int freezeFrameCounter;
+    private final int freezeFrameDuration = 15;
+
+    /* Transition handling */
     private boolean transitioning;
     private int transitionCounter;
     private final static int transitionLength = 40;
@@ -47,6 +52,9 @@ public class GameStateManager {
         transitioning = false;
         transitionCounter = 0;
 
+        freezeFrame = false;
+        freezeFrameCounter = 0;
+
         currentState = StateType.MAINMENU;
         /* Currently, all levels are loaded into memory as soon as the game state manager is constructed. */
         gameStates.put(StateType.MAINMENU, new MenuState(this));
@@ -78,12 +86,21 @@ public class GameStateManager {
      * Update the current game state if not currently in a transition. Also handles exiting the transition state.
      */
     public void update() {
-        if (!transitioning) {
+        if (updateNeeded()) {
             gameStates.get(currentState).update();
         } else {
             if (transitionCounter > transitionLength) {
                 transitioning = false;
                 transitionCounter = 0;
+            }
+
+            if (freezeFrame) {
+                freezeFrameCounter++;
+            }
+
+            if (freezeFrameCounter >= freezeFrameDuration) {
+                freezeFrame = false;
+                freezeFrameCounter = 0;
             }
         }
     }
@@ -123,6 +140,12 @@ public class GameStateManager {
         this.transitionCounter = 0;
     }
 
+    public void requestFreezeFrame() {
+        freezeFrame = true;
+        freezeFrameCounter = 0;
+    }
+
+
     /**
      * Draw a specific frame of the game state transition animation based on the transition  counter and duration. The
      * current animation is a rolling black screen, implemented here as a cascade of black bars.
@@ -152,4 +175,7 @@ public class GameStateManager {
         }
     }
 
+    private boolean updateNeeded() {
+        return !transitioning && !freezeFrame;
+    }
 }
