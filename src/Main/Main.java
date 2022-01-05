@@ -1,5 +1,7 @@
 package Main;
 
+import Networking.WeatherPuller;
+
 import javax.swing.*;
 import java.awt.*;
 

@@ -12,4 +12,4 @@
 out/
 
 # API keys
-src/Networking/APIKey.*
+src/Networking/APIKey.java
