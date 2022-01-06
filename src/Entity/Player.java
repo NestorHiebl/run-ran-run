@@ -270,7 +270,7 @@ public class Player extends Entity {
             dx = maxSpeed;
         }
 
-        // Fastfalling
+        /* Fastfalling */
         if (fastFalling) {
             jumping = false;
             falling = false;

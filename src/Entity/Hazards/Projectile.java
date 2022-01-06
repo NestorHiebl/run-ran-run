@@ -9,7 +9,7 @@ import TileMap.TileMap;
 import java.awt.*;
 
 public class Projectile extends Hazard {
-    public Projectile(TileMap tm, GameStateManager gsm, double spawnX, double spawnY) {
+    public Projectile(TileMap tm, GameStateManager gsm, double spawnX, double spawnY, double speed) {
         super(tm, gsm);
 
         width = 30;
@@ -17,7 +17,7 @@ public class Projectile extends Hazard {
         collisionHeight = 30;
         collisionWidth = 30;
 
-        maxSpeed = 1.5;
+        maxSpeed = speed;
 
         this.x = spawnX;
         this.y = spawnY;

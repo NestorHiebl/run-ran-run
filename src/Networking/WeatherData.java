@@ -98,4 +98,8 @@ public class WeatherData {
     public int getHumidity() {
         return this.WeatherDataJSON.getJSONObject("main").getInt("humidity");
     }
+
+    public double getWindSpeed() {
+        return this.WeatherDataJSON.getJSONObject("wind").getDouble("speed");
+    }
 }
