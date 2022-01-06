@@ -40,7 +40,7 @@ public class Player extends Entity {
     // Flinching state regulation
     private boolean flinching;
     private int flinchTimer;
-    private int flinchDuration;
+    private final int flinchDuration;
 
 
     // Animation hash table
@@ -83,7 +83,7 @@ public class Player extends Entity {
 
         /* Flinch parameters */
         flinchTimer = 0;
-        flinchDuration = 30;
+        flinchDuration = 60;
         flinching = false;
 
         dead = false;
@@ -161,6 +161,14 @@ public class Player extends Entity {
                 flinching = false;
                 flinchTimer = 0;
             }
+
+            if (flinchTimer == 1) {
+                currentAction = EntityState.FLINCHING;
+
+                animation.setFrames(sprites.get(EntityState.FLINCHING));
+                animation.setDelay(4);
+            }
+
         }
 
 
@@ -187,7 +195,7 @@ public class Player extends Entity {
         parrying = false;
 
         // If the player is in active parry state, ignore animation and state changes
-        if (!parryActive) {
+        if (!parryActive && !flinching) {
 
             if (dy > 0) /* Going down */ {
                 if (currentAction != EntityState.FALLING) {
@@ -231,18 +239,7 @@ public class Player extends Entity {
             }
         }
 
-        // If the player is in parry state or cooldown, increment the parry counter
-
         animation.update();
-
-        // Check direction
-        if (currentAction != EntityState.PARRYING) {
-            if(right) {
-                facingRight = true;
-            } else if (left) {
-                facingRight = false;
-            }
-        }
     }
 
     @Override
