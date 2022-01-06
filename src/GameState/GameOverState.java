@@ -82,6 +82,11 @@ public class GameOverState extends GameState {
     }
 
     @Override
+    public void startWorkers() {
+
+    }
+
+    @Override
     public void keyPressed(int k) {
         switch (k) {
             case KeyEvent.VK_ENTER:

@@ -76,11 +76,21 @@ public class GameStateManager {
     }
 
     public void setState(StateType state) {
-        this.gameStates.get(this.currentState).stopBGM();
+        this.gameStates.get(this.currentState).reload();
         this.previousState = currentState;
         this.currentState = state;
         transitionState();
-        this.gameStates.get(this.currentState).playBGM();
+        this.gameStates.get(this.currentState).startWorkers();
+    }
+
+    /**
+     * A wrapper for the setState function that is to be used when entering the PLAY state. Is used
+     * because the PLAY state has a number of associated worker threads that need to be woken up
+     * upon arrival.
+     */
+    public void enterPlayState() {
+        this.setState(StateType.PLAY);
+
     }
 
     public GameState getState(StateType state) {

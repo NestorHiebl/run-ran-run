@@ -131,6 +131,10 @@ public class Player extends Entity {
     public boolean isParrying() { return parryActive; }
     public boolean isFlinching() { return flinching; }
 
+    public double getX() {
+        return this.x;
+    }
+
     public double getRelativeScreenXPosition() {
         return x + xmap - (width / 2);
     }

@@ -3,6 +3,7 @@ package GameState;
 import Audio.AudioPlayer;
 import Entity.*;
 import Entity.Hazards.Hazard;
+import Entity.Hazards.HazardSpawner;
 import Entity.Hazards.Projectile;
 import Main.GamePanel;
 import Networking.WeatherData;
@@ -21,6 +22,7 @@ public class PlayState extends GameState{
     private HUD hud;
 
     /* Todo: Add worker thread that dynamically adds enemies */
+    private HazardSpawner hazardSpawner;
     private ConcurrentLinkedQueue<Hazard> hazards;
 
     public PlayState(GameStateManager gsm, WeatherData weatherData) {
@@ -52,6 +54,9 @@ public class PlayState extends GameState{
 
         /* Create hazard list */
         hazards = new ConcurrentLinkedQueue<Hazard>();
+
+        /* Create hazard spawner */
+        hazardSpawner = new HazardSpawner(this.gsm, this.tileMap, this, this.weatherData);
         hazards.add(new Projectile(tileMap, gsm, 400, 195));
 
         /* Create HUD */
@@ -100,7 +105,10 @@ public class PlayState extends GameState{
 
     @Override
     public void reload() {
+        this.stopBGM();
         tileMap.reset();
+
+        hazardSpawner.deactivate();
 
         /* TODO: Reset level structure */
 
@@ -109,6 +117,11 @@ public class PlayState extends GameState{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void startWorkers() {
+        this.playBGM();
     }
 
     @Override
@@ -134,6 +147,10 @@ public class PlayState extends GameState{
 
     public void stopBGM() {
         this.BGM.stop();
+    }
+
+    public double getPlayerX() {
+        return this.player.getX();
     }
 
     private void updateHazards() {
@@ -170,5 +187,9 @@ public class PlayState extends GameState{
                 h.draw(g);
             }
         }
+    }
+
+    public void spawnHazard(Hazard hazard) {
+        hazards.add(hazard);
     }
 }

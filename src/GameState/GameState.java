@@ -43,9 +43,14 @@ public abstract class GameState {
     public abstract void draw(java.awt.Graphics2D g);
 
     /**
-     * Reload the game state in case of e.g. Error or Player death.
+     * Is executed once every time the state is left.
      */
     public abstract void reload();
+
+    /**
+     * Is executed once every time the state is entered.
+     */
+    public abstract void startWorkers();
 
     public abstract void playBGM();
 

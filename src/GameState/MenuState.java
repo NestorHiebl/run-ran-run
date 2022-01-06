@@ -51,7 +51,13 @@ public class MenuState extends GameState{
 
     @Override
     public void reload() {
+        this.stopBGM();
         this.currentChoice = 0;
+    }
+
+    @Override
+    public void startWorkers() {
+
     }
 
     @Override

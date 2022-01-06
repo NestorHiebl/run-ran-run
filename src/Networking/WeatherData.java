@@ -94,4 +94,8 @@ public class WeatherData {
     public double getTemp() {
         return this.WeatherDataJSON.getJSONObject("main").getDouble("temp");
     }
+
+    public int getHumidity() {
+        return this.WeatherDataJSON.getJSONObject("main").getInt("humidity");
+    }
 }

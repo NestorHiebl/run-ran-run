@@ -32,6 +32,11 @@ public class OptionsState extends GameState{
     }
 
     @Override
+    public void startWorkers() {
+
+    }
+
+    @Override
     public void keyPressed(int k) {
 
     }
