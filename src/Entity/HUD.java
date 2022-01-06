@@ -53,7 +53,7 @@ public class HUD {
             /* The heal indicator is transparent */
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
             int healIndicatorXPosition = x + (player.getHealth() * healthBarWidth) + (player.getHealth() * healthBarDistance);
-            int healBarWidth = (player.getHealCounter() / player.getHealThreshold()) * healthBarWidth;
+            int healBarWidth = (int) (((double) player.getHealCounter() / (double) player.getHealThreshold()) * healthBarWidth);
             g.fillRect(healIndicatorXPosition, y, healBarWidth, healthBarHeight);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
         }

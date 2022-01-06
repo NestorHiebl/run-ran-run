@@ -63,10 +63,7 @@ public class HazardSpawner implements Runnable {
             double spawnXPosition = this.parentState.getPlayerX() + (double) (GamePanel.WIDTH);
             double spawnYPosition = (double) (RNG.nextInt(7) * GamePanel.TILESIZE);
 
-
-
             parentState.spawnHazard(new Projectile(this.tileMap, this.gsm, spawnXPosition, spawnYPosition));
-
         }
 
     }
