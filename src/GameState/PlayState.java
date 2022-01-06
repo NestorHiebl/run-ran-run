@@ -2,6 +2,8 @@ package GameState;
 
 import Audio.AudioPlayer;
 import Entity.*;
+import Entity.Hazards.Hazard;
+import Entity.Hazards.Projectile;
 import Main.GamePanel;
 import Networking.WeatherData;
 import TileMap.*;

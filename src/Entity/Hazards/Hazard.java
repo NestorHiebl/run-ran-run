@@ -1,5 +1,6 @@
-package Entity;
+package Entity.Hazards;
 
+import Entity.Entity;
 import GameState.GameStateManager;
 import TileMap.TileMap;
 

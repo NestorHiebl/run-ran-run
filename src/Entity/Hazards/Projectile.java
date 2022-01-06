@@ -1,5 +1,8 @@
-package Entity;
+package Entity.Hazards;
 
+import Entity.EntityState;
+import Entity.Hazards.Hazard;
+import Entity.LethalDamageException;
 import GameState.GameStateManager;
 import TileMap.TileMap;
 
