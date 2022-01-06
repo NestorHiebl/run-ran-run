@@ -1,5 +1,6 @@
 package GameState;
 
+import Main.GamePanel;
 import Networking.WeatherData;
 import TileMap.Background;
 
@@ -42,18 +43,19 @@ public class OptionsState extends GameState{
 
     @Override
     public void draw(Graphics2D g) {
-
+        g.setFont(font);
+        for (int i = 0; i < options.length; i++) {
+            if (i == currentChoice) {
+                g.setColor(selectedColor);
+            } else {
+                g.setColor(menuItemColor);
+                int menuItemWidth = calculateStringDisplayWidth(options[i], this.font, this.frc);
+                g.drawString(options[i], (GamePanel.WIDTH / 2) - (menuItemWidth / 2), 140 + i *15);
+            }
+        }
     }
 
-    @Override
-    public void reload() {
 
-    }
-
-    @Override
-    public void startWorkers() {
-
-    }
 
     @Override
     public void keyPressed(int k) {
@@ -86,8 +88,32 @@ public class OptionsState extends GameState{
     public void stopBGM() {
     }
 
+    @Override
+    public void reload() {
+        currentChoice = 0;
+    }
+
+    @Override
+    public void startWorkers() {
+
+    }
+
 
     private void select() {
+        switch (currentChoice) {
+            case 0:
+                toggleMuted();
+                break;
+            case 1:
+                gsm.setState(StateType.MAINMENU);
+                break;
+            default:
+                System.exit(-3);
+                break;
+        }
+    }
 
+    private void toggleMuted() {
+        GamePanel.setMuted(!GamePanel.getMuted());
     }
 }

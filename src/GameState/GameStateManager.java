@@ -72,6 +72,7 @@ public class GameStateManager {
         gameStates.put(StateType.MAINMENU, new MenuState(this, this.weatherData));
         gameStates.put(StateType.PLAY, new PlayState(this, this.weatherData));
         gameStates.put(StateType.GAMEOVER, new GameOverState(this, this.weatherData));
+        gameStates.put(StateType.OPTIONS, new OptionsState(this, this.weatherData));
 
     }
 

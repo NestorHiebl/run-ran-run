@@ -95,6 +95,7 @@ public class MenuState extends GameState{
                 break;
             case 1:
                 /* Options */
+                gsm.setState(StateType.OPTIONS);
                 break;
             case 2:
                 /* Quit */
