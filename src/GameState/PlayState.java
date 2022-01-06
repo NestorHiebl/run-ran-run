@@ -147,7 +147,7 @@ public class PlayState extends GameState{
     }
 
     public void playBGM() {
-        this.BGM.play();
+        this.BGM.loopContinuously();
     }
 
     public void stopBGM() {

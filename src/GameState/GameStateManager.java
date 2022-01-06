@@ -98,10 +98,9 @@ public class GameStateManager {
     }
 
     public void reloadCurrentState() {
-        this.gameStates.get(this.currentState).stopBGM();
         this.gameStates.get(this.currentState).reload();
         transitionState();
-        this.gameStates.get(this.currentState).playBGM();
+        this.gameStates.get(this.currentState).startWorkers();
     }
 
     /**
