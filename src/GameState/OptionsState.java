@@ -4,6 +4,7 @@ import Networking.WeatherData;
 import TileMap.Background;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.font.FontRenderContext;
 
 public class OptionsState extends GameState{
@@ -56,7 +57,22 @@ public class OptionsState extends GameState{
 
     @Override
     public void keyPressed(int k) {
-
+        switch (k) {
+            case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_A:
+                select();
+                break;
+            case KeyEvent.VK_UP:
+                currentChoice--;
+                /* Wrap around to end of list */
+                currentChoice = Math.floorMod(currentChoice, options.length);
+                break;
+            case KeyEvent.VK_DOWN:
+                currentChoice++;
+                /* Wrap around to start of list */
+                currentChoice = Math.floorMod(currentChoice, options.length);
+                break;
+        }
     }
 
     @Override
@@ -68,5 +84,10 @@ public class OptionsState extends GameState{
     }
 
     public void stopBGM() {
+    }
+
+
+    private void select() {
+
     }
 }

@@ -15,13 +15,14 @@ import java.util.TimerTask;
 
 public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListener {
 
-    // Global game info
+    /* Global game info */
     public static final String GAMETITLE = "Scraper";
+    private static boolean muted;
 
     /* Weather data container */
     private final WeatherData weatherData;
 
-    // Dimensions
+    /* Dimensions */
     public static final int WIDTH = 600;
     public static final int HEIGHT = 240;
     public static final int SCALE = 2;
@@ -29,22 +30,24 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
 
     public static final double SCROLLSPEED = 2.5;
 
-    // Game thread
+    /* Game thread */
     private Thread thread;
     private boolean running;
     private final int FPS = 60;
     private long targetTime = 1000 / FPS;
 
-    // Image
+    /* Image */
     private BufferedImage image;
     private Graphics2D g;
 
-    // Game state Manager
+    /* Game state Manager */
     private GameStateManager gsm;
 
-    // The constructor sets some of the window properties
+    /* The constructor sets some of the window properties */
     public GamePanel(WeatherData weatherData) {
         super();
+
+        GamePanel.muted = false;
 
         this.weatherData = weatherData;
 
@@ -118,18 +121,26 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
     public void keyTyped(KeyEvent e) {
 
     }
-    // Propagates the keyEvent to whichever object the game state manager deems appropriate
+
+    /* Propagates the keyEvent to whichever object the game state manager deems appropriate */
     public void keyPressed(KeyEvent e) {
         gsm.keyPressed(e.getKeyCode());
-
     }
-    // Propagates the keyEvent to whichever object the game state manager deems appropriate
+
+    /* Propagates the keyEvent to whichever object the game state manager deems appropriate */
     public void keyReleased(KeyEvent e) {
         gsm.keyReleased(e.getKeyCode());
-
     }
 
     private long nanosecondsToMilliseconds(long nanoseconds) {
         return nanoseconds / 1000000;
+    }
+
+    public static void setMuted(boolean muted) {
+        GamePanel.muted = muted;
+    }
+
+    public static boolean getMuted() {
+        return GamePanel.muted;
     }
 }

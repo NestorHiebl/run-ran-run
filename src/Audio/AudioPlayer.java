@@ -1,5 +1,7 @@
 package Audio;
 
+import Main.GamePanel;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -35,7 +37,7 @@ public class AudioPlayer {
     }
 
     public void play() {
-        if (clip == null) {
+        if ((clip == null || GamePanel.getMuted())) {
             return;
         }
         stop();
@@ -44,7 +46,7 @@ public class AudioPlayer {
     }
 
     public void loopContinuously() {
-        if (clip == null) {
+        if ((clip == null) || GamePanel.getMuted()) {
             return;
         }
         stop();

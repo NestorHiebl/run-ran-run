@@ -34,7 +34,7 @@ public class PlayState extends GameState{
     @Override
     public void init() {
         /* Load background and set its movement vector */
-        background = new Background("Resources/Backgrounds/placeholder-1.gif", -1);
+        background = new Background("Resources/Backgrounds/placeholder-1.gif");
         background.setVector(0.05, 0);
 
         /* Load level tile map */

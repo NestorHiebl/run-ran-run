@@ -15,23 +15,15 @@ public class Background {
     private double dx;
     private double dy;
 
-    private double moveScale;
-
-    public Background(String s, double moveScale) {
+    public Background(String s) {
         try {
             image = ImageIO.read(
                     new File(s)
             );
-            this.moveScale = moveScale;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void setPosition(double x, double y) {
-        this.x *= moveScale;
-        this.y *= moveScale;
-
     }
 
     public void setVector(double dx, double dy) {
