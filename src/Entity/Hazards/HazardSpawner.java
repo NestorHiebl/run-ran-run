@@ -33,30 +33,37 @@ public class HazardSpawner implements Runnable {
 
         active = false;
 
-        baseSpawnSpeed = weatherData.getHumidity() * 15;
+        baseSpawnSpeed = weatherData.getHumidity() * 75;
     }
 
-    public void activate() {
+    public synchronized void activate() {
         this.active = true;
     }
 
-    public void deactivate() {
+    public synchronized void deactivate() {
         this.active = false;
+    }
+
+    public void start() {
+        Thread thread = new Thread(this);
+        thread.start();
     }
 
     @Override
     public void run() {
         while (active) {
             try {
-                Thread.sleep(baseSpawnSpeed + RNG.nextInt(baseSpawnSpeed * 2));
+                Thread.sleep(baseSpawnSpeed + RNG.nextInt(baseSpawnSpeed * 3));
             } catch (Exception e) {
                 /* In case of an interrupt, print the exception and stop execution */
                 e.printStackTrace();
                 return;
             }
 
-            double spawnXPosition = this.parentState.getPlayerX() + (double) GamePanel.WIDTH;
-            double spawnYPosition = (double) (RNG.nextInt(8) * GamePanel.TILESIZE);
+            double spawnXPosition = this.parentState.getPlayerX() + (double) (GamePanel.WIDTH);
+            double spawnYPosition = (double) (RNG.nextInt(7) * GamePanel.TILESIZE);
+
+
 
             parentState.spawnHazard(new Projectile(this.tileMap, this.gsm, spawnXPosition, spawnYPosition));
 

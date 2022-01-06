@@ -171,7 +171,7 @@ public abstract class Entity {
     public int getCollisionHeight() { return collisionHeight; }
     public boolean isDead() { return this.dead; }
 
-    public void setPosition(double x, double y) throws LethalDamageException{
+    public synchronized void setPosition(double x, double y) throws LethalDamageException {
         if (y > tileMap.getHeight() || this.scrolledPast()) {
             throw new LethalDamageException("Fell off the map");
         }
@@ -207,14 +207,14 @@ public abstract class Entity {
      * @return true if on screen, false if not.
      */
     public boolean notOnScreen() {
-        return  x + xmap + width < 0 ||
-                x + xmap - width > GamePanel.WIDTH ||
-                y + ymap + height < 0 ||
-                y + ymap - height > GamePanel.HEIGHT;
+        return  ((x + tileMap.getX() + width) < 0) ||
+                ((x + tileMap.getX() - width) > GamePanel.WIDTH) ||
+                ((y + tileMap.getY() + height) < 0) ||
+                ((y + tileMap.getY() - height) > GamePanel.HEIGHT);
     }
 
     public boolean scrolledPast() {
-        return x + tileMap.getX() + width < 0;
+        return (x + tileMap.getX() + width) < 0;
     }
 
     public abstract void update();

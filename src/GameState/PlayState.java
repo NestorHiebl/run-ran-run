@@ -59,6 +59,8 @@ public class PlayState extends GameState{
         hazardSpawner = new HazardSpawner(this.gsm, this.tileMap, this, this.weatherData);
         hazards.add(new Projectile(tileMap, gsm, 400, 195));
 
+        hazards.add(new Projectile(tileMap, gsm, 800, 150));
+
         /* Create HUD */
         hud = new HUD(this.gsm, this.player, 10, 10);
 
@@ -122,6 +124,9 @@ public class PlayState extends GameState{
     @Override
     public void startWorkers() {
         this.playBGM();
+        hazardSpawner.activate();
+        hazardSpawner.start();
+
     }
 
     @Override
@@ -189,7 +194,7 @@ public class PlayState extends GameState{
         }
     }
 
-    public void spawnHazard(Hazard hazard) {
+    public synchronized void spawnHazard(Hazard hazard) {
         hazards.add(hazard);
     }
 }

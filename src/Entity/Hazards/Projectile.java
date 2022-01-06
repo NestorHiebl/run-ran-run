@@ -19,11 +19,8 @@ public class Projectile extends Hazard {
 
         maxSpeed = 1.5;
 
-        try {
-            setPosition(spawnX, spawnY);
-        } catch (LethalDamageException e) {
-            this.kill();
-        }
+        this.x = spawnX;
+        this.y = spawnY;
 
         this.currentAction = EntityState.IDLE;
     }
