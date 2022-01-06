@@ -85,15 +85,16 @@ public class PlayState extends GameState{
 
     @Override
     public void draw(Graphics2D g) {
-        // Draw background
+        /* Draw background */
         background.draw(g);
 
-        // Draw tilemap
+        /* Draw tilemap */
         tileMap.draw(g);
 
-        // Draw player
+        /* Draw player */
         if (player.isFlinching()) {
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+            /* Make player transparent while i-frames are active */
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
             player.draw(g);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
         } else {

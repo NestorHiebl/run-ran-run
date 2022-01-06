@@ -331,6 +331,12 @@ public class Player extends Entity {
 
     public void heal() {
         /* TODO: Play heal SFX once added */
+
+        /* No healing takes place if the player is at max health */
+        if (this.getHealth() == this.getMaxHealth()) {
+            return;
+        }
+
         healCounter++;
 
         /* Heal threshold has been reached */

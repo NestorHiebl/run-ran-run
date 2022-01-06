@@ -7,7 +7,7 @@ import java.util.concurrent.Semaphore;
 
 public class MapBuilder implements Runnable{
     private final TileMap tileMap;
-    private Semaphore semaphore;
+    private final Semaphore semaphore;
     private final Random RNG;
 
     /* Weather data container for RNG seeding and chunk selection */

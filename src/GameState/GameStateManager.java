@@ -28,9 +28,9 @@ public class GameStateManager {
     public static class GameStateManagerBuilder {
 
         private GameStateManager gsm;
-        private Graphics2D g;
+        private final Graphics2D g;
 
-        private WeatherData weatherData;
+        private final WeatherData weatherData;
 
         private static boolean instantiated = false;
 
@@ -81,16 +81,6 @@ public class GameStateManager {
         this.currentState = state;
         transitionState();
         this.gameStates.get(this.currentState).startWorkers();
-    }
-
-    /**
-     * A wrapper for the setState function that is to be used when entering the PLAY state. Is used
-     * because the PLAY state has a number of associated worker threads that need to be woken up
-     * upon arrival.
-     */
-    public void enterPlayState() {
-        this.setState(StateType.PLAY);
-
     }
 
     public GameState getState(StateType state) {

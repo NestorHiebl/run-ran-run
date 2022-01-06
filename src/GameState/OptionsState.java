@@ -1,10 +1,21 @@
 package GameState;
 
 import Networking.WeatherData;
+import TileMap.Background;
 
 import java.awt.*;
+import java.awt.font.FontRenderContext;
 
 public class OptionsState extends GameState{
+
+    private int currentChoice;
+    private String[] options;
+
+    private Color menuItemColor, selectedColor;
+    private Font font;
+    private FontRenderContext frc;
+
+    private Background bg;
 
     public OptionsState(GameStateManager gsm, WeatherData weatherData) {
         super(StateType.OPTIONS, gsm, weatherData);
@@ -13,7 +24,14 @@ public class OptionsState extends GameState{
 
     @Override
     public void init() {
+        currentChoice = 0;
+        options = new String[]{"sound ", "quit"};
 
+        menuItemColor = Color.RED;
+        selectedColor = Color.WHITE;
+
+        font = new Font("Arial", Font.PLAIN, 12);
+        frc = new FontRenderContext(null, false, false);
     }
 
     @Override
