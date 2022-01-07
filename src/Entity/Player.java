@@ -1,5 +1,6 @@
 package Entity;
 
+import Audio.AudioPlayer;
 import GameState.GameStateManager;
 import GameState.StateType;
 import Main.GamePanel;
@@ -45,6 +46,11 @@ public class Player extends Entity {
 
     /* Animation hash table */
     private HashMap<EntityState, BufferedImage[]> sprites;
+
+    /* Sound effects */
+    private final AudioPlayer parrySFX;
+    private AudioPlayer damagedSFX;
+    private AudioPlayer jumpSFX;
 
 
     public Player(TileMap tm, GameStateManager gsm) {
@@ -123,6 +129,11 @@ public class Player extends Entity {
         /* Set the player state to idle and stop the animation from looping */
         currentAction = EntityState.IDLE;
         animation = new Animation(sprites.get(EntityState.IDLE), -1);
+
+        /* Load SFX */
+        parrySFX = new AudioPlayer("Resources/Sound/SFX/Parry.wav");
+        damagedSFX = new AudioPlayer("Resources/Sound/SFX/Hurt.wav");
+        jumpSFX = new AudioPlayer("Resources/Sound/SFX/Jump.wav");
     }
 
     public int getHealth() { return health; }
@@ -280,6 +291,7 @@ public class Player extends Entity {
 
         /* Jumping */
         if (jumping && !falling) {
+            jumpSFX.play();
             jumping = false;
             dy = jumpStart;
             falling = true;
@@ -322,6 +334,7 @@ public class Player extends Entity {
     }
 
     public void damage() throws LethalDamageException {
+        damagedSFX.play();
         health--;
         if (health <= 0) {
             throw new LethalDamageException("Player took lethal damage");
@@ -330,7 +343,7 @@ public class Player extends Entity {
     }
 
     public void heal() {
-        /* TODO: Play heal SFX once added */
+        parrySFX.play();
 
         /* No healing takes place if the player is at max health */
         if (this.getHealth() == this.getMaxHealth()) {

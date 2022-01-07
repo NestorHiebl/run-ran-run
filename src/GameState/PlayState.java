@@ -65,7 +65,7 @@ public class PlayState extends GameState{
         hud = new HUD(this.gsm, this.player, 10, 10);
 
         /* Load BGM */
-        BGM = new AudioPlayer("Resources/Sound/Music/Shutter2.wav");
+        BGM = new AudioPlayer("Resources/Sound/Music/BGM_CLEAR.wav");
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PlayState extends GameState{
 
         /* Scroll the map by the amount determined by the GamePanel */
         double newMapX = tileMap.getX() - GamePanel.SCROLLSPEED;
-        double newMapY = (GamePanel.WIDTH / 2) - player.getY();
+        double newMapY = (double) (GamePanel.WIDTH / 2) - player.getY();
         tileMap.setPosition(newMapX, newMapY);
 
         /* Update hazards */
