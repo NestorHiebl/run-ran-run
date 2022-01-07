@@ -45,7 +45,7 @@ public class PlayState extends GameState{
         tileMap.setPosition(0, 0);
 
         /* Load and place player entity */
-        player = new Player(tileMap, gsm);
+        player = new Player(tileMap, gsm, this.weatherData);
         try {
             player.setPosition(100, 195);
         } catch (Exception e) {

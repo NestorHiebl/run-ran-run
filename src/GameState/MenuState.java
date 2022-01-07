@@ -1,5 +1,6 @@
 package GameState;
 
+import Audio.AudioPlayer;
 import Main.GamePanel;
 import Networking.WeatherData;
 import TileMap.Background;
@@ -24,10 +25,16 @@ public class MenuState extends GameState{
     private Font font;
     private FontRenderContext frc;
 
+    private final AudioPlayer switchSelectionSFX;
+    private final AudioPlayer selectSFX;
+
     public MenuState(GameStateManager gsm, WeatherData weatherData) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
         super(StateType.MAINMENU, gsm, weatherData);
         init();
+
+        switchSelectionSFX = new AudioPlayer("Resources/Sound/SFX/Select.wav");
+        selectSFX = new AudioPlayer("Resources/Sound/SFX/Enter.wav");
     }
 
     @Override
@@ -106,6 +113,7 @@ public class MenuState extends GameState{
                 System.exit(1);
                 break;
         }
+        selectSFX.play();
     }
 
     @Override
@@ -126,6 +134,7 @@ public class MenuState extends GameState{
                 currentChoice = Math.floorMod(currentChoice, options.length);
                 break;
         }
+        switchSelectionSFX.play();
     }
 
     @Override

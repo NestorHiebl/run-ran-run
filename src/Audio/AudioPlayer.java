@@ -40,7 +40,7 @@ public class AudioPlayer {
         if ((clip == null || GamePanel.getMuted())) {
             return;
         }
-        stop();
+        //stop();
         clip.setFramePosition(0);
         clip.start();
     }

@@ -83,6 +83,26 @@ public class WeatherData {
         WeatherDataJSON = new JSONObject(rawData);
     }
 
+    public static String[] getPossibleWeatherStringValues() {
+        return new String[]{
+                "Clear",
+                "Thunderstorm",
+                "Drizzle",
+                "Rain",
+                "Snow",
+                "Mist",
+                "Smoke",
+                "Haze",
+                "Dust",
+                "Fog",
+                "Sand",
+                "Ash",
+                "Squall",
+                "Tornado",
+                "Clouds"
+        };
+    }
+
     public JSONObject getWeatherDataJSON() {
         return this.WeatherDataJSON;
     }

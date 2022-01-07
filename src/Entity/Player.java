@@ -4,6 +4,7 @@ import Audio.AudioPlayer;
 import GameState.GameStateManager;
 import GameState.StateType;
 import Main.GamePanel;
+import Networking.WeatherData;
 import TileMap.TileMap;
 
 import javax.imageio.ImageIO;
@@ -43,18 +44,23 @@ public class Player extends Entity {
     private int flinchTimer;
     private final int flinchDuration;
 
+    /* Weather data */
+    private WeatherData weatherData;
 
     /* Animation hash table */
     private HashMap<EntityState, BufferedImage[]> sprites;
 
     /* Sound effects */
     private final AudioPlayer parrySFX;
-    private AudioPlayer damagedSFX;
-    private AudioPlayer jumpSFX;
+    private final AudioPlayer damagedSFX;
+    private final AudioPlayer jumpSFX;
 
 
-    public Player(TileMap tm, GameStateManager gsm) {
+    public Player(TileMap tm, GameStateManager gsm, WeatherData weatherData) {
         super(tm, gsm);
+
+        this.weatherData = weatherData;
+
         width = 30;
         height = 30;
 
@@ -108,7 +114,7 @@ public class Player extends Entity {
         /* Load the player sprites */
         try {
             /* Open the spritesheet */
-            BufferedImage spriteSheet = ImageIO.read(new File("Resources/Sprites/charsprite_placeholder.gif"));
+            BufferedImage spriteSheet = ImageIO.read(new File(mapWeatherToSpriteSheet(this.weatherData)));
             /* Initialize an animation HashMap */
             sprites = new HashMap<>();
 
@@ -363,5 +369,36 @@ public class Player extends Entity {
 
         /* Wrap heal counter back around */
         healCounter = Math.floorMod(healCounter, healThreshold);
+
+        /* Reset parrying state */
+        this.parryActive = false;
+        this.parryCounter = 0;
+        this.parryCoolDown = false;
+    }
+
+    private String mapWeatherToSpriteSheet(WeatherData weatherData) {
+        String weather = weatherData.getWeatherString();
+
+        switch (weather) {
+            case "Clear":
+                return "Resources/Sprites/charsprite_placeholder.gif";
+            case "Clouds":
+                return "Resources/Sprites/charsprite_placeholder.gif";
+            case "Thunderstorm":
+            case "Drizzle":
+            case "Rain":
+            case "Snow":
+            case "Mist":
+            case "Smoke":
+            case "Haze":
+            case "Dust":
+            case "Fog":
+            case "Sand":
+            case "Ash":
+            case "Squall":
+            case "Tornado":
+            default:
+                return "Resources/Sprites/charsprite_placeholder.gif";
+        }
     }
 }
