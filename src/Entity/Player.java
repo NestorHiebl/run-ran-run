@@ -105,11 +105,11 @@ public class Player extends Entity {
         final Map<EntityState, Integer> frameAmount = Map.of(
                 EntityState.IDLE, 1,
                 EntityState.WALKING, 2,
-                EntityState.JUMPING, 3,
-                EntityState.FALLING, 2,
+                EntityState.JUMPING, 1,
+                EntityState.FALLING, 1,
                 EntityState.FLINCHING, 3,
                 EntityState.PARRYING, 2,
-                EntityState.DEAD, 1); /* TODO: Update sprites and set actual frame amount of the dying animation */
+                EntityState.DEAD, 1);
 
         /* Load the player sprites */
         try {
@@ -155,11 +155,11 @@ public class Player extends Entity {
     }
 
     public double getRelativeScreenXPosition() {
-        return x + tileMap.getX() - (width / 2);
+        return x + tileMap.getX() - (double) (width / 2);
     }
 
     /**
-     * Turn on the parrying input vector. It will be unset automatically in the update function.
+     * Turn on the parrying input vector. It will be reset when appropriate in the update function.
      */
     public void setParrying() { this.parrying = true; }
 
@@ -187,7 +187,6 @@ public class Player extends Entity {
                 animation.setFrames(sprites.get(EntityState.FLINCHING));
                 animation.setDelay(4);
             }
-
         }
 
 
@@ -220,13 +219,13 @@ public class Player extends Entity {
                 if (currentAction != EntityState.FALLING) {
                     currentAction = EntityState.FALLING;
                     animation.setFrames(sprites.get(EntityState.FALLING));
-                    animation.setDelay(5);
+                    animation.setDelay(-1);
                 }
             } else if (dy < 0) /* Going up */ {
                 if (currentAction != EntityState.JUMPING) {
                     currentAction = EntityState.JUMPING;
                     animation.setFrames(sprites.get(EntityState.JUMPING));
-                    animation.setDelay(8);
+                    animation.setDelay(-1);
                 }
             } else {
                 if (currentAction != EntityState.WALKING) {
@@ -378,13 +377,14 @@ public class Player extends Entity {
         String weather = weatherData.getWeatherString();
 
         switch (weather) {
+            case "Ash":
+                return "Resources/Sprites/charsprite_placeholder.gif";
             case "Clear":
-                return "Resources/Sprites/charsprite_clouds.gif";
+                return "Resources/Sprites/charsprite_sun.gif";
             case "Clouds":
                 return "Resources/Sprites/charsprite_clouds.gif";
             case "Thunderstorm":
             case "Drizzle":
-            case "Rain":
             case "Snow":
             case "Mist":
             case "Smoke":
@@ -392,10 +392,10 @@ public class Player extends Entity {
             case "Dust":
             case "Fog":
             case "Sand":
-            case "Ash":
-                return "Resources/Sprites/charsprite_placeholder.gif";
             case "Squall":
             case "Tornado":
+            case "Rain":
+                return "Resources/Sprites/charsprite_clouds.gif";
             default:
                 return "Resources/Sprites/charsprite_clouds.gif";
         }

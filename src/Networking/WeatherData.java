@@ -18,8 +18,8 @@ public class WeatherData {
     }
 
     public WeatherData() {
-        getApiData();
-        //getDataFromTestFile("Resources/TestData/PlaceholderAPIResponse.txt");
+        //getApiData();
+        getDataFromTestFile("Resources/TestData/PlaceholderAPIResponse.txt");
     }
 
     private void getApiData() {
