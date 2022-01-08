@@ -13,19 +13,18 @@ public class WeatherData {
 
     private JSONObject WeatherDataJSON;
 
-    private URL APIURL;
-
     private URL buildAPICall() throws MalformedURLException {
         return new URL(String.format("http://api.openweathermap.org/data/2.5/weather?q=Vienna&units=metric&appid=%s", APIKey.get()));
     }
 
     public WeatherData() {
-        getDataFromTestFile("Resources/TestData/PlaceholderAPIResponse.txt");
+        getApiData();
+        //getDataFromTestFile("Resources/TestData/PlaceholderAPIResponse.txt");
     }
 
     private void getApiData() {
         try {
-            this.APIURL = buildAPICall();
+            URL APIURL = buildAPICall();
             HttpURLConnection APIConnection = (HttpURLConnection) APIURL.openConnection();
 
             APIConnection.setRequestMethod("GET");
@@ -48,9 +47,8 @@ public class WeatherData {
 
                 scanner.close();
 
-                System.out.println(APIResponse);
+                this.WeatherDataJSON = new JSONObject(APIResponse.toString());
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,7 +78,7 @@ public class WeatherData {
             throw new RuntimeException("Could not read data from test file - aborting startup");
         }
 
-        WeatherDataJSON = new JSONObject(rawData);
+        this.WeatherDataJSON = new JSONObject(rawData);
     }
 
     public static String[] getPossibleWeatherStringValues() {

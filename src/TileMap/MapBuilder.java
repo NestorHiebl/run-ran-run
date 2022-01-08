@@ -23,6 +23,8 @@ public class MapBuilder implements Runnable{
         this.RNG = new Random();
         this.workLoad = 1;
         this.weatherData = weatherData;
+
+        this.availableConfigurations = TileConfiguration.getAvailableConfigsForWeather(this.weatherData);
     }
 
     public synchronized void setWorkLoad(int i) {
@@ -47,33 +49,9 @@ public class MapBuilder implements Runnable{
         }
 
         for (int i = 0; i < this.workLoad; i++) {
-            /* Rudimentary add - one of available configs (except default), randomly */
-            switch (RNG.nextInt(TileConfiguration.values().length - 1)) {
-                case 0:
-                    tileMap.appendTileConfig(TileConfiguration.LEDGE);
-                    break;
-                case 1:
-                    tileMap.appendTileConfig(TileConfiguration.BUMPS1);
-                    break;
-                case 2:
-                    tileMap.appendTileConfig(TileConfiguration.PITS1);
-                    break;
-                case 3:
-                    tileMap.appendTileConfig(TileConfiguration.PITS2);
-                    break;
-                case 4:
-                    tileMap.appendTileConfig(TileConfiguration.PLATFORMS1);
-                    break;
-                case 5:
-                    tileMap.appendTileConfig(TileConfiguration.PLATFORMS2);
-                    break;
-                case 6:
-                    tileMap.appendTileConfig(TileConfiguration.HOLE1);
-                    break;
-                default:
-                    tileMap.appendTileConfig(TileConfiguration.DEFAULT);
-                    break;
-            }
+            /* Rudimentary add - one of available configs, randomly */
+            int configIndex = RNG.nextInt(availableConfigurations.length);
+            tileMap.appendTileConfig(availableConfigurations[configIndex]);
         }
 
         this.workLoad = 1;
@@ -82,4 +60,5 @@ public class MapBuilder implements Runnable{
         /* Give the semaphore back */
         semaphore.release();
     }
+
 }

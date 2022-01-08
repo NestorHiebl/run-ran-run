@@ -21,9 +21,11 @@ public enum TileConfiguration {
     BUMPS1("Resources/Maps/tileConfigBumps1.map", false),
     PITS1("Resources/Maps/tileConfigPits1.map", false),
     PITS2("Resources/Maps/tileConfigPits2.map", false),
+    PITS3("Resources/Maps/tileConfigPits3.map", false),
     PLATFORMS1("Resources/Maps/tileConfigPlatforms1.map", false),
     PLATFORMS2("Resources/Maps/tileConfigPlatforms2.map", false),
-    HOLE1("Resources/Maps/tileConfigHole1.map", false);
+    HOLE1("Resources/Maps/tileConfigHole1.map", false),
+    HOLE2("Resources/Maps/tileConfigHole2.map", false);
 
     private final int configLength;
     private final int configHeight;
@@ -40,6 +42,18 @@ public enum TileConfiguration {
 
     public int getLength() {
         return this.configLength;
+    }
+
+    public static TileConfiguration[] getRainConfigs() {
+        return new TileConfiguration[] { PITS1, PITS1, PITS3, PLATFORMS1, PLATFORMS2, HOLE1, HOLE2};
+    }
+
+    public static TileConfiguration[] getClearConfigs() {
+        return new TileConfiguration[] { LEDGE, LEDGE2, BUMPS1 };
+    }
+
+    public static TileConfiguration[] getCloudConfigs() {
+        return new TileConfiguration[] { PITS1, PITS1, PITS3, PLATFORMS1, PLATFORMS2, HOLE1, HOLE2,  LEDGE, LEDGE2, BUMPS1 };
     }
 
     /**
@@ -89,7 +103,29 @@ public enum TileConfiguration {
         }
     }
 
-    public TileConfiguration[] getAvailableConfigsForWeather(WeatherData weatherData) {
-        return new TileConfiguration[] {};
+    public static TileConfiguration[] getAvailableConfigsForWeather(WeatherData weatherData) {
+        String weather = weatherData.getWeatherString();
+
+        switch (weather) {
+            case "Clear":
+                return getClearConfigs();
+            case "Clouds":
+                return getCloudConfigs();
+            case "Thunderstorm":
+            case "Drizzle":
+            case "Rain":
+            case "Snow":
+            case "Mist":
+            case "Smoke":
+            case "Haze":
+            case "Dust":
+            case "Fog":
+            case "Sand":
+            case "Ash":
+            case "Squall":
+            case "Tornado":
+            default:
+                return getRainConfigs();
+        }
     }
 }
