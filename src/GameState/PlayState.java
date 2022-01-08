@@ -202,13 +202,14 @@ public class PlayState extends GameState{
         String weather = weatherData.getWeatherString();
 
         switch (weather) {
+            case "Ash":
+                return "Resources/Backgrounds/placeholder-1.gif";
             case "Clear":
                 return "Resources/Backgrounds/placeholder-1.gif";
             case "Clouds":
-                return "Resources/Backgrounds/placeholder-1.gif";
+                return "Resources/Backgrounds/cloudy-bg.gif";
             case "Thunderstorm":
             case "Drizzle":
-            case "Rain":
             case "Snow":
             case "Mist":
             case "Smoke":
@@ -216,10 +217,9 @@ public class PlayState extends GameState{
             case "Dust":
             case "Fog":
             case "Sand":
-            case "Ash":
-                return "Resources/Backgrounds/placeholder-1.gif";
             case "Squall":
             case "Tornado":
+            case "Rain":
             default:
                 return "Resources/Backgrounds/placeholder-1.gif";
         }
@@ -229,13 +229,14 @@ public class PlayState extends GameState{
         String weather = weatherData.getWeatherString();
 
         switch (weather) {
+            case "Ash":
+                return "Resources/Tilesets/placeholderset.gif";
             case "Clear":
                 return "Resources/Tilesets/placeholderset.gif";
             case "Clouds":
                 return "Resources/Tilesets/placeholderset.gif";
             case "Thunderstorm":
             case "Drizzle":
-            case "Rain":
             case "Snow":
             case "Mist":
             case "Smoke":
@@ -243,8 +244,7 @@ public class PlayState extends GameState{
             case "Dust":
             case "Fog":
             case "Sand":
-            case "Ash":
-                return "Resources/Tilesets/placeholderset.gif";
+            case "Rain":
             case "Squall":
             case "Tornado":
             default:
@@ -256,13 +256,14 @@ public class PlayState extends GameState{
         String weather = weatherData.getWeatherString();
 
         switch (weather) {
+            case "Ash":
+                return "Resources/Sound/Music/BGM_CLEAR.wav";
             case "Clear":
                 return "Resources/Sound/Music/BGM_CLEAR.wav";
             case "Clouds":
                 return "Resources/Sound/Music/BGM_CLEAR.wav";
             case "Thunderstorm":
             case "Drizzle":
-            case "Rain":
             case "Snow":
             case "Mist":
             case "Smoke":
@@ -270,10 +271,9 @@ public class PlayState extends GameState{
             case "Dust":
             case "Fog":
             case "Sand":
-            case "Ash":
-                return "Resources/Sound/Music/BGM_CLEAR.wav";
             case "Squall":
             case "Tornado":
+            case "Rain":
             default:
                 return "Resources/Sound/Music/BGM_CLEAR.wav";
         }
