@@ -1,6 +1,5 @@
 package Entity.Hazards;
 
-import GameState.GameState;
 import GameState.GameStateManager;
 import GameState.PlayState;
 import Main.GamePanel;
@@ -11,11 +10,11 @@ import java.util.Random;
 
 public class HazardSpawner implements Runnable {
 
-    private WeatherData weatherData;
+    private final WeatherData weatherData;
 
-    private PlayState parentState;
-    private GameStateManager gsm;
-    private TileMap tileMap;
+    private final PlayState parentState;
+    private final GameStateManager gsm;
+    private final TileMap tileMap;
 
     private int baseSpawnSpeed;
 
@@ -61,9 +60,9 @@ public class HazardSpawner implements Runnable {
             }
 
             double spawnXPosition = this.parentState.getPlayerX() + (double) (GamePanel.WIDTH);
-            double spawnYPosition = (double) (RNG.nextInt(7) * GamePanel.TILESIZE);
+            double spawnYPosition = (RNG.nextInt(7) * GamePanel.TILESIZE);
 
-            double speed = weatherData.getWindSpeed() + randomDoubleInRange(0.0, 1) ;
+            double speed = weatherData.getWindSpeed() + randomDoubleInRange(0.5, 1) ;
 
             parentState.spawnHazard(new Projectile(this.tileMap, this.gsm, spawnXPosition, spawnYPosition, speed));
         }

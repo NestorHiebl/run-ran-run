@@ -10,7 +10,6 @@ public class Main {
 
         WeatherData wp = new WeatherData();
         System.out.println(wp.getWeatherString() + " " + wp.getWindSpeed());
-        System.out.println(wp.getWeatherDataJSON());
 
         JFrame window = new JFrame("Window test");
         window.setContentPane(new GamePanel(wp));
@@ -19,5 +18,4 @@ public class Main {
         window.pack();
         window.setVisible(true);
     }
-
 }

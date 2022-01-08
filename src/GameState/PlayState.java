@@ -34,12 +34,12 @@ public class PlayState extends GameState{
     @Override
     public void init() {
         /* Load background and set its movement vector */
-        background = new Background("Resources/Backgrounds/placeholder-1.gif");
+        background = new Background(mapWeatherToBackground(this.weatherData));
         background.setVector(0.05, 0);
 
         /* Load level tile map */
         tileMap = new TileMap(30, this.weatherData);
-        tileMap.loadTiles("Resources/Tilesets/placeholderset.gif");
+        tileMap.loadTiles(mapWeatherToTileSet(this.weatherData));
 
         /* Load level structure */
         tileMap.setPosition(0, 0);
@@ -65,7 +65,7 @@ public class PlayState extends GameState{
         hud = new HUD(this.gsm, this.player, 10, 10);
 
         /* Load BGM */
-        BGM = new AudioPlayer("Resources/Sound/Music/BGM_CLEAR.wav");
+        BGM = new AudioPlayer(mapWeatherToBGM(this.weatherData));
     }
 
     @Override
@@ -197,5 +197,86 @@ public class PlayState extends GameState{
 
     public synchronized void spawnHazard(Hazard hazard) {
         hazards.add(hazard);
+    }
+
+    private String mapWeatherToBackground(WeatherData weatherData) {
+        String weather = weatherData.getWeatherString();
+
+        switch (weather) {
+            case "Clear":
+                return "Resources/Backgrounds/placeholder-1.gif";
+            case "Clouds":
+                return "Resources/Backgrounds/placeholder-1.gif";
+            case "Thunderstorm":
+            case "Drizzle":
+            case "Rain":
+            case "Snow":
+            case "Mist":
+            case "Smoke":
+            case "Haze":
+            case "Dust":
+            case "Fog":
+            case "Sand":
+            case "Ash":
+                return "Resources/Backgrounds/placeholder-1.gif";
+            case "Squall":
+            case "Tornado":
+            default:
+                return "Resources/Backgrounds/placeholder-1.gif";
+        }
+    }
+
+    private String mapWeatherToTileSet(WeatherData weatherData) {
+        String weather = weatherData.getWeatherString();
+
+        switch (weather) {
+            case "Clear":
+                return "Resources/Tilesets/placeholderset.gif";
+            case "Clouds":
+                return "Resources/Tilesets/placeholderset.gif";
+            case "Thunderstorm":
+            case "Drizzle":
+            case "Rain":
+            case "Snow":
+            case "Mist":
+            case "Smoke":
+            case "Haze":
+            case "Dust":
+            case "Fog":
+            case "Sand":
+            case "Ash":
+                return "Resources/Tilesets/placeholderset.gif";
+            case "Squall":
+            case "Tornado":
+            default:
+                return "Resources/Tilesets/placeholderset.gif";
+        }
+    }
+
+    private String mapWeatherToBGM(WeatherData weatherData) {
+        String weather = weatherData.getWeatherString();
+
+        switch (weather) {
+            case "Clear":
+                return "Resources/Sound/Music/BGM_CLEAR.wav";
+            case "Clouds":
+                return "Resources/Sound/Music/BGM_CLEAR.wav";
+            case "Thunderstorm":
+            case "Drizzle":
+            case "Rain":
+            case "Snow":
+            case "Mist":
+            case "Smoke":
+            case "Haze":
+            case "Dust":
+            case "Fog":
+            case "Sand":
+            case "Ash":
+                return "Resources/Sound/Music/BGM_CLEAR.wav";
+            case "Squall":
+            case "Tornado":
+            default:
+                return "Resources/Sound/Music/BGM_CLEAR.wav";
+        }
     }
 }

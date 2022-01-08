@@ -101,10 +101,6 @@ public class WeatherData {
         };
     }
 
-    public JSONObject getWeatherDataJSON() {
-        return this.WeatherDataJSON;
-    }
-
     public String getWeatherString() {
         return this.WeatherDataJSON.getJSONArray("weather").getJSONObject(0).getString("main");
     }

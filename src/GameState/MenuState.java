@@ -43,7 +43,7 @@ public class MenuState extends GameState{
     public void init() {
         this.currentChoice = 0;
         try {
-            bg = new Background("Resources/Backgrounds/menu_bg1.gif");
+            bg = new Background(mapWeatherToMenuBackground(this.weatherData));
             bg.setVector(-0.1, 0);
 
             titleColor = new Color(128, 0, 0);
@@ -149,5 +149,32 @@ public class MenuState extends GameState{
     }
 
     public void stopBGM() {
+    }
+
+    private String mapWeatherToMenuBackground(WeatherData weatherData) {
+        String weather = weatherData.getWeatherString();
+
+        switch (weather) {
+            case "Clear":
+                return "Resources/Backgrounds/menu_bg1.gif";
+            case "Clouds":
+                return "Resources/Backgrounds/menu_bg1.gif";
+            case "Thunderstorm":
+            case "Drizzle":
+            case "Rain":
+            case "Snow":
+            case "Mist":
+            case "Smoke":
+            case "Haze":
+            case "Dust":
+            case "Fog":
+            case "Sand":
+            case "Ash":
+                return "Resources/Backgrounds/menu_bg1.gif";
+            case "Squall":
+            case "Tornado":
+            default:
+                return "Resources/Backgrounds/menu_bg1.gif";
+        }
     }
 }
