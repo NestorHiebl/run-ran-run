@@ -59,7 +59,6 @@ public class MenuState extends GameState{
     @Override
     public void reload() {
         this.stopBGM();
-        this.currentChoice = 0;
     }
 
     @Override
@@ -124,17 +123,19 @@ public class MenuState extends GameState{
                 select();
                 break;
             case KeyEvent.VK_UP:
+                switchSelectionSFX.play();
                 currentChoice--;
                 /* Wrap around to end of list */
                 currentChoice = Math.floorMod(currentChoice, options.length);
                 break;
             case KeyEvent.VK_DOWN:
+                switchSelectionSFX.play();
                 currentChoice++;
                 /* Wrap around to start of list */
                 currentChoice = Math.floorMod(currentChoice, options.length);
                 break;
         }
-        switchSelectionSFX.play();
+
     }
 
     @Override

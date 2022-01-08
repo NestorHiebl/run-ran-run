@@ -13,6 +13,8 @@ public class MapBuilder implements Runnable{
     /* Weather data container for RNG seeding and chunk selection */
     private final WeatherData weatherData;
 
+    private TileConfiguration[] availableConfigurations;
+
     private int workLoad;
 
     public MapBuilder(TileMap tileMap, Semaphore semaphore, WeatherData weatherData) {

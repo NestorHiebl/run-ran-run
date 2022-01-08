@@ -370,7 +370,7 @@ public class Player extends Entity {
         /* Wrap heal counter back around */
         healCounter = Math.floorMod(healCounter, healThreshold);
 
-        /* Reset parrying state */
+        /* Reset parrying state1 */
         this.parryActive = false;
         this.parryCounter = 0;
         this.parryCoolDown = false;

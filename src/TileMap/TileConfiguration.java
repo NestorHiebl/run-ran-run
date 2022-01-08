@@ -1,6 +1,7 @@
 package TileMap;
 
 import Main.GamePanel;
+import Networking.WeatherData;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,6 +17,7 @@ import java.util.Vector;
 public enum TileConfiguration {
     DEFAULT("Resources/Maps/tileConfigDefault.map", true),
     LEDGE("Resources/Maps/tileConfigLedge.map", false),
+    LEDGE2("Resources/Maps/tileConfigLedge2.map", false),
     BUMPS1("Resources/Maps/tileConfigBumps1.map", false),
     PITS1("Resources/Maps/tileConfigPits1.map", false),
     PITS2("Resources/Maps/tileConfigPits2.map", false),
@@ -85,5 +87,9 @@ public enum TileConfiguration {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public TileConfiguration[] getAvailableConfigsForWeather(WeatherData weatherData) {
+        return new TileConfiguration[] {};
     }
 }
