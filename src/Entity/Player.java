@@ -70,7 +70,7 @@ public class Player extends Entity {
         /* Player velocity constants, to be tweaked with */
         /* TODO: Seed with weatherdata object */
         moveSpeed = 0.4;
-        maxSpeed = GamePanel.SCROLLSPEED;
+        maxSpeed = this.gsm.getScrollSpeed();
         stopSpeed = 0.4;
         fallSpeed = 0.15;
         maxFallSpeed = 4.0;
@@ -105,8 +105,8 @@ public class Player extends Entity {
         final Map<EntityState, Integer> frameAmount = Map.of(
                 EntityState.IDLE, 1,
                 EntityState.WALKING, 2,
-                EntityState.JUMPING, 1,
-                EntityState.FALLING, 1,
+                EntityState.JUMPING, 3,
+                EntityState.FALLING, 2,
                 EntityState.FLINCHING, 3,
                 EntityState.PARRYING, 2,
                 EntityState.DEAD, 1); /* TODO: Update sprites and set actual frame amount of the dying animation */
@@ -207,7 +207,7 @@ public class Player extends Entity {
 
                 /* Set parry animation */
                 animation.setFrames(sprites.get(EntityState.PARRYING));
-                animation.setDelay(2);
+                animation.setDelay(3);
             }
         }
         /* Clear the parry input vector */
@@ -220,13 +220,13 @@ public class Player extends Entity {
                 if (currentAction != EntityState.FALLING) {
                     currentAction = EntityState.FALLING;
                     animation.setFrames(sprites.get(EntityState.FALLING));
-                    animation.setDelay(-1); /* The falling animation only has one sprite */
+                    animation.setDelay(5);
                 }
             } else if (dy < 0) /* Going up */ {
                 if (currentAction != EntityState.JUMPING) {
                     currentAction = EntityState.JUMPING;
                     animation.setFrames(sprites.get(EntityState.JUMPING));
-                    animation.setDelay(-1); /* The jumping animation only has one sprite */
+                    animation.setDelay(8);
                 }
             } else {
                 if (currentAction != EntityState.WALKING) {
@@ -279,9 +279,9 @@ public class Player extends Entity {
 
         /* Center the player on the back third of the screen to provide more reaction time */
         if (this.getRelativeScreenXPosition() < (double) GamePanel.WIDTH / 3) {
-            this.maxSpeed = GamePanel.SCROLLSPEED * 1.3;
+            this.maxSpeed = this.gsm.getScrollSpeed() * 1.3;
         } else {
-            this.maxSpeed = GamePanel.SCROLLSPEED;
+            this.maxSpeed = this.gsm.getScrollSpeed();
         }
 
         dx += moveSpeed;
@@ -382,9 +382,9 @@ public class Player extends Entity {
 
         switch (weather) {
             case "Clear":
-                return "Resources/Sprites/charsprite_placeholder.gif";
+                return "Resources/Sprites/charsprite_clouds.gif";
             case "Clouds":
-                return "Resources/Sprites/charsprite_placeholder.gif";
+                return "Resources/Sprites/charsprite_clouds.gif";
             case "Thunderstorm":
             case "Drizzle":
             case "Rain":
@@ -396,10 +396,11 @@ public class Player extends Entity {
             case "Fog":
             case "Sand":
             case "Ash":
+                return "Resources/Sprites/charsprite_placeholder.gif";
             case "Squall":
             case "Tornado":
             default:
-                return "Resources/Sprites/charsprite_placeholder.gif";
+                return "Resources/Sprites/charsprite_clouds.gif";
         }
     }
 }

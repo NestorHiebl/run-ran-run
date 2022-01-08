@@ -28,7 +28,10 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
     public static final int SCALE = 2;
     public static final int TILESIZE = 30;
 
-    public static final double SCROLLSPEED = 2.5;
+    public static final double MIN_SCROLLSPEED = 2.2;
+    public static final double MAX_SCROLLSPEED = 4.8;
+
+    private final double scrollspeed;
 
     /* Game thread */
     private Thread thread;
@@ -51,6 +54,8 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
 
         this.weatherData = weatherData;
 
+        scrollspeed = mapRange(-12f, 45f, MIN_SCROLLSPEED, MAX_SCROLLSPEED, this.weatherData.getTemp());
+
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         setFocusable(true);
         requestFocus();
@@ -61,7 +66,7 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
         g = (Graphics2D) image.getGraphics();
         running = true;
 
-        GameStateManager.GameStateManagerBuilder builder = new GameStateManager.GameStateManagerBuilder(this.g, this.weatherData);
+        GameStateManager.GameStateManagerBuilder builder = new GameStateManager.GameStateManagerBuilder(this.g, this.weatherData, this.scrollspeed);
         gsm = builder.getGsm();
     }
 
@@ -143,4 +148,9 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
     public static boolean getMuted() {
         return GamePanel.muted;
     }
+
+    private double mapRange(double srcMin, double srcMax, double destMin, double destMax, double num) {
+        return destMin + (((num - srcMin) * (destMax - destMin)) / (srcMax - srcMin));
+    }
+
 }

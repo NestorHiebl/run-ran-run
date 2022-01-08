@@ -28,6 +28,8 @@ public class MenuState extends GameState{
     private final AudioPlayer switchSelectionSFX;
     private final AudioPlayer selectSFX;
 
+
+
     public MenuState(GameStateManager gsm, WeatherData weatherData) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
         super(StateType.MAINMENU, gsm, weatherData);

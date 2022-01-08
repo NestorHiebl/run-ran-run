@@ -25,21 +25,30 @@ public class GameStateManager {
     /* Weather data container */
     private final WeatherData weatherData;
 
+    /* Scroll-speed */
+    private final double scrollSpeed;
+
     public static class GameStateManagerBuilder {
 
         private GameStateManager gsm;
         private final Graphics2D g;
 
         private final WeatherData weatherData;
+        private final double scrollSpeed;
 
         private static boolean instantiated = false;
 
-        public GameStateManagerBuilder(Graphics2D g, WeatherData weatherData) {
+        public GameStateManagerBuilder(Graphics2D g, WeatherData weatherData, double scrollSpeed) {
             if (instantiated) {
                 throw new ExceptionInInitializerError("Only one instance of GameStateManager(Builder) may exist.");
             }
+            if (scrollSpeed < 0.5) {
+                throw new IllegalArgumentException("Scrollspeed too low");
+            }
+
             this.gsm = null;
             this.g = g;
+            this.scrollSpeed = scrollSpeed;
 
             this.weatherData = weatherData;
 
@@ -48,14 +57,14 @@ public class GameStateManager {
 
         public GameStateManager getGsm() {
             if (this.gsm == null) {
-                this.gsm = new GameStateManager(this, this.g, this.weatherData);
+                this.gsm = new GameStateManager(this, this.g, this.weatherData, this.scrollSpeed);
             }
 
             return this.gsm;
         }
     }
 
-    private GameStateManager(GameStateManagerBuilder gsmB, Graphics2D g, WeatherData weatherData) {
+    private GameStateManager(GameStateManagerBuilder gsmB, Graphics2D g, WeatherData weatherData, double scrollSpeed) {
         this.g = g;
         gameStates = new HashMap <StateType, GameState>();
 
@@ -66,6 +75,8 @@ public class GameStateManager {
         freezeFrameCounter = 0;
 
         this.weatherData = weatherData;
+
+        this.scrollSpeed = scrollSpeed;
 
         currentState = StateType.MAINMENU;
         /* Currently, all levels are loaded into memory as soon as the game state manager is constructed. */
@@ -189,5 +200,9 @@ public class GameStateManager {
 
     private boolean updateNeeded() {
         return !transitioning && !freezeFrame;
+    }
+
+    public double getScrollSpeed() {
+        return this.scrollSpeed;
     }
 }

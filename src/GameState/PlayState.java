@@ -75,7 +75,7 @@ public class PlayState extends GameState{
         tileMap.update();
 
         /* Scroll the map by the amount determined by the GamePanel */
-        double newMapX = tileMap.getX() - GamePanel.SCROLLSPEED;
+        double newMapX = tileMap.getX() - this.gsm.getScrollSpeed();
         double newMapY = (double) (GamePanel.WIDTH / 2) - player.getY();
         tileMap.setPosition(newMapX, newMapY);
 
