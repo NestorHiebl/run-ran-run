@@ -9,7 +9,7 @@ import java.util.Vector;
 
 /**
  * A tile configuration is a pre-loaded chunk of tiles that can be dynamically appended to a level's TileMap. The
- * elements of this enum all return Vectors of int arrays (of minimum length 40) via the getConfiguration() method.
+ * elements of this enum all return Vectors of int arrays (of minimum length 20) via the getConfiguration() method.
  * The configurations are loaded from files inside the Resources/Maps directory. The .map configuration files can be
  * thought of as transposed matrices containing the integer tile IDs of the configuration. To get a feeling for how
  * they'd look as a map chunk, swap the rows and columns.
@@ -27,7 +27,8 @@ public enum TileConfiguration {
     PLATFORMS1("Resources/Maps/tileConfigPlatforms1.map", false),
     PLATFORMS2("Resources/Maps/tileConfigPlatforms2.map", false),
     HOLE1("Resources/Maps/tileConfigHole1.map", false),
-    HOLE2("Resources/Maps/tileConfigHole2.map", false);
+    HOLE2("Resources/Maps/tileConfigHole2.map", false),
+    HOLE3("Resources/Maps/tileConfigHole3.map", false);
 
     private final int configLength;
     private final int configHeight;
@@ -47,7 +48,7 @@ public enum TileConfiguration {
     }
 
     public static TileConfiguration[] getRainConfigs() {
-        return new TileConfiguration[] { PITS1, PITS2, PITS3, PLATFORMS1, PLATFORMS2, HOLE1, HOLE2};
+        return new TileConfiguration[] { PITS1, PITS2, PITS3, PLATFORMS1, PLATFORMS2, HOLE1, HOLE2, HOLE3};
     }
 
     public static TileConfiguration[] getClearConfigs() {
@@ -55,7 +56,7 @@ public enum TileConfiguration {
     }
 
     public static TileConfiguration[] getCloudConfigs() {
-        return new TileConfiguration[] { PITS1, PITS2, PITS3, PLATFORMS1, PLATFORMS2, HOLE1, HOLE2,  LEDGE, LEDGE2, BUMPS1, STAIRS1, STAIRS2 };
+        return new TileConfiguration[] { PITS1, PITS2, PITS3, PLATFORMS1, PLATFORMS2, HOLE1, HOLE2, HOLE3, LEDGE, LEDGE2, BUMPS1, STAIRS1, STAIRS2 };
     }
 
     /**

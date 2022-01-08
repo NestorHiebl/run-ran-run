@@ -56,6 +56,7 @@ public class PlayState extends GameState{
 
         /* Create hazard spawner */
         hazardSpawner = new HazardSpawner(this.gsm, this.tileMap, this, this.weatherData);
+
         hazards.add(new Projectile(tileMap, gsm, 400, 195, 1.7));
 
         hazards.add(new Projectile(tileMap, gsm, 800, 150, 2));
@@ -234,7 +235,7 @@ public class PlayState extends GameState{
             case "Clear":
                 return "Resources/Tilesets/placeholderset.gif";
             case "Clouds":
-                return "Resources/Tilesets/placeholderset.gif";
+                return "Resources/Tilesets/tilesset_clouds.gif";
             case "Thunderstorm":
             case "Drizzle":
             case "Snow":

@@ -247,6 +247,10 @@ public class TileMap {
         this.rowOffset = 0;
 
         fixBounds();
+
+        this.mapStructure.removeAllElements();
+
+        appendTileConfig(TileConfiguration.DEFAULT);
     }
 
     /**
@@ -277,4 +281,5 @@ public class TileMap {
         }
         return false;
     }
+
 }
