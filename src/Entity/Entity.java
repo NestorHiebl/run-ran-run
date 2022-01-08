@@ -12,8 +12,6 @@ public abstract class Entity {
     protected TileMap tileMap;
     protected GameStateManager gsm;
     protected int tileSize;
-    protected double xmap;
-    protected double ymap;
 
     /* Global position on tilemap */
     protected double x;
@@ -190,16 +188,6 @@ public abstract class Entity {
         this.y = y;
     }
 
-    public void setVector(double dx, double dy) {
-        this.dx = dx;
-        this.dy = dy;
-    }
-
-    public void setMapPosition() {
-        xmap = tileMap.getX();
-        ymap = tileMap.getY();
-    }
-
 
     /**
      * Is true if the Entity is moving left. In the player Entities case, this function is called
@@ -223,6 +211,11 @@ public abstract class Entity {
                 ((y + tileMap.getY() - height) > GamePanel.HEIGHT);
     }
 
+    /**
+     * Check if an entity has been scrolled past, or in other words, whether it is to
+     * the left of the area shown by the camera.
+     * @return true if the entity has been scrolled past, false if not.
+     */
     public boolean scrolledPast() {
         return (x + tileMap.getX() + width) < 0;
     }

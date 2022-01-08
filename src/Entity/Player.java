@@ -155,7 +155,7 @@ public class Player extends Entity {
     }
 
     public double getRelativeScreenXPosition() {
-        return x + xmap - (width / 2);
+        return x + tileMap.getX() - (width / 2);
     }
 
     /**
@@ -263,15 +263,12 @@ public class Player extends Entity {
 
     @Override
     public void draw(Graphics2D g) {
-        setMapPosition();
-
             g.drawImage(
                     animation.getFrame(),
-                    (int) (x + xmap - (width / 2)),
-                    (int) (y + ymap - (height / 2)),
+                    (int) (x + tileMap.getX() - (width / 2)),
+                    (int) (y + tileMap.getY() - (height / 2)),
                     null
             );
-
     }
 
     private void getNextPosition() {

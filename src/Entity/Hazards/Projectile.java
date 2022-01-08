@@ -37,12 +37,11 @@ public class Projectile extends Hazard {
 
     @Override
     public void draw(Graphics2D g) {
-        setMapPosition();
 
         g.setColor(Color.RED);
         g.fillRect(
-                (int) (x + xmap - (width / 2)),
-                (int) (y + ymap - (height / 2)),
+                (int) (x + tileMap.getX() - (width / 2)),
+                (int) (y + tileMap.getY() - (height / 2)),
                 this.width,
                 this.height
         );

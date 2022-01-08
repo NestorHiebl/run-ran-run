@@ -4,19 +4,14 @@ import GameState.GameStateManager;
 import Networking.WeatherData;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListener {
 
     /* Global game info */
-    public static final String GAMETITLE = "Scraper";
+    public static final String GAMETITLE = "wtr";
     private static boolean muted;
 
     /* Weather data container */
@@ -31,13 +26,12 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
     public static final double MIN_SCROLLSPEED = 2.2;
     public static final double MAX_SCROLLSPEED = 4.8;
 
-    private final double scrollspeed;
+    private final double scrollSpeed;
 
     /* Game thread */
     private Thread thread;
     private boolean running;
     private final int FPS = 60;
-    private long targetTime = 1000 / FPS;
 
     /* Image */
     private BufferedImage image;
@@ -54,7 +48,7 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
 
         this.weatherData = weatherData;
 
-        scrollspeed = mapRange(-12f, 45f, MIN_SCROLLSPEED, MAX_SCROLLSPEED, this.weatherData.getTemp());
+        scrollSpeed = mapRange(-12f, 45f, MIN_SCROLLSPEED, MAX_SCROLLSPEED, this.weatherData.getTemp());
 
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         setFocusable(true);
@@ -66,7 +60,7 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
         g = (Graphics2D) image.getGraphics();
         running = true;
 
-        GameStateManager.GameStateManagerBuilder builder = new GameStateManager.GameStateManagerBuilder(this.g, this.weatherData, this.scrollspeed);
+        GameStateManager.GameStateManagerBuilder builder = new GameStateManager.GameStateManagerBuilder(this.g, this.weatherData, this.scrollSpeed);
         gsm = builder.getGsm();
     }
 
@@ -76,6 +70,8 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
         long start;
         long elapsed;
         long wait;
+
+        long targetTime = 1000 / FPS;
 
         /* Game loop - where the magic happens */
         while (running) {

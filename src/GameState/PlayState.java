@@ -21,7 +21,6 @@ public class PlayState extends GameState{
     private AudioPlayer BGM;
     private HUD hud;
 
-    /* Todo: Add worker thread that dynamically adds enemies */
     private HazardSpawner hazardSpawner;
     private ConcurrentLinkedQueue<Hazard> hazards;
 
