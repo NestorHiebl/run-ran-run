@@ -57,9 +57,7 @@ public class Player extends Entity {
 
 
     public Player(TileMap tm, GameStateManager gsm, WeatherData weatherData) {
-        super(tm, gsm);
-
-        this.weatherData = weatherData;
+        super(tm, gsm, weatherData);
 
         width = 30;
         height = 30;
@@ -113,7 +111,7 @@ public class Player extends Entity {
         /* Load the player sprites */
         try {
             /* Open the spritesheet */
-            BufferedImage spriteSheet = ImageIO.read(new File(mapWeatherToSpriteSheet(this.weatherData)));
+            BufferedImage spriteSheet = ImageIO.read(new File(mapWeatherToSpriteSheet(weatherData)));
             /* Initialize an animation HashMap */
             sprites = new HashMap<>();
 

@@ -3,6 +3,7 @@ package Entity;
 import Audio.AudioPlayer;
 import GameState.GameStateManager;
 import Main.GamePanel;
+import Networking.WeatherData;
 import TileMap.*;
 
 import java.awt.*;
@@ -70,10 +71,13 @@ public abstract class Entity {
 
     protected AudioPlayer landingSFX;
 
-    public Entity(TileMap tm, GameStateManager gsm) {
+    protected WeatherData weatherData;
+
+    public Entity(TileMap tm, GameStateManager gsm, WeatherData weatherData) {
         this.tileMap = tm;
         tileSize = tm.getTileSize();
         this.gsm = gsm;
+        this.weatherData = weatherData;
     }
 
     public boolean intersects(Entity o) {

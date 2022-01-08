@@ -44,7 +44,7 @@ public class PlayState extends GameState{
         tileMap.setPosition(0, 0);
 
         /* Load and place player entity */
-        player = new Player(tileMap, gsm, this.weatherData);
+        player = new Player(this.tileMap, this.gsm, this.weatherData);
         try {
             player.setPosition(100, 195);
         } catch (Exception e) {
@@ -57,9 +57,9 @@ public class PlayState extends GameState{
         /* Create hazard spawner */
         hazardSpawner = new HazardSpawner(this.gsm, this.tileMap, this, this.weatherData);
 
-        hazards.add(new Projectile(tileMap, gsm, 400, 195, 1.7));
+        hazards.add(new Projectile(tileMap, gsm, this.weatherData, 400, 195, 1.7));
 
-        hazards.add(new Projectile(tileMap, gsm, 800, 150, 2));
+        hazards.add(new Projectile(tileMap, gsm, this.weatherData, 800, 150, 2));
 
         /* Create HUD */
         hud = new HUD(this.gsm, this.player, 10, 10);

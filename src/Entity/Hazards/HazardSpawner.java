@@ -64,7 +64,7 @@ public class HazardSpawner implements Runnable {
 
             double speed = weatherData.getWindSpeed() + randomDoubleInRange(0.5, 1) ;
 
-            parentState.spawnHazard(new Projectile(this.tileMap, this.gsm, spawnXPosition, spawnYPosition, speed));
+            parentState.spawnHazard(new Projectile(this.tileMap, this.gsm, this.weatherData, spawnXPosition, spawnYPosition, speed));
         }
     }
 
