@@ -113,8 +113,6 @@ public class PlayState extends GameState{
 
         hazardSpawner.deactivate();
 
-        /* TODO: Reset level structure */
-
         try {
             player.setPosition(100, 195);
         } catch (Exception e) {

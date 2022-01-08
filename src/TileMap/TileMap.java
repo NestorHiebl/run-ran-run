@@ -133,7 +133,7 @@ public class TileMap {
     /**
      * Get the tile type at a specific pair of coordinates. Mostly useful for collision checking.
      * Out-of-bounds indices will always return a passable value. This function reads from the protected MapStructure
-     * Vector, and is called as part of the player update function. TODO: Add protection
+     * Vector, and is called as part of the player update function.
      * @param row The tile row.
      * @param col The tile column.
      * @return The type of tile at (row, col).
@@ -191,7 +191,7 @@ public class TileMap {
     }
 
     /**
-     * Draw the tilemap. Reads from the protected MapStructure Vector. TODO: Add protection
+     * Draw the tilemap. Reads from the protected MapStructure Vector.
      * @param g The Graphics2D object to draw into.
      */
     public void draw(Graphics2D g) {

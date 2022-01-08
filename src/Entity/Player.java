@@ -67,8 +67,7 @@ public class Player extends Entity {
         collisionWidth = 30;
         collisionHeight = 30;
 
-        /* Player velocity constants, to be tweaked with */
-        /* TODO: Seed with weatherdata object */
+        /* Player velocity constants, to be tweaked */
         moveSpeed = 0.4;
         maxSpeed = this.gsm.getScrollSpeed();
         stopSpeed = 0.4;
@@ -328,8 +327,6 @@ public class Player extends Entity {
         this.parryActive = false;
         this.parryCounter = 0;
         this.parryCoolDown = false;
-
-        /* TODO: After the death animation has been added, trigger the state reload when the animation has played once */
 
         this.gsm.setState(StateType.GAMEOVER);
 
