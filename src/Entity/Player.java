@@ -139,6 +139,7 @@ public class Player extends Entity {
         /* Load SFX */
         parrySFX = new AudioPlayer("Resources/Sound/SFX/Parry.wav");
         damagedSFX = new AudioPlayer("Resources/Sound/SFX/Hurt.wav");
+        landingSFX = new AudioPlayer("Resources/Sound/SFX/Land.wav");
         jumpSFX = new AudioPlayer("Resources/Sound/SFX/Jump.wav");
     }
 

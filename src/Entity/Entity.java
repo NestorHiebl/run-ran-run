@@ -1,5 +1,6 @@
 package Entity;
 
+import Audio.AudioPlayer;
 import GameState.GameStateManager;
 import Main.GamePanel;
 import TileMap.*;
@@ -69,6 +70,8 @@ public abstract class Entity {
     protected double jumpStart;
     protected double stopJumpSpeed;
 
+    protected AudioPlayer landingSFX;
+
     public Entity(TileMap tm, GameStateManager gsm) {
         this.tileMap = tm;
         tileSize = tm.getTileSize();
@@ -127,10 +130,17 @@ public abstract class Entity {
         } else if (dy > 0) /* Going down */ {
             if (bottomLeft || bottomRight) { /* Stop moving once landed */
                 dy = 0;
+
+                if (fastFalling) {
+                    /* Play landing sound */
+                    landingSFX.play();
+                }
+
                 falling = false;
                 fastFalling = false;
                 jumping = false;
-                // Bracket order matters, kids!
+
+                /* Bracket order matters, kids! */
                 yTemp = ((currRow + 1) * tileSize) - (collisionHeight / 2.0);
             }else { /* Otherwise keep falling */
                 yTemp += dy;
