@@ -26,7 +26,8 @@ public class GameStateManager {
     private final WeatherData weatherData;
 
     /* Scroll-speed */
-    private final double scrollSpeed;
+    private final double defaultScrollSpeed;
+    private double scrollSpeed;
 
     /* Score containers */
     private double previousScore;
@@ -38,7 +39,8 @@ public class GameStateManager {
         private final Graphics2D g;
 
         private final WeatherData weatherData;
-        private final double scrollSpeed;
+
+        private double scrollSpeed;
 
         private static boolean instantiated = false;
 
@@ -52,6 +54,7 @@ public class GameStateManager {
 
             this.gsm = null;
             this.g = g;
+
             this.scrollSpeed = scrollSpeed;
 
             this.weatherData = weatherData;
@@ -80,7 +83,7 @@ public class GameStateManager {
 
         this.weatherData = weatherData;
 
-        this.scrollSpeed = scrollSpeed;
+        this.defaultScrollSpeed = this.scrollSpeed = scrollSpeed;
 
         currentState = StateType.MAINMENU;
         /* Currently, all levels are loaded into memory as soon as the game state manager is constructed. */
@@ -212,6 +215,19 @@ public class GameStateManager {
     public double getScrollSpeed() {
         return this.scrollSpeed;
     }
+
+    public double getDefaultScrollSpeed() {
+        return defaultScrollSpeed;
+    }
+
+    public void resetScrollSpeed() {
+        this.scrollSpeed = this.defaultScrollSpeed;
+    }
+
+    public void setScrollSpeed(double scrollSpeed) {
+        this.scrollSpeed = scrollSpeed;
+    }
+
 
     /**
      * Set the field containing the previous run's score. If the amount is larger than the bestScore variable,

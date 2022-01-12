@@ -163,6 +163,9 @@ public class Player extends Entity {
     }
 
     public void update() {
+        /* Update max movement speed to account for acceleration */
+        super.maxSpeed = this.gsm.getScrollSpeed();
+
         /* Update position */
         getNextPosition();
         checkTileMapCollision();

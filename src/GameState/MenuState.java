@@ -14,7 +14,7 @@ public class MenuState extends GameState{
     private Background bg;
 
     private int currentChoice;
-    private String[] options = {
+    private final String[] options = {
             "Start",
             "Options",
             "Quit"
