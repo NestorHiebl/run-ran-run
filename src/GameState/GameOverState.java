@@ -13,7 +13,8 @@ public class GameOverState extends GameState {
     private String[] options;
 
     private Color BGColor, menuItemColor, selectedColor;
-    private Font font;
+    private Font menuFont;
+    private Font scoreFont;
     private FontRenderContext frc;
 
 
@@ -32,7 +33,8 @@ public class GameOverState extends GameState {
         BGColor = Color.DARK_GRAY;
         menuItemColor = Color.RED;
         selectedColor = Color.WHITE;
-        font = new Font("Arial", Font.PLAIN, 12);
+        menuFont = new Font("Arial", Font.PLAIN, 12);
+        scoreFont = new Font("Arial", Font.BOLD, 10);
         frc = new FontRenderContext(null, false, false);
     }
 
@@ -46,14 +48,17 @@ public class GameOverState extends GameState {
         g.setColor(BGColor);
         g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
-        g.setFont(font);
+        drawScore(g);
+
+        g.setFont(menuFont);
+
         for(int i = 0; i < options.length; i++) {
             if (i == choiceIndex) {
                 g.setColor(selectedColor);
             } else {
                 g.setColor(menuItemColor);
             }
-            int menuItemWidth = calculateStringDisplayWidth(options[i], this.font, this.frc);
+            int menuItemWidth = calculateStringDisplayWidth(options[i], this.menuFont, this.frc);
             g.drawString(options[i], ((GamePanel.WIDTH / 3) * (i + 1)) - (menuItemWidth / 2), 140);
         }
         g.setColor(BGColor);
@@ -117,5 +122,17 @@ public class GameOverState extends GameState {
 
     @Override
     public void stopBGM() {
+    }
+
+    private void drawScore(Graphics2D g) {
+        g.setColor(menuItemColor);
+        g.setFont(scoreFont);
+        String prevScoreDisplay = String.format("Distance: %.1fm", this.gsm.getPreviousScore());
+        int prevScoreWidth = calculateStringDisplayWidth(prevScoreDisplay, this.menuFont, this.frc);
+        String bestScoreDisplay = String.format("Best: %.1fm", this.gsm.getBestScore());
+        int bestScoreWidth = calculateStringDisplayWidth(bestScoreDisplay, this.menuFont, this.frc);
+
+        g.drawString(prevScoreDisplay, (GamePanel.WIDTH / 2) - (prevScoreWidth / 2), 70);
+        g.drawString(bestScoreDisplay, (GamePanel.WIDTH / 2) - (bestScoreWidth / 2), 90);
     }
 }

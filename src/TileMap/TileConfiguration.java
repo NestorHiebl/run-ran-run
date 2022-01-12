@@ -21,6 +21,7 @@ public enum TileConfiguration {
     STAIRS1("Resources/Maps/tileConfigStairs1.map", false),
     STAIRS2("Resources/Maps/tileConfigStairs2.map", false),
     BUMPS1("Resources/Maps/tileConfigBumps1.map", false),
+    BUMPS2("Resources/Maps/tileConfigBumps2.map", false),
     PITS1("Resources/Maps/tileConfigPits1.map", false),
     PITS2("Resources/Maps/tileConfigPits2.map", false),
     PITS3("Resources/Maps/tileConfigPits3.map", false),
@@ -52,11 +53,11 @@ public enum TileConfiguration {
     }
 
     public static TileConfiguration[] getClearConfigs() {
-        return new TileConfiguration[] { LEDGE, LEDGE2, BUMPS1, STAIRS1, STAIRS2 };
+        return new TileConfiguration[] { LEDGE, LEDGE2, BUMPS1, BUMPS2, STAIRS1, STAIRS2 };
     }
 
     public static TileConfiguration[] getCloudConfigs() {
-        return new TileConfiguration[] { PITS1, PITS2, PITS3, PLATFORMS1, PLATFORMS2, HOLE1, HOLE2, HOLE3, LEDGE, LEDGE2, BUMPS1, STAIRS1, STAIRS2 };
+        return new TileConfiguration[] { PITS1, PITS2, PITS3, PLATFORMS1, PLATFORMS2, HOLE1, HOLE2, HOLE3, LEDGE, LEDGE2, BUMPS1, BUMPS2, STAIRS1, STAIRS2 };
     }
 
     /**

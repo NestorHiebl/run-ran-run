@@ -158,7 +158,9 @@ public class Player extends Entity {
     /**
      * Turn on the parrying input vector. It will be reset when appropriate in the update function.
      */
-    public void setParrying() { this.parrying = true; }
+    public void setParrying() {
+        this.parrying = true;
+    }
 
     public void update() {
         /* Update position */

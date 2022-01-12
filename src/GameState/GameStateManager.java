@@ -28,6 +28,10 @@ public class GameStateManager {
     /* Scroll-speed */
     private final double scrollSpeed;
 
+    /* Score containers */
+    private double previousScore;
+    private double bestScore;
+
     public static class GameStateManagerBuilder {
 
         private GameStateManager gsm;
@@ -85,6 +89,9 @@ public class GameStateManager {
         gameStates.put(StateType.GAMEOVER, new GameOverState(this, this.weatherData));
         gameStates.put(StateType.OPTIONS, new OptionsState(this, this.weatherData));
 
+        /* Initialize score containers */
+        previousScore = 0;
+        bestScore = 0;
     }
 
     public void setState(StateType state) {
@@ -204,5 +211,26 @@ public class GameStateManager {
 
     public double getScrollSpeed() {
         return this.scrollSpeed;
+    }
+
+    /**
+     * Set the field containing the previous run's score. If the amount is larger than the bestScore variable,
+     * it is updated as well.
+     * @param score The score of the previous run.
+     */
+    public void setPreviousScore(double score) {
+        this.previousScore = score;
+
+        if (this.previousScore > this.bestScore) {
+            this.bestScore = this.previousScore;
+        }
+    }
+
+    public double getPreviousScore() {
+        return this.previousScore;
+    }
+
+    public double getBestScore() {
+        return this.bestScore;
     }
 }

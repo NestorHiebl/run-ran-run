@@ -113,6 +113,8 @@ public class PlayState extends GameState{
 
         hazardSpawner.deactivate();
 
+        this.gsm.setPreviousScore(this.getScore());
+
         try {
             player.setPosition(100, 195);
         } catch (Exception e) {
@@ -276,5 +278,9 @@ public class PlayState extends GameState{
             default:
                 return "Resources/Sound/Music/BGM_CLEAR.wav";
         }
+    }
+
+    public double getScore() {
+        return this.player.getX() / 10f;
     }
 }
