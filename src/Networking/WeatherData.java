@@ -116,4 +116,8 @@ public class WeatherData {
     public double getWindSpeed() {
         return this.WeatherDataJSON.getJSONObject("wind").getDouble("speed");
     }
+
+    public double getAirPressure() {
+        return this.WeatherDataJSON.getJSONObject("main").getDouble("pressure");
+    }
 }

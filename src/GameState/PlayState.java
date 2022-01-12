@@ -24,6 +24,8 @@ public class PlayState extends GameState{
     private HazardSpawner hazardSpawner;
     private ConcurrentLinkedQueue<Hazard> hazards;
 
+    private double accelerationFactor;
+
     public PlayState(GameStateManager gsm, WeatherData weatherData) {
         /* Send the game state type and manager to the parent class so they can be marked as final */
         super(StateType.PLAY, gsm, weatherData);
@@ -35,6 +37,8 @@ public class PlayState extends GameState{
         /* Load background and set its movement vector */
         this.background = new Background(mapWeatherToBackground(this.weatherData));
         this.background.setVector(-0.05, 0);
+
+        this.accelerationFactor = calculateAccelerationFactor(this.weatherData);
 
         /* Load level tile map */
         this.tileMap = new TileMap(30, this.weatherData);
@@ -215,7 +219,7 @@ public class PlayState extends GameState{
             case "Ash":
                 return "Resources/Backgrounds/placeholder-1.gif";
             case "Clear":
-                return "Resources/Backgrounds/placeholder-1.gif";
+                return "Resources/Backgrounds/cloudy-bg.gif";
             case "Clouds":
                 return "Resources/Backgrounds/cloudy-bg.gif";
             case "Thunderstorm":
@@ -231,7 +235,7 @@ public class PlayState extends GameState{
             case "Tornado":
             case "Rain":
             default:
-                return "Resources/Backgrounds/placeholder-1.gif";
+                return "Resources/Backgrounds/cloudy-bg.gif";
         }
     }
 
@@ -240,9 +244,9 @@ public class PlayState extends GameState{
 
         switch (weather) {
             case "Ash":
-                return "Resources/Tilesets/placeholderset.gif";
+                return "Resources/Tilesets/tilesset_clouds.gif";
             case "Clear":
-                return "Resources/Tilesets/placeholderset.gif";
+                return "Resources/Tilesets/tilesset_clouds.gif";
             case "Clouds":
                 return "Resources/Tilesets/tilesset_clouds.gif";
             case "Thunderstorm":
@@ -258,7 +262,7 @@ public class PlayState extends GameState{
             case "Squall":
             case "Tornado":
             default:
-                return "Resources/Tilesets/placeholderset.gif";
+                return "Resources/Tilesets/tilesset_clouds.gif";
         }
     }
 
@@ -267,11 +271,11 @@ public class PlayState extends GameState{
 
         switch (weather) {
             case "Ash":
-                return "Resources/Sound/Music/BGM_CLEAR.wav";
+                return "Resources/Sound/Music/BGM_CLOUDS.wav";
             case "Clear":
-                return "Resources/Sound/Music/BGM_CLEAR.wav";
+                return "Resources/Sound/Music/BGM_CLOUDS.wav";
             case "Clouds":
-                return "Resources/Sound/Music/BGM_CLEAR.wav";
+                return "Resources/Sound/Music/BGM_CLOUDS.wav";
             case "Thunderstorm":
             case "Drizzle":
             case "Snow":
@@ -285,7 +289,7 @@ public class PlayState extends GameState{
             case "Tornado":
             case "Rain":
             default:
-                return "Resources/Sound/Music/BGM_CLEAR.wav";
+                return "Resources/Sound/Music/BGM_RAIN.wav";
         }
     }
 
@@ -293,13 +297,19 @@ public class PlayState extends GameState{
         return this.player.getX() / 10f;
     }
 
+    private double calculateAccelerationFactor(WeatherData weatherData) {
+        double AirPressure = weatherData.getAirPressure();
+
+        return GamePanel.mapRange(999f, 1050f, 2, 5, AirPressure);
+    }
+
     private double calculateAcceleration() {
         double distance = this.player.getX() / 10f;
 
-        double acceleration = 0;
+        double acceleration = (distance / 10000) * this.accelerationFactor;
 
-        if (distance > 1000f) {
-
+        if (acceleration > GamePanel.MAX_SCROLLSPEED + 1) {
+            acceleration = GamePanel.MAX_SCROLLSPEED + 1;
         }
 
         return acceleration;

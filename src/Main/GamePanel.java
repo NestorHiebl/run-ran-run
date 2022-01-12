@@ -145,7 +145,7 @@ public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListen
         return GamePanel.muted;
     }
 
-    private double mapRange(double srcMin, double srcMax, double destMin, double destMax, double num) {
+    public static double mapRange(double srcMin, double srcMax, double destMin, double destMax, double num) {
         return destMin + (((num - srcMin) * (destMax - destMin)) / (srcMax - srcMin));
     }
 

@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         WeatherData wp = new WeatherData();
-        System.out.println(wp.getWeatherString() + " " + wp.getWindSpeed());
+        System.out.println(wp.getWeatherString() + ", Wind: " + wp.getWindSpeed() + ", Air pressure: " + wp.getAirPressure());
 
         JFrame window = new JFrame("Window test");
         window.setContentPane(new GamePanel(wp));
