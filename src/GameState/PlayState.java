@@ -219,7 +219,7 @@ public class PlayState extends GameState{
             case "Ash":
                 return "Resources/Backgrounds/placeholder-1.gif";
             case "Clear":
-                return "Resources/Backgrounds/cloudy-bg.gif";
+                return "Resources/Backgrounds/sun-bg.gif";
             case "Clouds":
                 return "Resources/Backgrounds/cloudy-bg.gif";
             case "Thunderstorm":
@@ -235,7 +235,7 @@ public class PlayState extends GameState{
             case "Tornado":
             case "Rain":
             default:
-                return "Resources/Backgrounds/cloudy-bg.gif";
+                return "Resources/Backgrounds/rain-bg.gif";
         }
     }
 
@@ -246,9 +246,9 @@ public class PlayState extends GameState{
             case "Ash":
                 return "Resources/Tilesets/tilesset_clouds.gif";
             case "Clear":
-                return "Resources/Tilesets/tilesset_clouds.gif";
+                return "Resources/Tilesets/tileset_sun.gif";
             case "Clouds":
-                return "Resources/Tilesets/tilesset_clouds.gif";
+                return "Resources/Tilesets/tileset_clouds.gif";
             case "Thunderstorm":
             case "Drizzle":
             case "Snow":
@@ -262,7 +262,7 @@ public class PlayState extends GameState{
             case "Squall":
             case "Tornado":
             default:
-                return "Resources/Tilesets/tilesset_clouds.gif";
+                return "Resources/Tilesets/tileset_rain.gif";
         }
     }
 
@@ -271,7 +271,6 @@ public class PlayState extends GameState{
 
         switch (weather) {
             case "Ash":
-                return "Resources/Sound/Music/BGM_CLOUDS.wav";
             case "Clear":
                 return "Resources/Sound/Music/BGM_CLOUDS.wav";
             case "Clouds":

@@ -395,9 +395,8 @@ public class Player extends Entity {
             case "Squall":
             case "Tornado":
             case "Rain":
-                return "Resources/Sprites/charsprite_clouds.gif";
             default:
-                return "Resources/Sprites/charsprite_clouds.gif";
+                return "Resources/Sprites/charsprite_rain.gif";
         }
     }
 }
