@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 public class GamePanel extends javax.swing.JPanel implements Runnable, KeyListener {
 
     /* Global game info */
-    public static final String GAMETITLE = "wtr";
+    public static final String GAMETITLE = "run ran run";
     private static boolean muted;
 
     /* Weather data container */

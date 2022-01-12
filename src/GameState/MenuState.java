@@ -44,7 +44,7 @@ public class MenuState extends GameState{
         this.currentChoice = 0;
         try {
             bg = new Background(mapWeatherToMenuBackground(this.weatherData));
-            bg.setVector(-0.1, 0);
+            bg.setVector(0, 0);
 
             titleColor = new Color(128, 0, 0);
             menuItemColor = Color.RED;
@@ -156,7 +156,7 @@ public class MenuState extends GameState{
 
         switch (weather) {
             case "Clear":
-                return "Resources/Backgrounds/menu_bg1.gif";
+                return "Resources/Backgrounds/menu_bg_sun.gif";
             case "Clouds":
                 return "Resources/Backgrounds/menu_bg1.gif";
             case "Thunderstorm":
@@ -170,11 +170,10 @@ public class MenuState extends GameState{
             case "Fog":
             case "Sand":
             case "Ash":
-                return "Resources/Backgrounds/menu_bg1.gif";
             case "Squall":
             case "Tornado":
             default:
-                return "Resources/Backgrounds/menu_bg1.gif";
+                return "Resources/Backgrounds/menu_bg_rain.gif";
         }
     }
 }
