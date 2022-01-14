@@ -272,7 +272,7 @@ public class PlayState extends GameState{
         switch (weather) {
             case "Ash":
             case "Clear":
-                return "Resources/Sound/Music/BGM_CLOUDS.wav";
+                return "Resources/Sound/Music/BGM_CLEAR.wav";
             case "Clouds":
                 return "Resources/Sound/Music/BGM_CLOUDS.wav";
             case "Thunderstorm":
