@@ -348,6 +348,12 @@ public class Player extends Entity {
     public void heal() {
         parrySFX.play();
 
+        /* Reset parrying state */
+        this.parrying = false;
+        this.parryActive = false;
+        this.parryCounter = 0;
+        this.parryCoolDown = false;
+
         /* No healing takes place if the player is at max health */
         if (this.getHealth() == this.getMaxHealth()) {
             return;
@@ -366,11 +372,6 @@ public class Player extends Entity {
 
         /* Wrap heal counter back around */
         healCounter = Math.floorMod(healCounter, healThreshold);
-
-        /* Reset parrying state1 */
-        this.parryActive = false;
-        this.parryCounter = 0;
-        this.parryCoolDown = false;
     }
 
     private String mapWeatherToSpriteSheet(WeatherData weatherData) {

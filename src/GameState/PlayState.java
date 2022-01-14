@@ -61,10 +61,6 @@ public class PlayState extends GameState{
         /* Create hazard spawner */
         this.hazardSpawner = new HazardSpawner(this.gsm, this.tileMap, this, this.weatherData);
 
-        this.hazards.add(new Projectile(tileMap, gsm, this.weatherData, 400, 195, 1.7));
-
-        this.hazards.add(new Projectile(tileMap, gsm, this.weatherData, 800, 150, 2));
-
         /* Create HUD */
         this.hud = new HUD(this.gsm, this.player, 10, 10);
 
