@@ -46,10 +46,10 @@ public class MenuState extends GameState{
             bg = new Background(mapWeatherToMenuBackground(this.weatherData));
             bg.setVector(0, 0);
 
-            titleColor = new Color(128, 0, 0);
-            menuItemColor = Color.RED;
-            selectedColor = Color.DARK_GRAY;
-            titleFont = new Font("Century Gothic", Font.PLAIN, 28);
+            titleColor = mapWeatherToTitleColor(this.weatherData);
+            menuItemColor = mapWeatherToMenuItemColor(this.weatherData);
+            selectedColor = Color.WHITE;
+            titleFont = new Font("Century Gothic", Font.BOLD, 28);
             font = new Font("Arial", Font.PLAIN, 12);
             frc = new FontRenderContext(null, false, false);
 
@@ -158,7 +158,7 @@ public class MenuState extends GameState{
             case "Clear":
                 return "Resources/Backgrounds/menu_bg_sun.gif";
             case "Clouds":
-                return "Resources/Backgrounds/menu_bg1.gif";
+                return "Resources/Backgrounds/menu_bg_clouds.gif";
             case "Thunderstorm":
             case "Drizzle":
             case "Rain":
@@ -174,6 +174,58 @@ public class MenuState extends GameState{
             case "Tornado":
             default:
                 return "Resources/Backgrounds/menu_bg_rain.gif";
+        }
+    }
+
+    private Color mapWeatherToMenuItemColor(WeatherData weatherData) {
+        String weather = weatherData.getWeatherString();
+
+        switch (weather) {
+            case "Clear":
+                return new Color(145, 79, 63);
+            case "Clouds":
+                return new Color(143, 129, 212);
+            case "Thunderstorm":
+            case "Drizzle":
+            case "Rain":
+            case "Snow":
+            case "Mist":
+            case "Smoke":
+            case "Haze":
+            case "Dust":
+            case "Fog":
+            case "Sand":
+            case "Ash":
+            case "Squall":
+            case "Tornado":
+            default:
+                return new Color(0, 87, 237);
+        }
+    }
+
+    private Color mapWeatherToTitleColor(WeatherData weatherData) {
+        String weather = weatherData.getWeatherString();
+
+        switch (weather) {
+            case "Clear":
+                return new Color(130, 60, 50);
+            case "Clouds":
+                return new Color(117, 107, 166);
+            case "Thunderstorm":
+            case "Drizzle":
+            case "Rain":
+            case "Snow":
+            case "Mist":
+            case "Smoke":
+            case "Haze":
+            case "Dust":
+            case "Fog":
+            case "Sand":
+            case "Ash":
+            case "Squall":
+            case "Tornado":
+            default:
+                return new Color(0, 87, 255);
         }
     }
 }
