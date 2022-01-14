@@ -99,16 +99,16 @@ public abstract class Entity {
         int bottomTileYIndex = (int) (y + (collisionHeight / 2) - 1) / tileSize;
 
         /* Get corner tile types */
-        int topLeftTileType = tileMap.getType(topTileYIndex, leftTileXIndex);
-        int topRightTileType = tileMap.getType(topTileYIndex, rightTileXIndex);
-        int bottomLeftTileType = tileMap.getType(bottomTileYIndex, leftTileXIndex);
-        int bottomRightTileType = tileMap.getType(bottomTileYIndex, rightTileXIndex);
+        Tile.type topLeftTileType = tileMap.getType(topTileYIndex, leftTileXIndex);
+        Tile.type topRightTileType = tileMap.getType(topTileYIndex, rightTileXIndex);
+        Tile.type bottomLeftTileType = tileMap.getType(bottomTileYIndex, leftTileXIndex);
+        Tile.type bottomRightTileType = tileMap.getType(bottomTileYIndex, rightTileXIndex);
 
         /* Set corner booleans */
-        this.topLeft = topLeftTileType == Tile.BLOCKED;
-        this.topRight = topRightTileType == Tile.BLOCKED;
-        this.bottomLeft = bottomLeftTileType == Tile.BLOCKED;
-        this.bottomRight = bottomRightTileType == Tile.BLOCKED;
+        this.topLeft = topLeftTileType == Tile.type.BLOCKED;
+        this.topRight = topRightTileType == Tile.type.BLOCKED;
+        this.bottomLeft = bottomLeftTileType == Tile.type.BLOCKED;
+        this.bottomRight = bottomRightTileType == Tile.type.BLOCKED;
     }
 
     public void checkTileMapCollision() {

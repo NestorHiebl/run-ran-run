@@ -95,7 +95,7 @@ public class TileMap {
                         col * tileSize, 0,
                         /* Subimage dimensions */
                         tileSize, tileSize);
-                tiles[0][col] = new Tile(subimage, Tile.PASSABLE);
+                tiles[0][col] = new Tile(subimage, Tile.type.PASSABLE);
 
                 // Load and mark tiles in the second row as blocked
                 subimage = tileset.getSubimage(
@@ -103,7 +103,7 @@ public class TileMap {
                         col * tileSize, tileSize,
                         /* Subimage dimensions */
                         tileSize, tileSize);
-                tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
+                tiles[1][col] = new Tile(subimage, Tile.type.BLOCKED);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -138,10 +138,10 @@ public class TileMap {
      * @param col The tile column.
      * @return The type of tile at (row, col).
      */
-    public int getType(int row, int col) {
+    public Tile.type getType(int row, int col) {
         if ((row < 0) || (col < 0) || (row >= numRows) || (col >= numCols)) {
             /* Space outside of the map is always passable */
-            return Tile.PASSABLE;
+            return Tile.type.PASSABLE;
         }
 
         int rc = mapStructure.get(col)[row];
@@ -265,21 +265,4 @@ public class TileMap {
         width = numCols * tileSize;
         xmin = GamePanel.WIDTH - width;
     }
-
-    /**
-     * TODO: The return value of this function will be used inside the GSM to enter a loading state until the level
-     * structure has been extended. May not be needed
-     * @return
-     */
-    public boolean isLoading() {
-        if (mapStructureAvailable.availablePermits() == 0) {
-            /* The map is currently being updated */
-            if (colOffset > (mapStructure.size() - ((GamePanel.WIDTH / GamePanel.TILESIZE) + 2))) {
-                /* There are only two blocks available off the right side of the screen */
-                return true;
-            }
-        }
-        return false;
-    }
-
 }
