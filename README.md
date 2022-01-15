@@ -1,38 +1,22 @@
-# FL4 (Working title - Red)
+# FL4 (run ran run)
 
-This project is a 2-dimensional auto-runner / platformer that builds levels based on real-time weather information.
-It uses a single JPanel window to display a pixel-art scene consisting of a player avatar, terrain and various hazards.
-The game "engine" is an endless loop that updates and displays the game state on a fixed schedule of 60 frames per
-second, meaning that a single frame lasts ~17 milliseconds. Interaction is managed through a keyboard input vector using
-Java event listeners. Events and state changes are handled through a singleton class; the GameStateManger. Several
-relevant factors, some of which have not been implemented at time of writing, are listed below:
+Run ran run is a 2-dimensional auto-runner / platformer that builds levels based on real-time weather information. 
+It uses a single JPanel window to display a pixel-art scene consisting of a player avatar, terrain and various hazards. On game start, local weather information for Vienna is pulled from the Open weather map API and used as a seed do determine the audiovisual style of the game as well as the gameplay parameters. Broadly speaking, the game is played as follows: The player has control over a small avatar that automatically moves left to right at variable speeds. Uneven terrain has to be traversed without being pushed off the left side of the screen or falling into a pit. To this aim, the player can press the 'a' key to jump, or fall quickly to the ground if airborne. If the player is pushed back by the terrain, they will accelerate until a neutral position is regained. Additionally, hazards are occasionally spawned and need to be either evaded or parried. Coming into contact with them too many times in a row leads to a loss. The player also has the option of parrying hazards using the 's' key, causing the damage they would deal to be nullified and HP to gradually heal. The exact structure of the level as well as the positioning of hazards is generated from scratch on each playthrough and determined laregely by the weather. There is no win condition. One can only deter loss as long as possible.
 
- - **Thread structure**: The game consists of two threads, one of which processes inputs and updates the game state
-    while the other fetches API data and uses it to construct the levels. Since the graphical interface is comparatively
-    simple, I do not know if it would be particularly efficient to split the game GUI and logic backend into separate
-    threads.
- - **API/Networking**: No concrete choice. [Open weather map](https://openweathermap.org/api) could be a good choice, if
-    the API calls are sufficiently thinned out as to not use up the 1000 free API calls per day.
- - **Sound**: Real-time sound filtering capabilities would be ideal, however I am not sure whether they are available 
-    on vanilla Java. I am in fact very unfamiliar with Java sound libraries.
+Upon starting the software, players are presented with a simple menu screen with three choices: Start the game, change game options or quit. In the options screen, game sound can be toggled on or off. The other two options are self-explanatory. Once the gameplay proper starts. there are only two controls. 'a' is used for jumping when standing on the ground and fast-falling when airborne. 's', if pressed moments before making contact with a hazard, will allow the player to parry the damage. Once the player loses, they are presented with a game over screen informing them of the distance they have ran as well as the longest distance of their current session. There, they have the choice of going straight back to the gameplay or back to the main menu.
+
+
+
+## Technical details
+
+The game engine is an endless loop that updates and displays the game state on a fixed schedule of 60 frames per second, meaning that a single frame lasts ~17 milliseconds. Events and state changes are handled through a singleton class; the GameStateManger. It interfaces with all relevant classes by subdividing the game into states that all implement the following fundamental functionality:
+
+ - An `update` function that advances the game logic by one frame and is called once per frame.
+ - A `draw` function that draws the state of the game to the display buffer and is called once per frame.
+ - A `reset` function that brings the state into a neutral condition, thus readying it for re-entry. It is called every time a state is exited.
+ - A `startWorkers` function that restarts the activites related to a state. It is called once every time a state is entered. 
  
-### Notes on ODE_FASTLANE.pdf:
+ The game assets are loaded from the `Resources` folder and is mostly formatted in the style of traditional sprite or tile sheets that contain individual animation frames for everything onscreen. There are two main kinds of gameplay objects one may encounter: Tiles and entities:
 
- - Inheritance, overriding and overloading are already ubiquitous.
- - Field and method access modifiers are purposefully chosen as to reduce access rights to a minimum.
- - Exception handling is present for regular use-cases, as well as in the form of custom exceptions that handle special
-    game events such as player death.
- - File IO is used to load (and, in the future, save) game metadata and graphics.
-
-###  Notes on the game mechanics
-
-Actions available to the player: 
-
- - Movement will be automatic, right to left.
- - Colliding with terrain will push the player avatar to the right. Being pushed behind the game screen edge results in
-    a loss. Avoiding collision for a certain time will cause the player avatar to slowly recover its neutral position.
- - Falling off the level results in a loss.
- - Colliding with hazards damages the player avatar. Sustaining too much damage results in a loss.
- - Jumps are fixed-height.
- - A fast-fall action that cancels an active jump is available.
- - Certain types of damage can be parried. Parrying a certain number of times heals the player avatar by one.
+ - Tiles are the building blocks used to construct the level being played on. They all have the same dimensions and can have one of the following two properties: Passable or solid. Passable tiles have no collision and can be moved through. Solid tiles cannot be moved through.
+ - Entities are more game objects with more complex internal logic and behavior, such as the player avatar and all hazards. They are placed on the level tilemap and interact with it by moving. They contain a large number of parameters such as size, collision data, health, speed, movement vector etc. Collision detection is handled through the four corners method. It has the benefit of being comparatively computationally cheap, and the constraint of not being able to handle collision boxes larger than the standard tile size. The update cycle for entities consists of two steps - in the first, the next position they would assume based on their current movement vector is determined, with no constraints. In the second step, that position is validated and modified based on factors such as their position inside the level and the presence of other entities.
