@@ -11,7 +11,7 @@ public class Main {
         WeatherData wp = new WeatherData();
         System.out.println(wp.getWeatherString() + ", Wind: " + wp.getWindSpeed() + ", Air pressure: " + wp.getAirPressure());
 
-        JFrame window = new JFrame("Window test");
+        JFrame window = new JFrame("run ran run");
         window.setContentPane(new GamePanel(wp));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
