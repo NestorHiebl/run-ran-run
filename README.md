@@ -28,3 +28,8 @@ _Example of an entity spritesheet_
 ![](Resources/Sprites/charsprite_rain.gif)
 
 The level structure is a vector of tiles, loaded dynamically by a separate thread. Loading happens in predefined chunks. The pool of allowed chunks is determined by weather data. Tile images are loaded from a two-row tile sheet, where all tiles in the first row are passable and all tiles in the second row are solid. When the game enters the gameplay state, the worker thread is started in order to populate the level. This also happens when the player approaches the current edge of the level.
+
+
+## Building the game
+
+Run ran run is made almost 100% in base Java. The only external library is [`org.json`](https://github.com/stleary/JSON-java). In order to run a succesfull build you will need to add it to you dependencies. Additionally, since run ran run uses the Openweathermap weather API, no weather information can be accessed without a valid API key. The API call happens inside the `Networking.WeatherData` class, which imports the `Networking.APIKey` class and calls its `get` method to get the key in string format. In order to interface with the program, you will have to first [create your own key](https://openweathermap.org/api) adn then re-implement the `Networking.APIKey` class as described above.
