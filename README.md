@@ -11,13 +11,15 @@ Upon starting the software, players are presented with a simple menu screen with
 
 ## Technical details
 
-The game engine is an endless loop that updates and displays the game state on a fixed schedule of 60 frames per second, meaning that a single frame lasts ~17 milliseconds. Events and state changes are handled through a singleton class; the GameStateManger. It interfaces with all relevant classes by subdividing the game into states that all implement the following fundamental functionality:
+The game engine is an endless loop that updates and displays the game state on a fixed schedule of 60 frames per second, meaning that a single frame lasts ~17 milliseconds. Events and state changes are handled through a singleton class; the `GameStateManager`. It interfaces with all relevant classes by subdividing the game into states that all implement the following fundamental functionality:
 
  - An `update` function that advances the game logic by one frame and is called once per frame.
  - A `draw` function that draws the state of the game to the display buffer and is called once per frame.
  - A `reset` function that brings the state into a neutral condition, thus readying it for re-entry. It is called every time a state is exited.
  - A `startWorkers` function that restarts the activites related to a state. It is called once every time a state is entered. 
  
+The `GameStateManager` also temporarily enters a transition state on every state transition. This allows for a smoother flow from state to state and provides room for transition animations.
+
  The game assets are loaded from the `Resources` folder and is mostly formatted in the style of traditional sprite or tile sheets that contain individual animation frames for everything onscreen. There are two main kinds of gameplay objects one may encounter: Tiles and entities:
 
  - Tiles are the building blocks used to construct the level being played on. They all have the same dimensions and can have one of the following two properties: Passable or solid. Passable tiles have no collision and can be moved through. Solid tiles cannot be moved through.
