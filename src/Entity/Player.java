@@ -320,7 +320,8 @@ public class Player extends Entity {
     }
 
     /**
-     * Dying currently only reloads the level
+     * Dying reloads the level structure from scratch and empties the hazard list. See the reload() method in
+     * the PlayState class for more information.
      */
     @Override
     public void kill() {
@@ -346,7 +347,7 @@ public class Player extends Entity {
     }
 
     public void heal() {
-        parrySFX.play();
+        this.parrySFX.play();
 
         /* Reset parrying state */
         this.parrying = false;
@@ -359,19 +360,19 @@ public class Player extends Entity {
             return;
         }
 
-        healCounter++;
+        this.healCounter++;
 
         /* Heal threshold has been reached */
-        if (healCounter >= healThreshold) {
+        if (this.healCounter >= this.healThreshold) {
             /* Player health is not full */
-            if (health < maxHealth) {
+            if (this.health < this.maxHealth) {
                 /* Heal the player */
-                health++;
+                this.health++;
             }
         }
 
         /* Wrap heal counter back around */
-        healCounter = Math.floorMod(healCounter, healThreshold);
+        this.healCounter = Math.floorMod(this.healCounter, this.healThreshold);
     }
 
     private String mapWeatherToSpriteSheet(WeatherData weatherData) {
