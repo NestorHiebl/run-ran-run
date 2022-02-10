@@ -40,8 +40,8 @@ The game also features sound in the form of sound effects as well as music. The 
 
 Run ran run is made almost 100% in base Java. The only external library is [`org.json`](https://github.com/stleary/JSON-java). In order to run a successful build you will need to add it to you dependencies. Additionally, since run ran run uses the Openweathermap weather API, no weather information can be accessed without a valid API key. The API call happens inside the `Networking.WeatherData` class, which imports the `Networking.APIKey` class and calls its `get` method to get the key in string format. In order to interface with the program, you will have to first [create your own key](https://openweathermap.org/api) adn then re-implement the `Networking.APIKey` class as described above.
 
-## Thanks and todos
+## Credits and todos
 
-Special thanks to [foreignguymike](https://github.com/foreignguymike).
+Special thanks to [hyperhiebl](https://github.com/hyperhiebl), [foreignguymike](https://github.com/foreignguymike).
 
 Possible next steps - UX changes such as a pause button and the option to determine geolocation on game start / in the options menu. Probably not coming anytime soon.
