@@ -42,6 +42,6 @@ Run ran run is made almost 100% in base Java. The only external library is [`org
 
 ## Credits and todos
 
-Special thanks to [hyperhiebl](https://github.com/hyperhiebl), [foreignguymike](https://github.com/foreignguymike).
+Special thanks to [hyperhiebl](https://sarhie.net/), [foreignguymike](https://github.com/foreignguymike).
 
 Possible next steps - UX changes such as a pause button and the option to determine geolocation on game start / in the options menu. Probably not coming anytime soon.
