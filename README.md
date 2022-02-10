@@ -1,4 +1,4 @@
-# FL4 (run ran run)
+# run ran run
 
 Run ran run is a 2-dimensional auto-runner / platformer that builds levels based on real-time weather information. 
 It uses a single JPanel window to display a pixel-art scene consisting of a player avatar, terrain and various hazards. On game start, local weather information for Vienna is pulled from the Open weather map API and used as a seed do determine the audiovisual style of the game as well as the gameplay parameters. Broadly speaking, the game is played as follows: The player has control over a small avatar that automatically moves left to right at variable speeds. Uneven terrain has to be traversed without being pushed off the left side of the screen or falling into a pit. To this aim, the player can press the 'a' key to jump, or fall quickly to the ground if airborne. If the player is pushed back by the terrain, they will accelerate until a neutral position is regained. Additionally, hazards are occasionally spawned and need to be either evaded or parried. Coming into contact with them too many times in a row leads to a loss. The player also has the option of parrying hazards using the 's' key, causing the damage they would deal to be nullified and HP to gradually heal. The exact structure of the level as well as the positioning of hazards is generated from scratch on each playthrough and determined laregely by the weather. There is no win condition. One can only deter loss as long as possible.
@@ -39,3 +39,9 @@ The game also features sound in the form of sound effects as well as music. The 
 ## Building the game
 
 Run ran run is made almost 100% in base Java. The only external library is [`org.json`](https://github.com/stleary/JSON-java). In order to run a successful build you will need to add it to you dependencies. Additionally, since run ran run uses the Openweathermap weather API, no weather information can be accessed without a valid API key. The API call happens inside the `Networking.WeatherData` class, which imports the `Networking.APIKey` class and calls its `get` method to get the key in string format. In order to interface with the program, you will have to first [create your own key](https://openweathermap.org/api) adn then re-implement the `Networking.APIKey` class as described above.
+
+## Thanks and todos
+
+Special thanks to [foreignguymike](https://github.com/foreignguymike).
+
+Possible next steps - UX changes such as a pause button and the option to determine geolocation on game start / in the options menu. Probably not coming anytime soon.
